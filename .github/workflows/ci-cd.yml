@@ -16,12 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: List project files
-        run: ls -R
-
-      - name: Move to project
-        run: cd ./frontend/client
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -29,15 +23,19 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./frontend/client
 
       - name: Run tests
         run: npm run test -- --code-coverage
+        working-directory: ./frontend/client
 
       - name: Lint code
         run: npm run lint
+        working-directory: ./frontend/client
 
       - name: Build Angular App
         run: npm run build
+        working-directory: ./frontend/client
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
