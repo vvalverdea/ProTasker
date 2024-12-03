@@ -16,6 +16,14 @@ module.exports = function (config) {
       reporters: [{ type: "html" }, { type: "text-summary" }],
     },
     browsers: ["ChromeHeadless"],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: "ChromeHeadless",
+        flags: ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"],
+      },
+    },
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 100000,
     singleRun: true,
   });
 };
