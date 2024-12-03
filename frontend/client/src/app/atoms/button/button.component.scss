@@ -1,0 +1,52 @@
+@use "../../../styles/_mixins" as *;
+@use "../../../styles/_variables" as *;
+
+.btn-primary {
+  @include button-styles($primary-color, $padding-medium, $medium-size, $black);
+}
+
+.btn-secondary {
+  @include button-styles(
+    $terciary-color,
+    $padding-medium,
+    $medium-size,
+    $black
+  );
+}
+
+.btn-terciary {
+  @include button-styles(
+    $secondary-color,
+    $padding-medium,
+    $medium-size,
+    $black
+  );
+}
+
+.btn-danger {
+  @include button-styles($danger-color, $padding-medium, $medium-size, $white);
+}
+
+.btn-disabled {
+  @include button-styles(
+    $disabled-color,
+    $padding-medium,
+    $medium-size,
+    $white
+  );
+}
+
+.btn-small {
+  padding: $padding-small;
+  font-size: $small-size;
+}
+
+.btn-medium {
+  padding: $padding-medium;
+  font-size: $medium-size;
+}
+
+.btn-large {
+  padding: $padding-large;
+  font-size: $large-size;
+}
