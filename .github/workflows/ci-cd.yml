@@ -16,8 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Navigate to project folder
-        run: cd ../../frontend/client
+      - name: List project files
+        run: ls -R
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
