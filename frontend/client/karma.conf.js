@@ -15,6 +15,7 @@ module.exports = function (config) {
       subdir: ".",
       reporters: [{ type: "html" }, { type: "text-summary" }],
     },
+    singleRun: true,
     browsers: ["ChromeHeadless"],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
@@ -24,6 +25,5 @@ module.exports = function (config) {
     },
     browserDisconnectTolerance: 3,
     browserNoActivityTimeout: 100000,
-    singleRun: true,
   });
 };

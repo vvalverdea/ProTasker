@@ -26,7 +26,7 @@ jobs:
         working-directory: ./frontend/client
 
       - name: Run tests
-        run: npm run test -- --code-coverage --browsers=ChromeHeadlessNoSandbox
+        run: npm run test -- --code-coverage --browsers=ChromeHeadlessNoSandbox --watch=false
         working-directory: ./frontend/client
 
       - name: Lint code
