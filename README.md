@@ -24,7 +24,7 @@ ProTasker features a REST API built with Node.js to handle backend logic, using 
 # Getting Started:
 
 Clone the repository:
-git clone https://github.com/your-username/ProTasker.git
+git clone https://github.com/vvalverdea/ProTasker.git
 
 Install frontend dependencies:
 cd frontend/client
