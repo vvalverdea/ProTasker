@@ -1,4 +1,69 @@
-<p>dashboard works!</p>
-<app-card [width]="'300px'" [height]="'350px'">
-  <app-button label="Click me!" type="primary" size="small"></app-button>
+<!--<app-card>
+  <div
+    class="grid-header"
+    *ngFor="let status of ['todo', 'in-progress', 'done']"
+  >
+    {{ status }}
+  </div>
+
+  <div *ngFor="let status of ['todo', 'in-progress', 'done']">
+    <div
+      cdkDropList
+      [cdkDropListData]="tasksByStatus[status]"
+      id="{{ status }}"
+      (cdkDropListDropped)="drop($event)"
+      class="task-column"
+    >
+      <div *ngFor="let task of tasksByStatus[status]" class="item">
+        <app-tasklist [task]="task" cdkDrag></app-tasklist>
+      </div>
+    </div>
+  </div>
+</app-card>-->
+
+<app-card cdkDropListGroup>
+  <div class="example-container">
+    <h2>To do</h2>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="todo"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of todo; track item) {
+      <div class="example-box" cdkDrag>{{ item }}</div>
+      }
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2>In Progress</h2>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="inprogress"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of inprogress; track item) {
+      <div class="example-box" cdkDrag>{{ item }}</div>
+      }
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2>Done</h2>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="done"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of done; track item) {
+      <div class="example-box" cdkDrag>{{ item }}</div>
+      }
+    </div>
+  </div>
 </app-card>
