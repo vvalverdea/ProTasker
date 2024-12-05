@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardComponent } from '../atoms/card/card.component';
 
 import { TasklistComponent } from '../tasklist/tasklist.component';
 import { CommonModule } from '@angular/common';
-import { Task } from '../interfaces/tasks';
 
 import {
   CdkDragDrop,
@@ -18,6 +17,8 @@ import {
   DialogOverviewExampleDialogComponent,
 } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import Task from '../interfaces/tasks';
+import { TasksService } from '../services/tasks.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,20 +34,23 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
-  constructor(private dialog: MatDialog) {}
-  @Input() tasklist: Task[] = [
-    { id: 1, title: 'Task 1', description: 'Description 1', status: 1 },
-    { id: 2, title: 'Task 2', description: 'Description 2', status: 2 },
-    { id: 3, title: 'Task 3', description: 'Description 3', status: 3 },
-  ];
+export class DashboardComponent implements OnInit {
+  constructor(private dialog: MatDialog, private tasksService: TasksService) {}
+
   task = {};
 
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-  inprogress = [''];
-  done = [''];
+  todo: Task[] = [];
+  inprogress: Task[] = [];
+  done: Task[] = [];
 
-  drop(event: CdkDragDrop<string[]>) {
+  ngOnInit(): void {
+    this.tasksService.getTasks().subscribe((tasks) => {
+      console.log('tareas', tasks);
+      this.todo = tasks;
+    });
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -63,7 +67,7 @@ export class DashboardComponent {
     }
   }
 
-  openAddTaskDialog(): void {
+  async openAddTaskDialog() {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialogComponent, {
       data: { name: '', task: '' } as DialogData,
     });
@@ -71,8 +75,11 @@ export class DashboardComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Dialog result:', result);
-        this.todo.push(result);
-        // Aquí puedes manejar la nueva tarea o información retornada.
+        const response = this.tasksService.addTask({
+          title: result,
+          status: 1,
+        });
+        console.log(response);
       }
     });
   }
