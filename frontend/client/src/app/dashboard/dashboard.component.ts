@@ -17,10 +17,17 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import Task from '../interfaces/tasks';
 import { TasksService } from '../services/tasks.service';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CardComponent, CommonModule, DragDropModule, ButtonComponent],
+  imports: [
+    CardComponent,
+    CommonModule,
+    DragDropModule,
+    ButtonComponent,
+    MatButton,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -89,11 +96,22 @@ export class DashboardComponent implements OnInit {
           status: 1,
         });
         console.log(response);
+        this.cleanAndRefresh();
       }
-      this.todo = [];
-      this.inprogress = [];
-      this.done = [];
-      this.getTasks();
     });
+  }
+
+  deleteTask(task: Task) {
+    this.tasksService.delete(task).then(() => {
+      console.log('Task deleted successfully');
+      this.cleanAndRefresh();
+    });
+  }
+
+  cleanAndRefresh() {
+    this.todo = [];
+    this.inprogress = [];
+    this.done = [];
+    this.getTasks();
   }
 }

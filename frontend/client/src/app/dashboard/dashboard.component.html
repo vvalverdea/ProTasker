@@ -15,7 +15,11 @@
       (cdkDropListDropped)="drop($event)"
     >
       @for (item of todo; track item) {
-      <div class="example-box" cdkDrag>{{ item.title }}</div>
+      <div class="example-box" cdkDrag>
+        {{ item.title }}
+        <button mat-button color="danger" (click)="deleteTask(item)">X</button>
+      </div>
+
       }
     </div>
   </div>
@@ -30,7 +34,11 @@
       (cdkDropListDropped)="drop($event)"
     >
       @for (item of inprogress; track item) {
-      <div class="example-box" cdkDrag>{{ item.title }}</div>
+      <div class="example-box" cdkDrag>
+        {{ item.title }}
+        <button mat-button color="danger" (click)="deleteTask(item)">X</button>
+      </div>
+
       }
     </div>
   </div>
@@ -45,7 +53,10 @@
       (cdkDropListDropped)="drop($event)"
     >
       @for (item of done; track item) {
-      <div class="example-box" cdkDrag>{{ item.title }}</div>
+      <div class="example-box" cdkDrag>
+        {{ item.title }}
+        <button mat-button color="danger" (click)="deleteTask(item)">X</button>
+      </div>
       }
     </div>
   </div>

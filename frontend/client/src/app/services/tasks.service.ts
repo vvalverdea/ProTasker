@@ -6,6 +6,7 @@ import {
   getDocs,
   doc,
   updateDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import Task from '../interfaces/tasks';
 
@@ -35,8 +36,6 @@ export class TasksService {
   }
 
   edit(place: string, task: Task) {
-    console.log(place);
-    console.log('id?', task.id);
     let status = 0;
     const id: string = task.id ?? 'undefined';
     const taskRef = doc(this.firestore, 'tasks', id);
@@ -52,5 +51,12 @@ export class TasksService {
     return updateDoc(taskRef, {
       status: status,
     });
+  }
+
+  delete(task: Task) {
+    const id: string = task.id ?? 'undefined';
+    const taskRef = doc(this.firestore, 'tasks', id);
+
+    return deleteDoc(taskRef);
   }
 }
