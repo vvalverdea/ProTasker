@@ -11,14 +11,30 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { ButtonComponent } from '../atoms/button/button.component';
+import {
+  DialogData,
+  DialogOverviewExampleComponent,
+  DialogOverviewExampleDialogComponent,
+} from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CardComponent, TasklistComponent, CommonModule, DragDropModule],
+  imports: [
+    CardComponent,
+    TasklistComponent,
+    CommonModule,
+    DragDropModule,
+    ButtonComponent,
+    DialogOverviewExampleComponent,
+    DialogOverviewExampleDialogComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
+  constructor(private dialog: MatDialog) {}
   @Input() tasklist: Task[] = [
     { id: 1, title: 'Task 1', description: 'Description 1', status: 1 },
     { id: 2, title: 'Task 2', description: 'Description 2', status: 2 },
@@ -30,7 +46,7 @@ export class DashboardComponent {
   inprogress = [''];
   done = [''];
 
-  drop(event: CdkDragDrop<string[] | never>) {
+  drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -45,5 +61,19 @@ export class DashboardComponent {
         event.currentIndex
       );
     }
+  }
+
+  openAddTaskDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialogComponent, {
+      data: { name: '', task: '' } as DialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Dialog result:', result);
+        this.todo.push(result);
+        // Aquí puedes manejar la nueva tarea o información retornada.
+      }
+    });
   }
 }
