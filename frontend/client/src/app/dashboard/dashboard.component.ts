@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardComponent } from '../atoms/card/card.component';
 
-import { TasklistComponent } from '../tasklist/tasklist.component';
 import { CommonModule } from '@angular/common';
 
 import {
@@ -13,7 +12,6 @@ import {
 import { ButtonComponent } from '../atoms/button/button.component';
 import {
   DialogData,
-  DialogOverviewExampleComponent,
   DialogOverviewExampleDialogComponent,
 } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,15 +20,7 @@ import { TasksService } from '../services/tasks.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [
-    CardComponent,
-    TasklistComponent,
-    CommonModule,
-    DragDropModule,
-    ButtonComponent,
-    DialogOverviewExampleComponent,
-    DialogOverviewExampleDialogComponent,
-  ],
+  imports: [CardComponent, CommonModule, DragDropModule, ButtonComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -43,10 +33,20 @@ export class DashboardComponent implements OnInit {
   inprogress: Task[] = [];
   done: Task[] = [];
 
-  ngOnInit(): void {
-    this.tasksService.getTasks().subscribe((tasks) => {
-      console.log('tareas', tasks);
-      this.todo = tasks;
+  async ngOnInit() {
+    this.getTasks();
+  }
+
+  async getTasks() {
+    const tasks = this.tasksService.getTasks();
+    (await tasks).map((task) => {
+      if (task.status === 1) {
+        this.todo.push(task);
+      } else if (task.status === 2) {
+        this.inprogress.push(task);
+      } else {
+        this.done.push(task);
+      }
     });
   }
 
@@ -64,7 +64,16 @@ export class DashboardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+
+      const movedTask = event.container.data[event.currentIndex];
+      const columnPlace = event.container._dropListRef.element as HTMLElement;
+      this.changeTaskStatus(columnPlace.id, movedTask);
     }
+  }
+
+  changeTaskStatus(place: string, task: Task) {
+    console.log('place:', place, 'task:', task);
+    this.tasksService.edit(place, task);
   }
 
   async openAddTaskDialog() {
@@ -81,6 +90,10 @@ export class DashboardComponent implements OnInit {
         });
         console.log(response);
       }
+      this.todo = [];
+      this.inprogress = [];
+      this.done = [];
+      this.getTasks();
     });
   }
 }
