@@ -17,7 +17,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import Task from '../interfaces/tasks';
 import { TasksService } from '../services/tasks.service';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconAnchor } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +28,8 @@ import { MatButton } from '@angular/material/button';
     DragDropModule,
     ButtonComponent,
     MatButton,
+    MatIconAnchor,
+    MatIconModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -34,13 +37,18 @@ import { MatButton } from '@angular/material/button';
 export class DashboardComponent implements OnInit {
   constructor(private dialog: MatDialog, private tasksService: TasksService) {}
 
+  hoverStates: boolean[] = [];
+
   task = {};
 
   todo: Task[] = [];
   inprogress: Task[] = [];
   done: Task[] = [];
 
+  isHovered = false;
+
   async ngOnInit() {
+    this.hoverStates = new Array(this.todo.length).fill(false);
     this.getTasks();
   }
 
@@ -55,6 +63,10 @@ export class DashboardComponent implements OnInit {
         this.done.push(task);
       }
     });
+  }
+
+  onHover(state: boolean): void {
+    this.isHovered = state;
   }
 
   drop(event: CdkDragDrop<Task[]>) {

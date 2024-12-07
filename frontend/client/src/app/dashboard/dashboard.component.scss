@@ -4,8 +4,7 @@
 .grid-header {
   color: $secondary-color;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 30%;
-  height: 50%;
+  max-height: 100%;
   margin: 0 auto;
   text-align: center;
   font-size: xx-large;
@@ -15,39 +14,48 @@
 
 .example-container {
   width: 20%;
-  max-width: 100%;
   margin: 2%;
   margin-left: 8%;
   display: inline-block;
   vertical-align: top;
+  flex-grow: 2;
 }
 
 .example-list {
-  border: solid 1px #ccc;
   min-height: 60px;
   background: white;
-  border-radius: 4px;
+
   overflow: hidden;
   display: block;
+  padding: 5px;
 }
 
 .example-box {
   padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  cursor: move;
+  cursor: default;
   background: white;
   font-size: 14px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.example-box:hover {
+  transition: opacity 1.3s ease, transform 1.3s ease;
+  box-shadow: 2px 9px 12px rgba(0, 0, 0, 0.2);
+}
+
+.example-box * {
+  padding: 5px;
 }
 
 .cdk-drag-preview {
   box-sizing: border-box;
-  border-radius: 4px;
+
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
     0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
@@ -66,4 +74,59 @@
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.styled_button {
+  color: #fff;
+  padding: 10px 15px;
+  background-color: #38d2d2;
+  background-image: radial-gradient(
+      93% 87% at 87% 89%,
+      rgba(0, 0, 0, 0.23) 0%,
+      transparent 86.18%
+    ),
+    radial-gradient(
+      66% 66% at 26% 20%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0) 69.79%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25),
+    inset 0px 3px 9px rgba(255, 255, 255, 0.3),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0px -8px 36px rgba(0, 0, 0, 0.3),
+    inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 16px;
+  height: 2%;
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+  cursor: default;
+}
+
+.styled_button:hover {
+  box-shadow: inset 4px 4px 9px rgba(255, 255, 255, 0.25),
+    inset 0px 3px 9px rgba(255, 255, 255, 0.3),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0px -8px 6px rgba(0, 0, 0, 0.3),
+    inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+
+  transition: opacity 1.3s ease, transform 1.3s ease;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.25);
+}
+
+.trash {
+  color: grey;
+  font-family: "Material Icons";
+}
+
+.trash:hover {
+  color: red;
+  transition: color 0.3s ease-out;
 }

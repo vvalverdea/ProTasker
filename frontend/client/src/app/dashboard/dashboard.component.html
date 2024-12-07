@@ -1,10 +1,7 @@
 <app-card cdkDropListGroup>
-  <app-button
-    label="+"
-    type="primary"
-    size="medium"
-    (click)="openAddTaskDialog()"
-  ></app-button>
+  <button class="styled_button" (click)="openAddTaskDialog()">
+    <mat-icon>edit</mat-icon>
+  </button>
   <div class="example-container">
     <h2>To do</h2>
 
@@ -17,9 +14,9 @@
       @for (item of todo; track item) {
       <div class="example-box" cdkDrag>
         {{ item.title }}
-        <button mat-button color="danger" (click)="deleteTask(item)">X</button>
+        <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
       </div>
-
+      <br />
       }
     </div>
   </div>
@@ -36,9 +33,9 @@
       @for (item of inprogress; track item) {
       <div class="example-box" cdkDrag>
         {{ item.title }}
-        <button mat-button color="danger" (click)="deleteTask(item)">X</button>
+        <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
       </div>
-
+      <br />
       }
     </div>
   </div>
@@ -55,8 +52,9 @@
       @for (item of done; track item) {
       <div class="example-box" cdkDrag>
         {{ item.title }}
-        <button mat-button color="danger" (click)="deleteTask(item)">X</button>
+        <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
       </div>
+      <br />
       }
     </div>
   </div>
