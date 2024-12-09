@@ -9,7 +9,6 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { ButtonComponent } from '../atoms/button/button.component';
 import {
   DialogData,
   DialogOverviewExampleDialogComponent,
@@ -17,20 +16,12 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import Task from '../interfaces/tasks';
 import { TasksService } from '../services/tasks.service';
-import { MatButton, MatIconAnchor } from '@angular/material/button';
+
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [
-    CardComponent,
-    CommonModule,
-    DragDropModule,
-    ButtonComponent,
-    MatButton,
-    MatIconAnchor,
-    MatIconModule,
-  ],
+  imports: [CardComponent, CommonModule, DragDropModule, MatIconModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

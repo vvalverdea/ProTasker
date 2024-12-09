@@ -2,6 +2,7 @@
 @use "../../styles/_variables" as *;
 
 .grid-header {
+  background-color: #fff;
   color: $secondary-color;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-height: 100%;
@@ -15,7 +16,7 @@
 .example-container {
   width: 20%;
   margin: 2%;
-  margin-left: 8%;
+  margin-left: 10%;
   display: inline-block;
   vertical-align: top;
   flex-grow: 2;
@@ -24,8 +25,8 @@
 .example-list {
   min-height: 60px;
   background: white;
+  margin-left: -45%;
 
-  overflow: hidden;
   display: block;
   padding: 5px;
 }
@@ -109,16 +110,70 @@
   cursor: default;
 }
 
-.styled_button:hover {
-  box-shadow: inset 4px 4px 9px rgba(255, 255, 255, 0.25),
-    inset 0px 3px 9px rgba(255, 255, 255, 0.3),
-    inset 0px 1px 1px rgba(255, 255, 255, 0.6),
-    inset 0px -8px 6px rgba(0, 0, 0, 0.3),
-    inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+/* CSS */
+.button-53 {
+  background-color: #88efff;
+  border: 0 solid #e5e7eb;
+  box-sizing: border-box;
+  color: #000000;
+  display: flex;
+  font-family: ui-sans-serif, system-ui;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.75rem;
+  padding: 0.75rem 1.65rem;
 
+  width: 100%;
+  max-width: 60px;
+  font-size: 16px;
+  height: 2%;
+
+  position: relative; // Asegúrate de que el botón esté posicionado para manejar elementos internos
+  display: flex; // Utiliza flexbox para centrar el contenido
+  justify-content: center; // Centra horizontalmente
+  align-items: center;
+
+  cursor: default;
+  transform: rotate(-2deg);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  content: icon;
+}
+
+.button-53:focus {
+  outline: 0;
+}
+
+.button-53:after {
+  content: "";
+  position: absolute;
+  border: 1px solid #000000;
+  bottom: 4px;
+  left: 4px;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+}
+
+.button-53:hover:after {
+  bottom: 2px;
+  left: 2px;
+}
+
+@media (min-width: 768px) {
+  .button-53 {
+    padding: 0.75rem 3rem;
+    font-size: 1.25rem;
+  }
+}
+
+.styled_button:hover {
   transition: opacity 1.3s ease, transform 1.3s ease;
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-  transform: scale(1.25);
+
+  transform: scale(1.15);
 }
 
 .trash {
@@ -129,4 +184,43 @@
 .trash:hover {
   color: red;
   transition: color 0.3s ease-out;
+}
+
+.title1 {
+  text-decoration: underline;
+}
+
+.title2 {
+  text-decoration: underline;
+}
+
+.title3 {
+  text-decoration: underline;
+}
+
+.todo {
+  background-color: #dbf8f8;
+  font-style: italic;
+  font-family: cursive;
+  font-size: large;
+}
+
+.inprogress {
+  background-color: rgb(252, 222, 157);
+  font-style: italic;
+  font-family: cursive;
+  font-size: large;
+}
+
+.done {
+  background-color: rgb(212, 250, 156);
+  font-style: italic;
+  font-family: cursive;
+  font-size: large;
+}
+
+.icon-pencil {
+  z-index: 3;
+  position: absolute;
+  margin-bottom: 10px;
 }
