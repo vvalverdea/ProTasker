@@ -1,0 +1,26 @@
+.light {
+  margin: 0 auto;
+  margin-top: 0;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Movimiento al hacer hover */
+.light:hover {
+  animation: sway 0.7s ease infinite;
+}
+
+/* Animación de balanceo */
+@keyframes sway {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
