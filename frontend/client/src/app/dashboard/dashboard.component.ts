@@ -9,15 +9,13 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import {
-  DialogData,
-  DialogOverviewExampleDialogComponent,
-} from '../dialog/dialog.component';
+
 import { MatDialog } from '@angular/material/dialog';
 import Task from '../interfaces/tasks';
 import { TasksService } from '../services/tasks.service';
 
 import { MatIconModule } from '@angular/material/icon';
+import { DialogComponent, DialogData } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -87,7 +85,7 @@ export class DashboardComponent implements OnInit {
   }
 
   async openAddTaskDialog() {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       data: { name: '', task: '' } as DialogData,
     });
 

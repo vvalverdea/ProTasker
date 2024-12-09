@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  model,
-  signal,
-} from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -18,47 +12,21 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TasksService } from '../services/tasks.service';
+import Task from '../interfaces/tasks';
 
 export interface DialogData {
   task: string;
   name: string;
 }
 
-/**
- * @title Dialog Overview
- */
 @Component({
-  selector: 'app-dialog-overview-example',
-  templateUrl: 'dialog-overview-example.html',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class DialogOverviewExampleComponent {
-  readonly task = signal('');
-  readonly name = model('');
-  readonly dialog = inject(MatDialog);
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialogComponent, {
-      data: { name: this.name(), task: this.task() },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      if (result !== undefined) {
-        this.task.set(result);
-      }
-    });
-  }
-}
-
-@Component({
-  selector: 'app-pop-up-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
+  selector: 'app-dialog',
+  templateUrl: 'dialog.component.html',
   imports: [
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
     MatButtonModule,
     MatDialogTitle,
     MatDialogContent,
@@ -66,14 +34,25 @@ export class DialogOverviewExampleComponent {
     MatDialogClose,
   ],
 })
-export class DialogOverviewExampleDialogComponent {
-  readonly dialogRef = inject(
-    MatDialogRef<DialogOverviewExampleDialogComponent>
-  );
+export class DialogComponent {
+  readonly dialogRef = inject(MatDialogRef<DialogComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  readonly task = model(this.data.task);
+  readonly task: WritableSignal<Task> = signal({ title: '', status: 1 });
+  readonly name = 'Add Task';
+  readonly dialog = inject(MatDialog);
+
+  constructor(private tasksService: TasksService) {}
 
   onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  submitTask(): void {
+    console.log('Dialog result:', this.task());
+    this.tasksService.addTask({
+      title: this.name,
+      status: 1,
+    });
     this.dialogRef.close();
   }
 }
