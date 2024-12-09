@@ -11,15 +11,11 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   constructor(private elementRef: ElementRef) {}
 
-  title = 'client';
-
-  isDark = false;
-
   toggleBackground() {
-    console.log('press');
-    this.isDark = !this.isDark;
-
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
-      this.isDark ? 'rgb(70, 70, 70)' : 'white';
+      this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor ===
+      'white'
+        ? 'grey'
+        : 'white';
   }
 }
