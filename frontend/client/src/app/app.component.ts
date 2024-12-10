@@ -1,12 +1,23 @@
-import { Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, ElementRef } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, MatIcon, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'client';
+  constructor(private elementRef: ElementRef) {}
+
+  toggleBackground() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor ===
+      'white'
+        ? 'grey'
+        : 'white';
+  }
 }

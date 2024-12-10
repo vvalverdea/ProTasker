@@ -1,19 +1,13 @@
 @use "../../../styles/_variables" as *;
 
 .card {
-  border-radius: 20px;
-  padding: 5px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  display: grid;
-  grid-template-rows: auto 1fr;
-
-  @media (max-width: 768px) {
-    width: 150px !important;
-    height: auto !important;
-  }
-
-  @media (max-width: 480px) {
-    width: 120px !important;
-  }
+  border-radius: 20px;
+  margin: 10%;
+  padding: 20px;
+  display: flex;
+  min-height: 40%;
+  overflow: hidden;
+  background-color: white;
 }
