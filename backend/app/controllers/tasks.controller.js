@@ -10,15 +10,17 @@ exports.create = (req, res) => {
   }
 
   // Create a Task
-  const Task = new Task({
+  const newTask = new Task({
     title: req.body.title,
-    status: 1,
+    status: req.body.status,
   });
 
   // Save Task in the database
-  Task.save(Task)
+  newTask
+    .save(newTask)
     .then((data) => {
       res.send(data);
+      console.log('task saved!');
     })
     .catch((err) => {
       res.status(500).send({
@@ -28,7 +30,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all tasks from the database.
-exports.findAll = (req, res) => {
+/*exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title
     ? { title: { $regex: new RegExp(title), $options: 'i' } }
@@ -106,7 +108,7 @@ exports.delete = (req, res) => {
         message: 'Could not delete Task with id=' + id,
       });
     });
-};
+};*/
 
 // Delete all tasks from the database.
 exports.deleteAll = (req, res) => {

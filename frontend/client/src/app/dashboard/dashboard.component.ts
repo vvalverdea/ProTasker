@@ -97,6 +97,7 @@ export class DashboardComponent implements OnInit {
           status: 1,
         });
         console.log(response);
+
         //this.cleanAndRefresh();
       }
     });

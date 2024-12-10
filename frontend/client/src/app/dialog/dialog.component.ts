@@ -49,10 +49,16 @@ export class DialogComponent {
 
   submitTask(): void {
     console.log('Dialog result:', this.task());
-    this.tasksService.addTask({
-      title: this.name,
-      status: 1,
-    });
+
+    this.tasksService
+      .addTask({
+        title: this.name,
+        status: 1,
+      })
+      .subscribe({
+        next: (response) => console.log('Tarea creada:', response),
+        error: (err) => console.error('Error al crear tarea:', err),
+      });
     this.dialogRef.close();
   }
 }
