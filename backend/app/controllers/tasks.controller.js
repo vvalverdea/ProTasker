@@ -1,23 +1,20 @@
 const db = require('../models');
-const newTask = db.newTasks;
 
-// Create and Save a new newTask
+const Task = db.tasks;
+
 exports.create = (req, res) => {
-  // Validate request
   if (!req.body.title) {
     res.status(400).send({ message: 'Content can not be empty!' });
     return;
   }
 
-  // Create a newTask
-  const newnewTask = new newTask({
+  const newTask = new Task({
     title: req.body.title,
     status: req.body.status,
   });
 
-  // Save newTask in the database
-  newnewTask
-    .save(newnewTask)
+  newTask
+    .save(newTask)
     .then((data) => {
       res.send(data);
       console.log('newTask saved!');
@@ -30,98 +27,59 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all newTasks from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title
-    ? { title: { $regex: new RegExp(title), $options: 'i' } }
-    : {};
-
-  newTask
-    .find(condition)
+  Task.find()
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || 'Some error occurred while retrieving newTasks.',
+        message: err.message || 'Some error occurred while retrieving tasks.',
       });
     });
 };
 
-// Find a single newTask with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  newTask
-    .findById(id)
-    .then((data) => {
-      if (!data)
-        res.status(404).send({ message: 'Not found newTask with id ' + id });
-      else res.send(data);
-    })
-    .catch((err) => {
-      res
-        .status(500)
-        .send({ message: 'Error retrieving newTask with id=' + id });
-    });
-};
-
-// Update a newTask by the id in the request
 exports.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Data to update can not be empty!',
-    });
-  }
-
   const id = req.params.id;
+  const newStatus = req.body.status;
 
-  newTask
-    .findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update newTask with id=${id}. Maybe newTask was not found!`,
-        });
-      } else res.send({ message: 'newTask was updated successfully.' });
+  Task.findByIdAndUpdate(id, { status: newStatus }, { new: true })
+    .then((updatedTask) => {
+      if (!updatedTask) {
+        return res
+          .status(404)
+          .send({ message: 'Task not found with id ' + id });
+      }
+      res.send(updatedTask);
     })
     .catch((err) => {
       res.status(500).send({
-        message: 'Error updating newTask with id=' + id,
+        message: err.message || 'Error updating task with id ' + id,
       });
     });
 };
 
-// Delete a newTask with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  newTask
-    .findByIdAndRemove(id, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot delete newTask with id=${id}. Maybe newTask was not found!`,
-        });
-      } else {
-        res.send({
-          message: 'newTask was deleted successfully!',
-        });
+  Task.findByIdAndRemove(id)
+    .then((task) => {
+      if (!task) {
+        return res
+          .status(404)
+          .send({ message: 'Task not found with id ' + id });
       }
+      res.send({ message: 'Task was deleted successfully!' });
     })
     .catch((err) => {
       res.status(500).send({
-        message: 'Could not delete newTask with id=' + id,
+        message: err.message || 'Could not delete task with id ' + id,
       });
     });
 };
 
-// Delete all newTasks from the database.
 exports.deleteAll = (req, res) => {
-  newTask
-    .deleteMany({})
+  Task.deleteMany({})
     .then((data) => {
       res.send({
         message: `${data.deletedCount} newTasks were deleted successfully!`,

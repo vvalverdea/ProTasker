@@ -56,8 +56,8 @@ export class DialogComponent {
         status: 1,
       })
       .subscribe({
-        next: (response) => console.log('Tarea creada:', response),
-        error: (err) => console.error('Error al crear tarea:', err),
+        next: (response) => console.log('Task created:', response),
+        error: (err) => console.error('Task creation failed:', err),
       });
     this.dialogRef.close();
   }

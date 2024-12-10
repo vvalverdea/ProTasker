@@ -12,28 +12,35 @@ export class TasksService {
   constructor(private http: HttpClient) {}
 
   addTask(task: Task) {
-    console.log('añadir tarea:', task);
     return this.http.post<Task>(this.apiUrl, task);
   }
 
-  /*async getTasks(): Promise<Task[]> {
-    const querySnapshot = await getDocs(collection(this.firestore, 'tasks'));
+  async getTasks(): Promise<Task[]> {
     const tasks: Task[] = [];
 
-    querySnapshot.forEach((doc) => {
-      tasks.push({
-        id: doc.id,
-        ...(doc.data() as Task),
+    await this.http
+      .get<Task[]>(this.apiUrl)
+      .toPromise()
+      .then((response) => {
+        response?.forEach((res) => {
+          tasks.push({
+            id: res.id,
+            title: res.title,
+            status: res.status,
+          });
+        });
+      })
+      .catch((error) => {
+        console.error('Error getting tasks', error);
       });
-    });
 
     return tasks;
   }
 
   edit(place: string, task: Task) {
+    console.log(place, task);
     let status = 0;
     const id: string = task.id ?? 'undefined';
-    const taskRef = doc(this.firestore, 'tasks', id);
 
     if (place === 'cdk-drop-list-0') {
       status = 1;
@@ -43,15 +50,14 @@ export class TasksService {
       status = 3;
     }
 
-    return updateDoc(taskRef, {
-      status: status,
-    });
+    return this.http
+      .put<Task>(`${this.apiUrl}/${id}`, { status: status })
+      .subscribe();
   }
 
   delete(task: Task) {
     const id: string = task.id ?? 'undefined';
-    const taskRef = doc(this.firestore, 'tasks', id);
 
-    return deleteDoc(taskRef);
-  }*/
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

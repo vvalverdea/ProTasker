@@ -4,17 +4,17 @@
   </button>
   <div class="example-container">
     <h2 style="text-decoration: underline; font-family: serif">To do</h2>
-    <div>
-      <!--<div
+
+    <div
       cdkDropList
       [cdkDropListData]="todo"
       class="example-list"
       (cdkDropListDropped)="drop($event)"
-    >-->
+    >
       @for (item of todo; track item) {
       <div class="example-box todo" cdkDrag>
         {{ item.title }}
-        <!--<mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>-->
+        <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
       </div>
       <br />
       }
@@ -23,17 +23,17 @@
 
   <div class="example-container">
     <h2 style="text-decoration: underline; font-family: serif">In Progress</h2>
-    <div>
-      <!--<div
+
+    <div
       cdkDropList
       [cdkDropListData]="inprogress"
       class="example-list"
       (cdkDropListDropped)="drop($event)"
-    > -->
+    >
       @for (item of inprogress; track item) {
       <div class="example-box inprogress" cdkDrag>
         {{ item.title }}
-        <!--<mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>-->
+        <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
       </div>
       <br />
       }
@@ -42,17 +42,17 @@
 
   <div class="example-container">
     <h2 style="text-decoration: underline; font-family: serif">Done</h2>
-    <div>
-      <!--<div
+
+    <div
       cdkDropList
       [cdkDropListData]="done"
       class="example-list"
       (cdkDropListDropped)="drop($event)"
-    >-->
+    >
       @for (item of done; track item) {
       <div class="example-box done" cdkDrag>
         {{ item.title }}
-        <!--<mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>-->
+        <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
       </div>
       <br />
       }
