@@ -3,12 +3,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 import { TasksService } from '../services/tasks.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { of } from 'rxjs';
+import Task from '../interfaces/tasks';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
+  let mockDialog: jasmine.SpyObj<MatDialog>;
+  let mockTasksService: jasmine.SpyObj<TasksService>;
 
   beforeEach(async () => {
+    mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
+    mockTasksService = jasmine.createSpyObj('TasksService', [
+      'getTasks',
+      'addTask',
+      'edit',
+      'delete',
+    ]);
     await TestBed.configureTestingModule({
       imports: [DashboardComponent],
       providers: [TasksService, HttpClient, HttpHandler],
@@ -19,7 +31,20 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should onHover', () => {
+    const state = true;
+    let isHovered = false;
+
+    component.onHover(state);
+    isHovered = state;
+    expect(isHovered).toBe(true);
   });
 });
