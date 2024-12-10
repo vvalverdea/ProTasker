@@ -1,27 +1,22 @@
 import { Injectable } from '@angular/core';
-import {
-  collection,
-  Firestore,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-} from '@angular/fire/firestore';
+
 import Task from '../interfaces/tasks';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  constructor(private firestore: Firestore) {}
+  private apiUrl = 'http://localhost:8081/tasks';
+
+  constructor(private http: HttpClient) {}
 
   addTask(task: Task) {
-    const taskRef = collection(this.firestore, 'tasks');
-    return addDoc(taskRef, task);
+    console.log('añadir tarea:', task);
+    return this.http.post<Task>(this.apiUrl, task);
   }
 
-  async getTasks(): Promise<Task[]> {
+  /*async getTasks(): Promise<Task[]> {
     const querySnapshot = await getDocs(collection(this.firestore, 'tasks'));
     const tasks: Task[] = [];
 
@@ -58,5 +53,5 @@ export class TasksService {
     const taskRef = doc(this.firestore, 'tasks', id);
 
     return deleteDoc(taskRef);
-  }
+  }*/
 }

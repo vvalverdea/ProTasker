@@ -1,10 +1,12 @@
+import { HttpClientModule } from '@angular/common/http';
 import { Component, ElementRef } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatIcon],
+  standalone: true,
+  imports: [RouterOutlet, MatIcon, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

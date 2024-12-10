@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CardComponent } from '../atoms/card/card.component';
 
 import { CommonModule } from '@angular/common';
-
 import {
   CdkDragDrop,
   DragDropModule,
@@ -19,6 +18,7 @@ import { DialogComponent, DialogData } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [CardComponent, CommonModule, DragDropModule, MatIconModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -38,10 +38,10 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.hoverStates = new Array(this.todo.length).fill(false);
-    this.getTasks();
+    //this.getTasks();
   }
 
-  async getTasks() {
+  /*async getTasks() {
     const tasks = this.tasksService.getTasks();
     (await tasks).map((task) => {
       if (task.status === 1) {
@@ -52,13 +52,13 @@ export class DashboardComponent implements OnInit {
         this.done.push(task);
       }
     });
-  }
+  }*/
 
   onHover(state: boolean): void {
     this.isHovered = state;
   }
 
-  drop(event: CdkDragDrop<Task[]>) {
+  /*drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -77,11 +77,11 @@ export class DashboardComponent implements OnInit {
       const columnPlace = event.container._dropListRef.element as HTMLElement;
       this.changeTaskStatus(columnPlace.id, movedTask);
     }
-  }
+  }*/
 
   changeTaskStatus(place: string, task: Task) {
     console.log('place:', place, 'task:', task);
-    this.tasksService.edit(place, task);
+    //this.tasksService.edit(place, task);
   }
 
   async openAddTaskDialog() {
@@ -97,12 +97,12 @@ export class DashboardComponent implements OnInit {
           status: 1,
         });
         console.log(response);
-        this.cleanAndRefresh();
+        //this.cleanAndRefresh();
       }
     });
   }
 
-  deleteTask(task: Task) {
+  /*deleteTask(task: Task) {
     this.tasksService.delete(task).then(() => {
       console.log('Task deleted successfully');
       this.cleanAndRefresh();
@@ -114,5 +114,5 @@ export class DashboardComponent implements OnInit {
     this.inprogress = [];
     this.done = [];
     this.getTasks();
-  }
+  }*/
 }
