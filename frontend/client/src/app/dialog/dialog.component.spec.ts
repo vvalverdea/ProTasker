@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogComponent } from './dialog.component';
 import { TasksService } from '../services/tasks.service';
-import { Firestore } from '@angular/fire/firestore';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('DialogComponent', () => {
   let component: DialogComponent;
@@ -18,7 +18,8 @@ describe('DialogComponent', () => {
       imports: [DialogComponent, BrowserAnimationsModule, NoopAnimationsModule],
       providers: [
         TasksService,
-        { provide: Firestore, useValue: {} },
+        HttpClient,
+        HttpHandler,
         {
           provide: MatDialogRef,
           useValue: { close: jasmine.createSpy('close') },

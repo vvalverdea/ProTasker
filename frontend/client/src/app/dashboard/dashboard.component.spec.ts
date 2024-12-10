@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { TasksService } from '../services/tasks.service';
-import { Firestore } from '@angular/fire/firestore';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -11,7 +11,7 @@ describe('DashboardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DashboardComponent],
-      providers: [TasksService, { provide: Firestore, useValue: {} }],
+      providers: [TasksService, HttpClient, HttpHandler],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
