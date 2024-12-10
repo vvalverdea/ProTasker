@@ -1,7 +1,7 @@
 const db = require('../models');
-const Task = db.tasks;
+const newTask = db.newTasks;
 
-// Create and Save a new Task
+// Create and Save a new newTask
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -9,60 +9,66 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Task
-  const newTask = new Task({
+  // Create a newTask
+  const newnewTask = new newTask({
     title: req.body.title,
     status: req.body.status,
   });
 
-  // Save Task in the database
-  newTask
-    .save(newTask)
+  // Save newTask in the database
+  newnewTask
+    .save(newnewTask)
     .then((data) => {
       res.send(data);
-      console.log('task saved!');
+      console.log('newTask saved!');
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Task.',
+        message:
+          err.message || 'Some error occurred while creating the newTask.',
       });
     });
 };
 
-// Retrieve all tasks from the database.
-/*exports.findAll = (req, res) => {
+// Retrieve all newTasks from the database.
+exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title
     ? { title: { $regex: new RegExp(title), $options: 'i' } }
     : {};
 
-  Task.find(condition)
+  newTask
+    .find(condition)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving tasks.',
+        message:
+          err.message || 'Some error occurred while retrieving newTasks.',
       });
     });
 };
 
-// Find a single Task with an id
+// Find a single newTask with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Task.findById(id)
+  newTask
+    .findById(id)
     .then((data) => {
       if (!data)
-        res.status(404).send({ message: 'Not found Task with id ' + id });
+        res.status(404).send({ message: 'Not found newTask with id ' + id });
       else res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({ message: 'Error retrieving Task with id=' + id });
+      res
+        .status(500)
+        .send({ message: 'Error retrieving newTask with id=' + id });
     });
 };
 
-// Update a Task by the id in the request
+// Update a newTask by the id in the request
 exports.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
@@ -72,55 +78,59 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  Task.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  newTask
+    .findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update Task with id=${id}. Maybe Task was not found!`,
+          message: `Cannot update newTask with id=${id}. Maybe newTask was not found!`,
         });
-      } else res.send({ message: 'Task was updated successfully.' });
+      } else res.send({ message: 'newTask was updated successfully.' });
     })
     .catch((err) => {
       res.status(500).send({
-        message: 'Error updating Task with id=' + id,
+        message: 'Error updating newTask with id=' + id,
       });
     });
 };
 
-// Delete a Task with the specified id in the request
+// Delete a newTask with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Task.findByIdAndRemove(id, { useFindAndModify: false })
+  newTask
+    .findByIdAndRemove(id, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete Task with id=${id}. Maybe Task was not found!`,
+          message: `Cannot delete newTask with id=${id}. Maybe newTask was not found!`,
         });
       } else {
         res.send({
-          message: 'Task was deleted successfully!',
+          message: 'newTask was deleted successfully!',
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: 'Could not delete Task with id=' + id,
+        message: 'Could not delete newTask with id=' + id,
       });
     });
-};*/
+};
 
-// Delete all tasks from the database.
+// Delete all newTasks from the database.
 exports.deleteAll = (req, res) => {
-  Task.deleteMany({})
+  newTask
+    .deleteMany({})
     .then((data) => {
       res.send({
-        message: `${data.deletedCount} tasks were deleted successfully!`,
+        message: `${data.deletedCount} newTasks were deleted successfully!`,
       });
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while removing all tasks.',
+        message:
+          err.message || 'Some error occurred while removing all newTasks.',
       });
     });
 };

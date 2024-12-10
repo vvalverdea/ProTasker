@@ -5,7 +5,7 @@ module.exports = (app) => {
 
   // Create a new Tutorial
   router.post('/', tasks.create);
-  /*
+
   // Retrieve all tasks
   router.get('/', tasks.findAll());
 
@@ -22,7 +22,7 @@ module.exports = (app) => {
   router.delete('/:id', tasks.delete());
 
   // Create a new Tutorial
-  router.delete('/', tasks.deleteAll());*/
+  router.delete('/', tasks.deleteAll());
 
   app.use('/api/tasks', router);
 };
