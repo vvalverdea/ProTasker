@@ -26,12 +26,6 @@ jobs:
         run: npm install
         working-directory: ./frontend/client
 
-      - name: Build backend
-        run: |
-          cd backend
-          npm install
-        working-directory: ./backend
-
       - name: Run tests
         run: npm run test -- --code-coverage --browsers=ChromeHeadlessNoSandbox --watch=false
         working-directory: ./frontend/client
