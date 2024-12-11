@@ -48,8 +48,6 @@ export class DialogComponent {
   }
 
   submitTask(): void {
-    console.log('Dialog result:', this.task());
-
     this.tasksService
       .addTask({
         title: this.name,
