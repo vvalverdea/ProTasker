@@ -30,7 +30,7 @@ jobs:
         run: |
           cd backend
           npm install
-          npx esbuild server.js --platform=node --external:mongoose --external:express --external:cors --outdir=dist
+        working-directory: ./backend
 
       - name: Run tests
         run: npm run test -- --code-coverage --browsers=ChromeHeadlessNoSandbox --watch=false
