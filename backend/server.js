@@ -14,10 +14,12 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, '../docs/browser')));
+app.use(
+  express.static(path.join(__dirname, '../frontend/client/dist/client/browser'))
+);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../docs/browser/index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/client/dist/client/browser'));
 });
 
 const db = require('./app/models');
