@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 
 import Task from '../interfaces/tasks';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  //private apiUrl = 'http://localhost:8081/api/tasks';
-  private apiUrl = 'https://protasker-server.vercel.app/api/tasks';
+  private apiUrl = `${environment.apiUrl}api/tasks`;
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +17,7 @@ export class TasksService {
   }
 
   async getTasks(): Promise<Task[]> {
+    console.log(this.apiUrl);
     const tasks: Task[] = [];
 
     await this.http

@@ -5,10 +5,11 @@ require('dotenv').config();
 const app = express();
 const path = require('path');
 
+const isVercel = process.env.VERCEL ? true : false;
+
 const corsOptions = {
-  origin: ['https://protasker-server.vercel.app/'],
+  origin: ['https://protasker-server.vercel.app/', 'http://localhost:8081/'],
   methods: ['POST', 'GET'],
-  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -17,16 +18,30 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, '../public/browser')));
+app.use(
+  express.static(
+    isVercel
+      ? path.join(__dirname, '../public/prod/browser')
+      : path.join(__dirname, '../public/browser')
+  )
+);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/browser'));
+  isVercel
+    ? res.sendFile(path.join(__dirname, '../public/prod/browser'))
+    : res.sendFile(path.join(__dirname, '../public/browser'));
 });
+
+const publicPath = isVercel
+  ? path.join(__dirname, '../public/prod/browser')
+  : path.join(__dirname, '../public/browser');
 
 const db = require('./app/models');
 
+const dbPath = isVercel ? db.url : 'mongodb://127.0.0.1:27017/';
+
 db.mongoose
-  .connect(db.url, {
+  .connect(dbPath, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
