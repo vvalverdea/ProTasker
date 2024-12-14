@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'mongodb://127.0.0.1:27017/protasker',
+  url: 'mongodb+srv://cohetecoder:<1VIYDkQVguJDN0zm>@cluster0.sm2cp.mongodb.net/protasker?retryWrites=true&w=majority&appName=Cluster0',
 };
