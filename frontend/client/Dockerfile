@@ -1,12 +1,6 @@
 # Etapa 1: Construcción
 FROM node:18 as build
 
-# Establecer el directorio de trabajo dentro del contenedor
-WORKDIR /app
-
-# Copiar los archivos de configuración y de dependencias
-COPY package*.json ./
-
 # Instalar las dependencias
 RUN npm install
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const path = require('path');
@@ -8,13 +9,7 @@ const corsOptions = {
   origin: 'http://localhost:4200',
 };
 
-const corsOptionsProd = {
-  origin: 'http://protasker-v1.vercel.app/',
-  methods: ['POST', 'GET'],
-};
-
 app.use(cors(corsOptions));
-app.use(cors(corsOptionsProd));
 
 app.use(express.json());
 
@@ -29,6 +24,7 @@ app.get('*', (req, res) => {
 });
 
 const db = require('./app/models');
+
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
