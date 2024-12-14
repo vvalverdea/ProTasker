@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TasksService {
   //private apiUrl = 'http://localhost:8081/api/tasks';
-  private apiUrl = 'https://protasker-server.vercel.app/';
+  private apiUrl = 'https://protasker-server.vercel.app/api/tasks';
 
   constructor(private http: HttpClient) {}
 
