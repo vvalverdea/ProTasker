@@ -6,7 +6,9 @@ const app = express();
 const path = require('path');
 
 const corsOptions = {
-  origin: 'https://protasker-server.vercel.app/',
+  origin: ['https://protasker-server.vercel.app/'],
+  methods: ['POST', 'GET'],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
