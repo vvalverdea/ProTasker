@@ -38,10 +38,8 @@ const publicPath = isVercel
 
 const db = require('./app/models');
 
-const dbPath = isVercel ? db.url : 'mongodb://127.0.0.1:27017/';
-
 db.mongoose
-  .connect(dbPath, {
+  .connect(db.url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

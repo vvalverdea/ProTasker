@@ -65220,7 +65220,7 @@ var MatInputModule = class _MatInputModule {
 // src/environments/environment.ts
 var environment = {
   production: false,
-  apiUrl: "https://localhost:8081/"
+  apiUrl: "http://localhost:8081/"
 };
 
 // src/app/services/tasks.service.ts
