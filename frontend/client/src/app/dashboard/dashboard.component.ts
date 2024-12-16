@@ -14,12 +14,19 @@ import Task from '../interfaces/tasks';
 import { TasksService } from '../services/tasks.service';
 
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 import { DialogComponent, DialogData } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CardComponent, CommonModule, DragDropModule, MatIconModule],
+  imports: [
+    CardComponent,
+    CommonModule,
+    DragDropModule,
+    MatIconModule,
+    MatTabsModule,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
