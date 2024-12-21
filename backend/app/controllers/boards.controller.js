@@ -3,11 +3,10 @@ const db = require('../models');
 const Boards = db.boards;
 
 exports.createBoard = async (req, res) => {
-  const { title, description } = req.body;
+  const { title } = req.body;
 
   const newBoard = new Boards({
     title: title,
-    description: description,
   });
 
   if (!title) {

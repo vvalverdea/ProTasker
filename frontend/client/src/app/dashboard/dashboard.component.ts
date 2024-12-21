@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   constructor(private dialog: MatDialog, private tasksService: TasksService) {}
 
   hoverStates: boolean[] = [];
-
+  currentBoard = { title: '0' };
   task = {};
 
   todo: Task[] = [];
@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit {
         const response = this.tasksService.addTask({
           title: result,
           status: 1,
-          board: 1,
+          board: this.currentBoard.title,
         });
         console.log(response);
       }

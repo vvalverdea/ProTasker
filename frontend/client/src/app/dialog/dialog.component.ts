@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TasksService } from '../services/tasks.service';
 import Task from '../interfaces/tasks';
+import Board from '../interfaces/boards';
+import { BoardsService } from '../services/boards.service';
 
 export interface DialogData {
   task: string;
@@ -40,12 +42,16 @@ export class DialogComponent {
   readonly task: WritableSignal<Task> = signal({
     title: '',
     status: 1,
-    board: 1,
+    board: '0',
   });
+  readonly board: WritableSignal<Board> = signal({ title: '0' });
   readonly name = 'Add Task';
   readonly dialog = inject(MatDialog);
 
-  constructor(private tasksService: TasksService) {}
+  constructor(
+    private tasksService: TasksService,
+    private boardsService: BoardsService
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -56,7 +62,7 @@ export class DialogComponent {
       .addTask({
         title: this.name,
         status: 1,
-        board: 1,
+        board: this.boardsService.getCurrentBoard().title,
       })
       .subscribe({
         next: (response) => console.log('Task created:', response),

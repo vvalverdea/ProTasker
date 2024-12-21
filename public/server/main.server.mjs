@@ -68432,20 +68432,52 @@ var TasksService = class _TasksService {
   static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _TasksService, factory: _TasksService.\u0275fac, providedIn: "root" });
 };
 
+// src/app/services/boards.service.ts
+var BoardsService = class _BoardsService {
+  http;
+  baseUrl = `${environment.apiUrl}api/boards`;
+  currentBoard = { title: "0" };
+  constructor(http) {
+    this.http = http;
+  }
+  getBoards() {
+    return this.http.get(this.baseUrl);
+  }
+  setCurrentBoard(currentBoard) {
+    this.currentBoard = currentBoard;
+  }
+  getCurrentBoard() {
+    return this.currentBoard;
+  }
+  createBoard(title) {
+    return this.http.post(this.baseUrl, { title });
+  }
+  deleteBoard(id) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+  static \u0275fac = function BoardsService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _BoardsService)(\u0275\u0275inject(HttpClient));
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _BoardsService, factory: _BoardsService.\u0275fac, providedIn: "root" });
+};
+
 // src/app/dialog/dialog.component.ts
 var DialogComponent = class _DialogComponent {
   tasksService;
+  boardsService;
   dialogRef = inject(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
   task = signal({
     title: "",
     status: 1,
-    board: 1
+    board: "0"
   });
+  board = signal({ title: "0" });
   name = "Add Task";
   dialog = inject(MatDialog);
-  constructor(tasksService) {
+  constructor(tasksService, boardsService) {
     this.tasksService = tasksService;
+    this.boardsService = boardsService;
   }
   onNoClick() {
     this.dialogRef.close();
@@ -68454,7 +68486,7 @@ var DialogComponent = class _DialogComponent {
     this.tasksService.addTask({
       title: this.name,
       status: 1,
-      board: 1
+      board: this.boardsService.getCurrentBoard().title
     }).subscribe({
       next: (response) => console.log("Task created:", response),
       error: (err) => console.error("Task creation failed:", err)
@@ -68462,7 +68494,7 @@ var DialogComponent = class _DialogComponent {
     this.dialogRef.close();
   }
   static \u0275fac = function DialogComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _DialogComponent)(\u0275\u0275directiveInject(TasksService));
+    return new (__ngFactoryType__ || _DialogComponent)(\u0275\u0275directiveInject(TasksService), \u0275\u0275directiveInject(BoardsService));
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DialogComponent, selectors: [["app-dialog"]], decls: 12, vars: 1, consts: [["matInput", "", 3, "ngModelChange", "ngModel"], ["mat-button", "", 3, "click"], ["mat-button", "", "cdkFocusInitial", "", 3, "click"]], template: function DialogComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -68512,7 +68544,7 @@ var DialogComponent = class _DialogComponent {
   ], encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DialogComponent, { className: "DialogComponent", filePath: "src/app/dialog/dialog.component.ts", lineNumber: 37 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DialogComponent, { className: "DialogComponent", filePath: "src/app/dialog/dialog.component.ts", lineNumber: 39 });
 })();
 
 // src/app/dashboard/dashboard.component.ts
@@ -68587,6 +68619,7 @@ var DashboardComponent = class _DashboardComponent {
     this.tasksService = tasksService;
   }
   hoverStates = [];
+  currentBoard = { title: "0" };
   task = {};
   todo = [];
   inprogress = [];
@@ -68638,7 +68671,7 @@ var DashboardComponent = class _DashboardComponent {
           const response = this.tasksService.addTask({
             title: result2,
             status: 1,
-            board: 1
+            board: this.currentBoard.title
           });
           console.log(response);
         }
@@ -68728,28 +68761,6 @@ var DashboardComponent = class _DashboardComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DashboardComponent, { className: "DashboardComponent", filePath: "src/app/dashboard/dashboard.component.ts", lineNumber: 33 });
 })();
 
-// src/app/services/boards.service.ts
-var BoardsService = class _BoardsService {
-  http;
-  baseUrl = `${environment.apiUrl}api/boards`;
-  constructor(http) {
-    this.http = http;
-  }
-  getBoards() {
-    return this.http.get(this.baseUrl);
-  }
-  createBoard(title, description) {
-    return this.http.post(this.baseUrl, { title, description });
-  }
-  deleteBoard(id) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
-  }
-  static \u0275fac = function BoardsService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _BoardsService)(\u0275\u0275inject(HttpClient));
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _BoardsService, factory: _BoardsService.\u0275fac, providedIn: "root" });
-};
-
 // src/app/boards/boards.component.ts
 function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
@@ -68795,6 +68806,7 @@ var BoardsComponent = class _BoardsComponent {
   onBoardChange(index) {
     this.selectedBoardIndex = index;
     const boardId = this.boards[index].id;
+    this.boardsService.setCurrentBoard(this.boards[index]);
     this.loadTasks(boardId);
   }
   loadTasks(boardId) {
@@ -68808,9 +68820,8 @@ var BoardsComponent = class _BoardsComponent {
   }
   addBoard() {
     const title = prompt("Enter board title:");
-    const description = prompt("Enter board description:");
-    if (title && description) {
-      this.boardsService.createBoard(title, description).subscribe((board) => {
+    if (title) {
+      this.boardsService.createBoard(title).subscribe((board) => {
         this.boards.push(board.title);
       });
     }

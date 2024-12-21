@@ -51,6 +51,7 @@ export class BoardsComponent implements OnInit {
   onBoardChange(index: number) {
     this.selectedBoardIndex = index;
     const boardId = this.boards[index].id;
+    this.boardsService.setCurrentBoard(this.boards[index]);
     this.loadTasks(boardId);
   }
 
@@ -66,9 +67,8 @@ export class BoardsComponent implements OnInit {
 
   addBoard() {
     const title = prompt('Enter board title:');
-    const description = prompt('Enter board description:');
-    if (title && description) {
-      this.boardsService.createBoard(title, description).subscribe((board) => {
+    if (title) {
+      this.boardsService.createBoard(title).subscribe((board) => {
         this.boards.push(board.title);
       });
     }
