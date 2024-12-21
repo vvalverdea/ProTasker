@@ -101,6 +101,7 @@ export class DashboardComponent implements OnInit {
         const response = this.tasksService.addTask({
           title: result,
           status: 1,
+          board: 1,
         });
         console.log(response);
       }

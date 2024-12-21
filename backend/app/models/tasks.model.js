@@ -2,6 +2,11 @@ module.exports = (mongoose) => {
   var schema = mongoose.Schema({
     title: String,
     status: Number,
+    board: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'boards',
+      required: true,
+    },
   });
 
   schema.method('toJSON', function () {

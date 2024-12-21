@@ -37,7 +37,11 @@ export interface DialogData {
 export class DialogComponent {
   readonly dialogRef = inject(MatDialogRef<DialogComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  readonly task: WritableSignal<Task> = signal({ title: '', status: 1 });
+  readonly task: WritableSignal<Task> = signal({
+    title: '',
+    status: 1,
+    board: 1,
+  });
   readonly name = 'Add Task';
   readonly dialog = inject(MatDialog);
 
@@ -52,6 +56,7 @@ export class DialogComponent {
       .addTask({
         title: this.name,
         status: 1,
+        board: 1,
       })
       .subscribe({
         next: (response) => console.log('Task created:', response),

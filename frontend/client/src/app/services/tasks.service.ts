@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import Task from '../interfaces/tasks';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,14 @@ export class TasksService {
 
   addTask(task: Task) {
     return this.http.post<Task>(this.apiUrl, task);
+  }
+
+  createTask(boardId: string, title: string, status: number): Observable<any> {
+    return this.http.post<any>(this.apiUrl, { board: boardId, title, status });
+  }
+
+  getTasksByBoard(boardId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?board=${boardId}`);
   }
 
   async getTasks(): Promise<Task[]> {
@@ -29,6 +38,7 @@ export class TasksService {
             id: res.id,
             title: res.title,
             status: res.status,
+            board: res.board,
           });
         });
       })

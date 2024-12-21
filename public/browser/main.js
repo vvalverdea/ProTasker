@@ -45,6 +45,7 @@ import {
   LOCATION_INITIALIZED,
   Location,
   LocationStrategy,
+  NgForOf,
   NgModule,
   NgModuleFactory$1,
   NgModuleRef$1,
@@ -242,7 +243,7 @@ import {
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuery
-} from "./chunk-GDE2USWL.js";
+} from "./chunk-CNNMISHW.js";
 
 // node_modules/@angular/common/fesm2022/http.mjs
 var HttpHandler = class {
@@ -40220,6 +40221,12 @@ var TasksService = class _TasksService {
   addTask(task) {
     return this.http.post(this.apiUrl, task);
   }
+  createTask(boardId, title, status) {
+    return this.http.post(this.apiUrl, { board: boardId, title, status });
+  }
+  getTasksByBoard(boardId) {
+    return this.http.get(`${this.apiUrl}?board=${boardId}`);
+  }
   getTasks() {
     return __async(this, null, function* () {
       console.log(this.apiUrl);
@@ -40229,7 +40236,8 @@ var TasksService = class _TasksService {
           tasks.push({
             id: res.id,
             title: res.title,
-            status: res.status
+            status: res.status,
+            board: res.board
           });
         });
       }).catch((error) => {
@@ -40266,7 +40274,11 @@ var DialogComponent = class _DialogComponent {
   tasksService;
   dialogRef = inject(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
-  task = signal({ title: "", status: 1 });
+  task = signal({
+    title: "",
+    status: 1,
+    board: 1
+  });
   name = "Add Task";
   dialog = inject(MatDialog);
   constructor(tasksService) {
@@ -40278,7 +40290,8 @@ var DialogComponent = class _DialogComponent {
   submitTask() {
     this.tasksService.addTask({
       title: this.name,
-      status: 1
+      status: 1,
+      board: 1
     }).subscribe({
       next: (response) => console.log("Task created:", response),
       error: (err) => console.error("Task creation failed:", err)
@@ -40461,7 +40474,8 @@ var DashboardComponent = class _DashboardComponent {
         if (result) {
           const response = this.tasksService.addTask({
             title: result,
-            status: 1
+            status: 1,
+            board: 1
           });
           console.log(response);
         }
@@ -40535,14 +40549,171 @@ var DashboardComponent = class _DashboardComponent {
       \u0275\u0275advance();
       \u0275\u0275repeater(ctx.done);
     }
-  }, dependencies: [CardComponent, CommonModule, DragDropModule, CdkDropList, CdkDropListGroup, CdkDrag, MatIconModule, MatIcon, MatTabsModule], styles: ['\n\n.grid-header[_ngcontent-%COMP%] {\n  background-color: #fff;\n  color: #e9b44c;\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n  max-height: 100%;\n  margin: 0 auto;\n  text-align: center;\n  font-size: xx-large;\n  font-family:\n    "Gill Sans",\n    "Gill Sans MT",\n    Calibri,\n    "Trebuchet MS",\n    sans-serif;\n  padding: 2%;\n}\n.example-container[_ngcontent-%COMP%] {\n  width: 20%;\n  margin: 2%;\n  margin-left: 10%;\n  display: inline-block;\n  vertical-align: top;\n  flex-grow: 2;\n}\n.example-list[_ngcontent-%COMP%] {\n  min-height: 60px;\n  background: white;\n  margin-left: -45%;\n  display: block;\n  padding: 5px;\n}\n.example-box[_ngcontent-%COMP%] {\n  padding: 20px 10px;\n  color: rgba(0, 0, 0, 0.87);\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  box-sizing: border-box;\n  cursor: default;\n  background: white;\n  font-size: 14px;\n  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  box-shadow: 2px 9px 12px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]   *[_ngcontent-%COMP%] {\n  padding: 5px;\n}\n.cdk-drag-preview[_ngcontent-%COMP%] {\n  box-sizing: border-box;\n  box-shadow:\n    0 5px 5px -3px rgba(0, 0, 0, 0.2),\n    0 8px 10px 1px rgba(0, 0, 0, 0.14),\n    0 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n.cdk-drag-placeholder[_ngcontent-%COMP%] {\n  opacity: 0;\n}\n.cdk-drag-animating[_ngcontent-%COMP%] {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.example-box[_ngcontent-%COMP%]:last-child {\n  border: none;\n}\n.example-list.cdk-drop-list-dragging[_ngcontent-%COMP%]   .example-box[_ngcontent-%COMP%]:not(.cdk-drag-placeholder) {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.styled_button[_ngcontent-%COMP%] {\n  color: #fff;\n  padding: 10px 15px;\n  background-color: #38d2d2;\n  background-image:\n    radial-gradient(\n      93% 87% at 87% 89%,\n      rgba(0, 0, 0, 0.23) 0%,\n      transparent 86.18%),\n    radial-gradient(\n      66% 66% at 26% 20%,\n      rgba(255, 255, 255, 0.55) 0%,\n      rgba(255, 255, 255, 0) 69.79%,\n      rgba(255, 255, 255, 0) 100%);\n  box-shadow:\n    inset -3px -3px 9px rgba(255, 255, 255, 0.25),\n    inset 0px 3px 9px rgba(255, 255, 255, 0.3),\n    inset 0px 1px 1px rgba(255, 255, 255, 0.6),\n    inset 0px -8px 36px rgba(0, 0, 0, 0.3),\n    inset 0px 1px 5px rgba(255, 255, 255, 0.6),\n    2px 19px 31px rgba(0, 0, 0, 0.2);\n  border-radius: 14px;\n  font-weight: bold;\n  font-size: 16px;\n  height: 2%;\n  border: 0;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  cursor: default;\n}\n.button-53[_ngcontent-%COMP%] {\n  background-color: #88efff;\n  border: 0 solid #e5e7eb;\n  box-sizing: border-box;\n  color: #000000;\n  display: flex;\n  font-family: ui-sans-serif, system-ui;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  font-weight: 700;\n  justify-content: center;\n  line-height: 1.75rem;\n  padding: 0.75rem 1.65rem;\n  width: 100%;\n  max-width: 60px;\n  font-size: 16px;\n  height: 2%;\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: default;\n  transform: rotate(-2deg);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  content: icon;\n}\n.button-53[_ngcontent-%COMP%]:focus {\n  outline: 0;\n}\n.button-53[_ngcontent-%COMP%]:after {\n  content: "";\n  position: absolute;\n  border: 1px solid #000000;\n  bottom: 4px;\n  left: 4px;\n  width: calc(100% - 1px);\n  height: calc(100% - 1px);\n}\n.button-53[_ngcontent-%COMP%]:hover:after {\n  bottom: 2px;\n  left: 2px;\n}\n@media (min-width: 768px) {\n  .button-53[_ngcontent-%COMP%] {\n    padding: 0.75rem 3rem;\n    font-size: 1.25rem;\n  }\n}\n.styled_button[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  transform: scale(1.15);\n}\n.trash[_ngcontent-%COMP%] {\n  color: grey;\n  font-family: "Material Icons";\n}\n.trash[_ngcontent-%COMP%]:hover {\n  color: red;\n  transition: color 0.3s ease-out;\n}\n.title1[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title2[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title3[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.todo[_ngcontent-%COMP%] {\n  background-color: #dbf8f8;\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.inprogress[_ngcontent-%COMP%] {\n  background-color: rgb(252, 222, 157);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.done[_ngcontent-%COMP%] {\n  background-color: rgb(212, 250, 156);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.icon-pencil[_ngcontent-%COMP%] {\n  z-index: 3;\n  position: absolute;\n  margin-bottom: 10px;\n}\n/*# sourceMappingURL=dashboard.component.css.map */'] });
+  }, dependencies: [
+    CardComponent,
+    CommonModule,
+    DragDropModule,
+    CdkDropList,
+    CdkDropListGroup,
+    CdkDrag,
+    MatIconModule,
+    MatIcon,
+    MatTabsModule
+  ], styles: ['\n\n.grid-header[_ngcontent-%COMP%] {\n  background-color: #fff;\n  color: #e9b44c;\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n  max-height: 100%;\n  margin: 0 auto;\n  text-align: center;\n  font-size: xx-large;\n  font-family:\n    "Gill Sans",\n    "Gill Sans MT",\n    Calibri,\n    "Trebuchet MS",\n    sans-serif;\n  padding: 2%;\n}\n.example-container[_ngcontent-%COMP%] {\n  width: 20%;\n  margin: 2%;\n  margin-left: 10%;\n  display: inline-block;\n  vertical-align: top;\n  flex-grow: 2;\n}\n.example-list[_ngcontent-%COMP%] {\n  min-height: 60px;\n  background: white;\n  margin-left: -45%;\n  display: block;\n  padding: 5px;\n}\n.example-box[_ngcontent-%COMP%] {\n  padding: 20px 10px;\n  color: rgba(0, 0, 0, 0.87);\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  box-sizing: border-box;\n  cursor: default;\n  background: white;\n  font-size: 14px;\n  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  box-shadow: 2px 9px 12px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]   *[_ngcontent-%COMP%] {\n  padding: 5px;\n}\n.cdk-drag-preview[_ngcontent-%COMP%] {\n  box-sizing: border-box;\n  box-shadow:\n    0 5px 5px -3px rgba(0, 0, 0, 0.2),\n    0 8px 10px 1px rgba(0, 0, 0, 0.14),\n    0 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n.cdk-drag-placeholder[_ngcontent-%COMP%] {\n  opacity: 0;\n}\n.cdk-drag-animating[_ngcontent-%COMP%] {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.example-box[_ngcontent-%COMP%]:last-child {\n  border: none;\n}\n.example-list.cdk-drop-list-dragging[_ngcontent-%COMP%]   .example-box[_ngcontent-%COMP%]:not(.cdk-drag-placeholder) {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.styled_button[_ngcontent-%COMP%] {\n  color: #fff;\n  padding: 10px 15px;\n  background-color: #38d2d2;\n  background-image:\n    radial-gradient(\n      93% 87% at 87% 89%,\n      rgba(0, 0, 0, 0.23) 0%,\n      transparent 86.18%),\n    radial-gradient(\n      66% 66% at 26% 20%,\n      rgba(255, 255, 255, 0.55) 0%,\n      rgba(255, 255, 255, 0) 69.79%,\n      rgba(255, 255, 255, 0) 100%);\n  box-shadow:\n    inset -3px -3px 9px rgba(255, 255, 255, 0.25),\n    inset 0px 3px 9px rgba(255, 255, 255, 0.3),\n    inset 0px 1px 1px rgba(255, 255, 255, 0.6),\n    inset 0px -8px 36px rgba(0, 0, 0, 0.3),\n    inset 0px 1px 5px rgba(255, 255, 255, 0.6),\n    2px 19px 31px rgba(0, 0, 0, 0.2);\n  border-radius: 14px;\n  font-weight: bold;\n  font-size: 16px;\n  height: 2%;\n  border: 0;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  cursor: default;\n}\n.button-53[_ngcontent-%COMP%] {\n  background-color: #88efff;\n  border: 0 solid #e5e7eb;\n  box-sizing: border-box;\n  color: #000000;\n  display: flex;\n  font-family: ui-sans-serif, system-ui;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  font-weight: 700;\n  justify-content: center;\n  line-height: 1.75rem;\n  padding: 0.75rem 1.65rem;\n  width: 100%;\n  max-width: 60px;\n  font-size: 16px;\n  height: 2%;\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: default;\n  transform: rotate(-2deg);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  content: icon;\n}\n.button-53[_ngcontent-%COMP%]:focus {\n  outline: 0;\n}\n.button-53[_ngcontent-%COMP%]:after {\n  content: "";\n  position: absolute;\n  border: 1px solid #000000;\n  bottom: 4px;\n  left: 4px;\n  width: calc(100% - 1px);\n  height: calc(100% - 1px);\n}\n.button-53[_ngcontent-%COMP%]:hover:after {\n  bottom: 2px;\n  left: 2px;\n}\n@media (min-width: 768px) {\n  .button-53[_ngcontent-%COMP%] {\n    padding: 0.75rem 3rem;\n    font-size: 1.25rem;\n  }\n}\n.styled_button[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  transform: scale(1.15);\n}\n.trash[_ngcontent-%COMP%] {\n  color: grey;\n  font-family: "Material Icons";\n}\n.trash[_ngcontent-%COMP%]:hover {\n  color: red;\n  transition: color 0.3s ease-out;\n}\n.title1[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title2[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title3[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.todo[_ngcontent-%COMP%] {\n  background-color: #dbf8f8;\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.inprogress[_ngcontent-%COMP%] {\n  background-color: rgb(252, 222, 157);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.done[_ngcontent-%COMP%] {\n  background-color: rgb(212, 250, 156);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.icon-pencil[_ngcontent-%COMP%] {\n  z-index: 3;\n  position: absolute;\n  margin-bottom: 10px;\n}\n/*# sourceMappingURL=dashboard.component.css.map */'] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DashboardComponent, { className: "DashboardComponent", filePath: "src/app/dashboard/dashboard.component.ts", lineNumber: 27 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DashboardComponent, { className: "DashboardComponent", filePath: "src/app/dashboard/dashboard.component.ts", lineNumber: 33 });
+})();
+
+// src/app/services/boards.service.ts
+var BoardsService = class _BoardsService {
+  http;
+  baseUrl = `${environment.apiUrl}api/boards`;
+  constructor(http) {
+    this.http = http;
+  }
+  getBoards() {
+    return this.http.get(this.baseUrl);
+  }
+  createBoard(title, description) {
+    return this.http.post(this.baseUrl, { title, description });
+  }
+  deleteBoard(id) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+  static \u0275fac = function BoardsService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _BoardsService)(\u0275\u0275inject(HttpClient));
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _BoardsService, factory: _BoardsService.\u0275fac, providedIn: "root" });
+};
+
+// src/app/boards/boards.component.ts
+function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const board_r1 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", board_r1.title, " ");
+  }
+}
+function BoardsComponent_mat_tab_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-tab");
+    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 1, 1, "ng-template", 4);
+    \u0275\u0275elementEnd();
+  }
+}
+var BoardsComponent = class _BoardsComponent {
+  boardsService;
+  tasksService;
+  boards = [{ title: "main_board" }];
+  selectedBoardIndex = 0;
+  tasks = {
+    todo: [],
+    inprogress: [],
+    done: []
+  };
+  constructor(boardsService, tasksService) {
+    this.boardsService = boardsService;
+    this.tasksService = tasksService;
+  }
+  ngOnInit() {
+    this.loadBoards();
+  }
+  loadBoards() {
+    this.boardsService.getBoards().subscribe((boards) => {
+      this.boards = boards;
+      if (this.boards.length > 0) {
+        this.loadTasks(this.boards[0].id);
+      }
+    });
+  }
+  onBoardChange(index) {
+    this.selectedBoardIndex = index;
+    const boardId = this.boards[index].id;
+    this.loadTasks(boardId);
+  }
+  loadTasks(boardId) {
+    this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
+      this.tasks = {
+        todo: tasks.filter((task) => task.status === 0),
+        inprogress: tasks.filter((task) => task.status === 1),
+        done: tasks.filter((task) => task.status === 2)
+      };
+    });
+  }
+  addBoard() {
+    const title = prompt("Enter board title:");
+    const description = prompt("Enter board description:");
+    if (title && description) {
+      this.boardsService.createBoard(title, description).subscribe((board) => {
+        this.boards.push(board.title);
+      });
+    }
+  }
+  openAddTaskDialog(boardId) {
+    const title = prompt("Enter task title:");
+    if (title) {
+      this.tasksService.createTask(boardId, title, 0).subscribe(() => {
+        this.loadTasks(boardId);
+      });
+    }
+  }
+  deleteTask(taskId) {
+  }
+  drop(event, boardId) {
+  }
+  static \u0275fac = function BoardsComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _BoardsComponent)(\u0275\u0275directiveInject(BoardsService), \u0275\u0275directiveInject(TasksService));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 2, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "click"], ["mat-tab-label", ""]], template: function BoardsComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "div", 0)(1, "mat-tab-group", 1);
+      \u0275\u0275twoWayListener("selectedIndexChange", function BoardsComponent_Template_mat_tab_group_selectedIndexChange_1_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.selectedBoardIndex, $event) || (ctx.selectedBoardIndex = $event);
+        return $event;
+      });
+      \u0275\u0275listener("selectedIndexChange", function BoardsComponent_Template_mat_tab_group_selectedIndexChange_1_listener($event) {
+        return ctx.onBoardChange($event);
+      });
+      \u0275\u0275template(2, BoardsComponent_mat_tab_2_Template, 2, 0, "mat-tab", 2);
+      \u0275\u0275elementEnd();
+      \u0275\u0275element(3, "app-dashboard");
+      \u0275\u0275elementStart(4, "button", 3);
+      \u0275\u0275listener("click", function BoardsComponent_Template_button_click_4_listener() {
+        return ctx.addBoard();
+      });
+      \u0275\u0275text(5, "+ Add Board");
+      \u0275\u0275elementEnd()();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance();
+      \u0275\u0275twoWayProperty("selectedIndex", ctx.selectedBoardIndex);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngForOf", ctx.boards);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgForOf,
+    DragDropModule,
+    MatIconModule,
+    MatTabsModule,
+    MatTabLabel,
+    MatTab,
+    MatTabGroup,
+    DashboardComponent
+  ], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardsComponent, { className: "BoardsComponent", filePath: "src/app/boards/boards.component.ts", lineNumber: 24 });
 })();
 
 // src/app/app.routes.ts
-var routes = [{ path: "", component: DashboardComponent }];
+var routes = [
+  { path: "", component: DashboardComponent },
+  { path: "boards", component: BoardsComponent }
+];
 
 // node_modules/@angular/platform-browser/fesm2022/animations/async.mjs
 var ANIMATION_PREFIX = "@";
@@ -40579,7 +40750,7 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./chunk-F2Y7B2TN.js").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import("./chunk-OFR5JVWD.js").then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);
