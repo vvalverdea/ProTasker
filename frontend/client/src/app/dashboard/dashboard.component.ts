@@ -58,7 +58,9 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.hoverStates = new Array(this.todo.length).fill(false);
+  }
 
+  fetchBoard() {
     this.tasksService
       .getTasksByBoard(this.boardsService.getCurrentBoard().id)
       .subscribe((task: any) => {
@@ -72,7 +74,7 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  async getTasks() {
+  /*async getTasks() {
     const tasks = this.tasksService.getTasks();
 
     (await tasks).map((task) => {
@@ -84,7 +86,7 @@ export class DashboardComponent implements OnInit {
         this.done.push(task);
       }
     });
-  }
+  }*/
 
   onHover(state: boolean): void {
     this.isHovered = state;
@@ -143,6 +145,6 @@ export class DashboardComponent implements OnInit {
     this.todo = [];
     this.inprogress = [];
     this.done = [];
-    this.getTasks();
+    this.fetchBoard();
   }
 }

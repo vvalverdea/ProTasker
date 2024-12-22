@@ -40,6 +40,7 @@ export class BoardsComponent implements OnInit {
     this.boardsService.getBoards().subscribe((boards) => {
       this.boardsService.setCurrentBoard(boards[0]);
     });
+
     this.loadBoards();
   }
 
@@ -47,7 +48,6 @@ export class BoardsComponent implements OnInit {
     this.boardsService.getBoards().subscribe((boards) => {
       this.boards = boards;
       if (this.boards.length > 0) {
-        this.currentUpdatedBoard = this.boards[0].tasks;
         this.loadTasks(this.boards[0].id);
       }
     });
@@ -61,16 +61,18 @@ export class BoardsComponent implements OnInit {
   }
 
   async loadTasks(boardId: string) {
+    this.clearTasks();
     await this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
+      console.log(1, boardId, tasks);
       this.tasks = {
         todo: tasks.filter((task) => task.status === 0),
         inprogress: tasks.filter((task) => task.status === 1),
         done: tasks.filter((task) => task.status === 2),
       };
+      this.boardsService.setUpdatedTasks(this.tasks);
+      this.currentUpdatedBoard = this.boardsService.getUpdatedTasks();
+      console.log(2, this.currentUpdatedBoard);
     });
-
-    this.boardsService.setUpdatedTasks(this.tasks);
-    this.currentUpdatedBoard = this.boardsService.getUpdatedTasks();
   }
 
   addBoard() {
@@ -100,5 +102,13 @@ export class BoardsComponent implements OnInit {
 
   drop(event: any, boardId: string) {
     // Lógica para actualizar el estado de la tarea al arrastrarla
+  }
+
+  clearTasks() {
+    this.tasks = {
+      todo: [],
+      inprogress: [],
+      done: [],
+    };
   }
 }

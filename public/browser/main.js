@@ -40476,21 +40476,23 @@ var DashboardComponent = class _DashboardComponent {
   ngOnInit() {
     return __async(this, null, function* () {
       this.hoverStates = new Array(this.todo.length).fill(false);
-      this.tasksService.getTasksByBoard(this.boardsService.getCurrentBoard().id).subscribe((task) => {
-        if (task.status === 0) {
-          this.todo.push(task);
-        } else if (task.status === 1) {
-          this.inprogress.push(task);
-        } else {
-          this.done.push(task);
-        }
-      });
     });
   }
-  getTasks() {
-    return __async(this, null, function* () {
+  fetchBoard() {
+    this.tasksService.getTasksByBoard(this.boardsService.getCurrentBoard().id).subscribe((task) => {
+      if (task.status === 0) {
+        this.todo.push(task);
+      } else if (task.status === 1) {
+        this.inprogress.push(task);
+      } else {
+        this.done.push(task);
+      }
+    });
+  }
+  /*async getTasks() {
       const tasks = this.tasksService.getTasks();
-      (yield tasks).map((task) => {
+  
+      (await tasks).map((task) => {
         if (task.status === 1) {
           this.todo.push(task);
         } else if (task.status === 2) {
@@ -40499,8 +40501,7 @@ var DashboardComponent = class _DashboardComponent {
           this.done.push(task);
         }
       });
-    });
-  }
+    }*/
   onHover(state2) {
     this.isHovered = state2;
   }
@@ -40545,7 +40546,7 @@ var DashboardComponent = class _DashboardComponent {
     this.todo = [];
     this.inprogress = [];
     this.done = [];
-    this.getTasks();
+    this.fetchBoard();
   }
   static \u0275fac = function DashboardComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _DashboardComponent)(\u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(TasksService), \u0275\u0275directiveInject(BoardsService));
@@ -40621,6 +40622,9 @@ var DashboardComponent = class _DashboardComponent {
 function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
+    \u0275\u0275elementStart(1, "mat-icon", 6);
+    \u0275\u0275text(2, "close");
+    \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     const board_r1 = \u0275\u0275nextContext().$implicit;
@@ -40630,7 +40634,7 @@ function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
 function BoardsComponent_mat_tab_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-tab");
-    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 1, 1, "ng-template", 5);
+    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 3, 1, "ng-template", 5);
     \u0275\u0275elementEnd();
   }
 }
@@ -40660,7 +40664,6 @@ var BoardsComponent = class _BoardsComponent {
       this.boardsService.getBoards().subscribe((boards) => {
         this.boards = boards;
         if (this.boards.length > 0) {
-          this.currentUpdatedBoard = this.boards[0].tasks;
           this.loadTasks(this.boards[0].id);
         }
       });
@@ -40673,15 +40676,18 @@ var BoardsComponent = class _BoardsComponent {
   }
   loadTasks(boardId) {
     return __async(this, null, function* () {
+      this.clearTasks();
       yield this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
+        console.log(1, boardId, tasks);
         this.tasks = {
           todo: tasks.filter((task) => task.status === 0),
           inprogress: tasks.filter((task) => task.status === 1),
           done: tasks.filter((task) => task.status === 2)
         };
+        this.boardsService.setUpdatedTasks(this.tasks);
+        this.currentUpdatedBoard = this.boardsService.getUpdatedTasks();
+        console.log(2, this.currentUpdatedBoard);
       });
-      this.boardsService.setUpdatedTasks(this.tasks);
-      this.currentUpdatedBoard = this.boardsService.getUpdatedTasks();
     });
   }
   addBoard() {
@@ -40704,10 +40710,17 @@ var BoardsComponent = class _BoardsComponent {
   }
   drop(event, boardId) {
   }
+  clearTasks() {
+    this.tasks = {
+      todo: [],
+      inprogress: [],
+      done: []
+    };
+  }
   static \u0275fac = function BoardsComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _BoardsComponent)(\u0275\u0275directiveInject(BoardsService), \u0275\u0275directiveInject(TasksService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 3, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "currentUpdatedBoard"], [3, "click"], ["mat-tab-label", ""]], template: function BoardsComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 3, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "currentUpdatedBoard"], [3, "click"], ["mat-tab-label", ""], [1, "close"]], template: function BoardsComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "mat-tab-group", 1);
       \u0275\u0275twoWayListener("selectedIndexChange", function BoardsComponent_Template_mat_tab_group_selectedIndexChange_1_listener($event) {
@@ -40740,6 +40753,7 @@ var BoardsComponent = class _BoardsComponent {
     NgForOf,
     DragDropModule,
     MatIconModule,
+    MatIcon,
     MatTabsModule,
     MatTabLabel,
     MatTab,
