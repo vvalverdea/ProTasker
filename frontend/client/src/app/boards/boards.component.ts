@@ -22,7 +22,8 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   ],
 })
 export class BoardsComponent implements OnInit {
-  boards: any[] = [{ title: 'main_board' }];
+  boards: any[] = [];
+  currentUpdatedBoard = [];
   selectedBoardIndex: number = 0;
   tasks: { todo: any[]; inprogress: any[]; done: any[] } = {
     todo: [],
@@ -36,13 +37,17 @@ export class BoardsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.boardsService.getBoards().subscribe((boards) => {
+      this.boardsService.setCurrentBoard(boards[0]);
+    });
     this.loadBoards();
   }
 
-  loadBoards() {
+  async loadBoards() {
     this.boardsService.getBoards().subscribe((boards) => {
       this.boards = boards;
       if (this.boards.length > 0) {
+        this.currentUpdatedBoard = this.boards[0].tasks;
         this.loadTasks(this.boards[0].id);
       }
     });
@@ -50,26 +55,29 @@ export class BoardsComponent implements OnInit {
 
   onBoardChange(index: number) {
     this.selectedBoardIndex = index;
-    const boardId = this.boards[index].id;
     this.boardsService.setCurrentBoard(this.boards[index]);
-    this.loadTasks(boardId);
+
+    this.loadTasks(this.boardsService.getCurrentBoard().id);
   }
 
-  loadTasks(boardId: string) {
-    this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
+  async loadTasks(boardId: string) {
+    await this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
       this.tasks = {
         todo: tasks.filter((task) => task.status === 0),
         inprogress: tasks.filter((task) => task.status === 1),
         done: tasks.filter((task) => task.status === 2),
       };
     });
+
+    this.boardsService.setUpdatedTasks(this.tasks);
+    this.currentUpdatedBoard = this.boardsService.getUpdatedTasks();
   }
 
   addBoard() {
     const title = prompt('Enter board title:');
     if (title) {
       this.boardsService.createBoard(title).subscribe((board) => {
-        this.boards.push(board.title);
+        this.boards.push(board);
       });
     }
   }

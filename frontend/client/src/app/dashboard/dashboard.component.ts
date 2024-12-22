@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { CardComponent } from '../atoms/card/card.component';
 
 import { CommonModule } from '@angular/common';
@@ -16,6 +22,8 @@ import { TasksService } from '../services/tasks.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DialogComponent, DialogData } from '../dialog/dialog.component';
+import Board from '../interfaces/boards';
+import { BoardsService } from '../services/boards.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,10 +39,15 @@ import { DialogComponent, DialogData } from '../dialog/dialog.component';
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  constructor(private dialog: MatDialog, private tasksService: TasksService) {}
+  constructor(
+    private dialog: MatDialog,
+    private tasksService: TasksService,
+    private boardsService: BoardsService
+  ) {}
 
+  @Input() currentUpdatedBoard: any;
   hoverStates: boolean[] = [];
-  currentBoard = { title: '0' };
+  currentBoard: Board = { id: '0', title: '0', tasks: [] };
   task = {};
 
   todo: Task[] = [];
@@ -45,7 +58,18 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     this.hoverStates = new Array(this.todo.length).fill(false);
-    this.getTasks();
+
+    this.tasksService
+      .getTasksByBoard(this.boardsService.getCurrentBoard().id)
+      .subscribe((task: any) => {
+        if (task.status === 0) {
+          this.todo.push(task);
+        } else if (task.status === 1) {
+          this.inprogress.push(task);
+        } else {
+          this.done.push(task);
+        }
+      });
   }
 
   async getTasks() {
@@ -95,13 +119,12 @@ export class DashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: { name: '', task: '' } as DialogData,
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const response = this.tasksService.addTask({
           title: result,
-          status: 1,
-          board: this.currentBoard.title,
+          status: 0,
+          board: this.currentBoard.id,
         });
         console.log(response);
       }

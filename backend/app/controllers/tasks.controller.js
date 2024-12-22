@@ -11,6 +11,7 @@ exports.create = (req, res) => {
   const newTask = new Task({
     title: req.body.title,
     status: req.body.status,
+    board: req.body.board,
   });
 
   newTask
@@ -29,6 +30,19 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   Task.find()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving tasks.',
+      });
+    });
+};
+
+exports.findAllByBoard = (req, res) => {
+  const boardId = req.params.id;
+  Task.find({ board: boardId })
     .then((data) => {
       res.send(data);
     })

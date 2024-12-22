@@ -41,10 +41,9 @@ export class DialogComponent {
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   readonly task: WritableSignal<Task> = signal({
     title: '',
-    status: 1,
-    board: '0',
+    status: 0,
+    board: '',
   });
-  readonly board: WritableSignal<Board> = signal({ title: '0' });
   readonly name = 'Add Task';
   readonly dialog = inject(MatDialog);
 
@@ -61,8 +60,8 @@ export class DialogComponent {
     this.tasksService
       .addTask({
         title: this.name,
-        status: 1,
-        board: this.boardsService.getCurrentBoard().title,
+        status: 0,
+        board: this.boardsService.getCurrentBoard().id,
       })
       .subscribe({
         next: (response) => console.log('Task created:', response),

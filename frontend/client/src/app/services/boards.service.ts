@@ -9,7 +9,8 @@ import Board from '../interfaces/boards';
 })
 export class BoardsService {
   private baseUrl = `${environment.apiUrl}api/boards`;
-  private currentBoard = { title: '0' };
+  private currentBoard: Board = { id: '', title: '0', tasks: [] };
+  private currentTasks: any = [];
 
   constructor(private http: HttpClient) {}
 
@@ -31,5 +32,15 @@ export class BoardsService {
 
   deleteBoard(id: string): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/${id}`);
+  }
+
+  setUpdatedTasks(tasks: any) {
+    this.currentBoard.tasks = [];
+    this.currentBoard.tasks = tasks;
+    this.currentTasks = tasks;
+  }
+
+  getUpdatedTasks() {
+    return this.currentTasks;
   }
 }

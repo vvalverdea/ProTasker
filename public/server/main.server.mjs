@@ -68388,7 +68388,7 @@ var TasksService = class _TasksService {
     return this.http.post(this.apiUrl, { board: boardId, title, status });
   }
   getTasksByBoard(boardId) {
-    return this.http.get(`${this.apiUrl}?board=${boardId}`);
+    return this.http.get(`${this.apiUrl}/${boardId}/boards`);
   }
   getTasks() {
     return __async(this, null, function* () {
@@ -68436,7 +68436,8 @@ var TasksService = class _TasksService {
 var BoardsService = class _BoardsService {
   http;
   baseUrl = `${environment.apiUrl}api/boards`;
-  currentBoard = { title: "0" };
+  currentBoard = { id: "", title: "0", tasks: [] };
+  currentTasks = [];
   constructor(http) {
     this.http = http;
   }
@@ -68455,6 +68456,14 @@ var BoardsService = class _BoardsService {
   deleteBoard(id) {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+  setUpdatedTasks(tasks) {
+    this.currentBoard.tasks = [];
+    this.currentBoard.tasks = tasks;
+    this.currentTasks = tasks;
+  }
+  getUpdatedTasks() {
+    return this.currentTasks;
+  }
   static \u0275fac = function BoardsService_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _BoardsService)(\u0275\u0275inject(HttpClient));
   };
@@ -68469,10 +68478,9 @@ var DialogComponent = class _DialogComponent {
   data = inject(MAT_DIALOG_DATA);
   task = signal({
     title: "",
-    status: 1,
-    board: "0"
+    status: 0,
+    board: ""
   });
-  board = signal({ title: "0" });
   name = "Add Task";
   dialog = inject(MatDialog);
   constructor(tasksService, boardsService) {
@@ -68485,8 +68493,8 @@ var DialogComponent = class _DialogComponent {
   submitTask() {
     this.tasksService.addTask({
       title: this.name,
-      status: 1,
-      board: this.boardsService.getCurrentBoard().title
+      status: 0,
+      board: this.boardsService.getCurrentBoard().id
     }).subscribe({
       next: (response) => console.log("Task created:", response),
       error: (err) => console.error("Task creation failed:", err)
@@ -68614,12 +68622,15 @@ function DashboardComponent_For_21_Template(rf, ctx) {
 var DashboardComponent = class _DashboardComponent {
   dialog;
   tasksService;
-  constructor(dialog, tasksService) {
+  boardsService;
+  constructor(dialog, tasksService, boardsService) {
     this.dialog = dialog;
     this.tasksService = tasksService;
+    this.boardsService = boardsService;
   }
+  currentUpdatedBoard;
   hoverStates = [];
-  currentBoard = { title: "0" };
+  currentBoard = { id: "0", title: "0", tasks: [] };
   task = {};
   todo = [];
   inprogress = [];
@@ -68628,7 +68639,15 @@ var DashboardComponent = class _DashboardComponent {
   ngOnInit() {
     return __async(this, null, function* () {
       this.hoverStates = new Array(this.todo.length).fill(false);
-      this.getTasks();
+      this.tasksService.getTasksByBoard(this.boardsService.getCurrentBoard().id).subscribe((task) => {
+        if (task.status === 0) {
+          this.todo.push(task);
+        } else if (task.status === 1) {
+          this.inprogress.push(task);
+        } else {
+          this.done.push(task);
+        }
+      });
     });
   }
   getTasks() {
@@ -68670,8 +68689,8 @@ var DashboardComponent = class _DashboardComponent {
         if (result2) {
           const response = this.tasksService.addTask({
             title: result2,
-            status: 1,
-            board: this.currentBoard.title
+            status: 0,
+            board: this.currentBoard.id
           });
           console.log(response);
         }
@@ -68692,9 +68711,9 @@ var DashboardComponent = class _DashboardComponent {
     this.getTasks();
   }
   static \u0275fac = function DashboardComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _DashboardComponent)(\u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(TasksService));
+    return new (__ngFactoryType__ || _DashboardComponent)(\u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(TasksService), \u0275\u0275directiveInject(BoardsService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DashboardComponent, selectors: [["app-dashboard"]], decls: 22, vars: 3, consts: [["cdkDropListGroup", ""], [1, "button-53", 3, "click"], [1, "icon-pencil"], [1, "example-container"], [2, "text-decoration", "underline", "font-family", "serif"], ["cdkDropList", "", 1, "example-list", 3, "cdkDropListDropped", "cdkDropListData"], ["cdkDrag", "", 1, "example-box", "todo"], [1, "trash", 3, "click"], ["cdkDrag", "", 1, "example-box", "inprogress"], ["cdkDrag", "", 1, "example-box", "done"]], template: function DashboardComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DashboardComponent, selectors: [["app-dashboard"]], inputs: { currentUpdatedBoard: "currentUpdatedBoard" }, decls: 22, vars: 3, consts: [["cdkDropListGroup", ""], [1, "button-53", 3, "click"], [1, "icon-pencil"], [1, "example-container"], [2, "text-decoration", "underline", "font-family", "serif"], ["cdkDropList", "", 1, "example-list", 3, "cdkDropListDropped", "cdkDropListData"], ["cdkDrag", "", 1, "example-box", "todo"], [1, "trash", 3, "click"], ["cdkDrag", "", 1, "example-box", "inprogress"], ["cdkDrag", "", 1, "example-box", "done"]], template: function DashboardComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "app-card", 0)(1, "button", 1);
       \u0275\u0275listener("click", function DashboardComponent_Template_button_click_1_listener() {
@@ -68735,15 +68754,15 @@ var DashboardComponent = class _DashboardComponent {
       \u0275\u0275advance(7);
       \u0275\u0275property("cdkDropListData", ctx.todo);
       \u0275\u0275advance();
-      \u0275\u0275repeater(ctx.todo);
+      \u0275\u0275repeater(ctx.currentUpdatedBoard.todo);
       \u0275\u0275advance(5);
       \u0275\u0275property("cdkDropListData", ctx.inprogress);
       \u0275\u0275advance();
-      \u0275\u0275repeater(ctx.inprogress);
+      \u0275\u0275repeater(ctx.currentUpdatedBoard.inprogress);
       \u0275\u0275advance(5);
       \u0275\u0275property("cdkDropListData", ctx.done);
       \u0275\u0275advance();
-      \u0275\u0275repeater(ctx.done);
+      \u0275\u0275repeater(ctx.currentUpdatedBoard.done);
     }
   }, dependencies: [
     CardComponent,
@@ -68758,7 +68777,7 @@ var DashboardComponent = class _DashboardComponent {
   ], styles: ['\n\n.grid-header[_ngcontent-%COMP%] {\n  background-color: #fff;\n  color: #e9b44c;\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n  max-height: 100%;\n  margin: 0 auto;\n  text-align: center;\n  font-size: xx-large;\n  font-family:\n    "Gill Sans",\n    "Gill Sans MT",\n    Calibri,\n    "Trebuchet MS",\n    sans-serif;\n  padding: 2%;\n}\n.example-container[_ngcontent-%COMP%] {\n  width: 20%;\n  margin: 2%;\n  margin-left: 10%;\n  display: inline-block;\n  vertical-align: top;\n  flex-grow: 2;\n}\n.example-list[_ngcontent-%COMP%] {\n  min-height: 60px;\n  background: white;\n  margin-left: -45%;\n  display: block;\n  padding: 5px;\n}\n.example-box[_ngcontent-%COMP%] {\n  padding: 20px 10px;\n  color: rgba(0, 0, 0, 0.87);\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  box-sizing: border-box;\n  cursor: default;\n  background: white;\n  font-size: 14px;\n  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  box-shadow: 2px 9px 12px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]   *[_ngcontent-%COMP%] {\n  padding: 5px;\n}\n.cdk-drag-preview[_ngcontent-%COMP%] {\n  box-sizing: border-box;\n  box-shadow:\n    0 5px 5px -3px rgba(0, 0, 0, 0.2),\n    0 8px 10px 1px rgba(0, 0, 0, 0.14),\n    0 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n.cdk-drag-placeholder[_ngcontent-%COMP%] {\n  opacity: 0;\n}\n.cdk-drag-animating[_ngcontent-%COMP%] {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.example-box[_ngcontent-%COMP%]:last-child {\n  border: none;\n}\n.example-list.cdk-drop-list-dragging[_ngcontent-%COMP%]   .example-box[_ngcontent-%COMP%]:not(.cdk-drag-placeholder) {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.styled_button[_ngcontent-%COMP%] {\n  color: #fff;\n  padding: 10px 15px;\n  background-color: #38d2d2;\n  background-image:\n    radial-gradient(\n      93% 87% at 87% 89%,\n      rgba(0, 0, 0, 0.23) 0%,\n      transparent 86.18%),\n    radial-gradient(\n      66% 66% at 26% 20%,\n      rgba(255, 255, 255, 0.55) 0%,\n      rgba(255, 255, 255, 0) 69.79%,\n      rgba(255, 255, 255, 0) 100%);\n  box-shadow:\n    inset -3px -3px 9px rgba(255, 255, 255, 0.25),\n    inset 0px 3px 9px rgba(255, 255, 255, 0.3),\n    inset 0px 1px 1px rgba(255, 255, 255, 0.6),\n    inset 0px -8px 36px rgba(0, 0, 0, 0.3),\n    inset 0px 1px 5px rgba(255, 255, 255, 0.6),\n    2px 19px 31px rgba(0, 0, 0, 0.2);\n  border-radius: 14px;\n  font-weight: bold;\n  font-size: 16px;\n  height: 2%;\n  border: 0;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  cursor: default;\n}\n.button-53[_ngcontent-%COMP%] {\n  background-color: #88efff;\n  border: 0 solid #e5e7eb;\n  box-sizing: border-box;\n  color: #000000;\n  display: flex;\n  font-family: ui-sans-serif, system-ui;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  font-weight: 700;\n  justify-content: center;\n  line-height: 1.75rem;\n  padding: 0.75rem 1.65rem;\n  width: 100%;\n  max-width: 60px;\n  font-size: 16px;\n  height: 2%;\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: default;\n  transform: rotate(-2deg);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  content: icon;\n}\n.button-53[_ngcontent-%COMP%]:focus {\n  outline: 0;\n}\n.button-53[_ngcontent-%COMP%]:after {\n  content: "";\n  position: absolute;\n  border: 1px solid #000000;\n  bottom: 4px;\n  left: 4px;\n  width: calc(100% - 1px);\n  height: calc(100% - 1px);\n}\n.button-53[_ngcontent-%COMP%]:hover:after {\n  bottom: 2px;\n  left: 2px;\n}\n@media (min-width: 768px) {\n  .button-53[_ngcontent-%COMP%] {\n    padding: 0.75rem 3rem;\n    font-size: 1.25rem;\n  }\n}\n.styled_button[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  transform: scale(1.15);\n}\n.trash[_ngcontent-%COMP%] {\n  color: grey;\n  font-family: "Material Icons";\n}\n.trash[_ngcontent-%COMP%]:hover {\n  color: red;\n  transition: color 0.3s ease-out;\n}\n.title1[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title2[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title3[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.todo[_ngcontent-%COMP%] {\n  background-color: #dbf8f8;\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.inprogress[_ngcontent-%COMP%] {\n  background-color: rgb(252, 222, 157);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.done[_ngcontent-%COMP%] {\n  background-color: rgb(212, 250, 156);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.icon-pencil[_ngcontent-%COMP%] {\n  z-index: 3;\n  position: absolute;\n  margin-bottom: 10px;\n}\n/*# sourceMappingURL=dashboard.component.css.map */'] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DashboardComponent, { className: "DashboardComponent", filePath: "src/app/dashboard/dashboard.component.ts", lineNumber: 33 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DashboardComponent, { className: "DashboardComponent", filePath: "src/app/dashboard/dashboard.component.ts", lineNumber: 41 });
 })();
 
 // src/app/boards/boards.component.ts
@@ -68774,14 +68793,15 @@ function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
 function BoardsComponent_mat_tab_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-tab");
-    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 1, 1, "ng-template", 4);
+    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 1, 1, "ng-template", 5);
     \u0275\u0275elementEnd();
   }
 }
 var BoardsComponent = class _BoardsComponent {
   boardsService;
   tasksService;
-  boards = [{ title: "main_board" }];
+  boards = [];
+  currentUpdatedBoard = [];
   selectedBoardIndex = 0;
   tasks = {
     todo: [],
@@ -68793,36 +68813,45 @@ var BoardsComponent = class _BoardsComponent {
     this.tasksService = tasksService;
   }
   ngOnInit() {
+    this.boardsService.getBoards().subscribe((boards) => {
+      this.boardsService.setCurrentBoard(boards[0]);
+    });
     this.loadBoards();
   }
   loadBoards() {
-    this.boardsService.getBoards().subscribe((boards) => {
-      this.boards = boards;
-      if (this.boards.length > 0) {
-        this.loadTasks(this.boards[0].id);
-      }
+    return __async(this, null, function* () {
+      this.boardsService.getBoards().subscribe((boards) => {
+        this.boards = boards;
+        if (this.boards.length > 0) {
+          this.currentUpdatedBoard = this.boards[0].tasks;
+          this.loadTasks(this.boards[0].id);
+        }
+      });
     });
   }
   onBoardChange(index) {
     this.selectedBoardIndex = index;
-    const boardId = this.boards[index].id;
     this.boardsService.setCurrentBoard(this.boards[index]);
-    this.loadTasks(boardId);
+    this.loadTasks(this.boardsService.getCurrentBoard().id);
   }
   loadTasks(boardId) {
-    this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
-      this.tasks = {
-        todo: tasks.filter((task) => task.status === 0),
-        inprogress: tasks.filter((task) => task.status === 1),
-        done: tasks.filter((task) => task.status === 2)
-      };
+    return __async(this, null, function* () {
+      yield this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
+        this.tasks = {
+          todo: tasks.filter((task) => task.status === 0),
+          inprogress: tasks.filter((task) => task.status === 1),
+          done: tasks.filter((task) => task.status === 2)
+        };
+      });
+      this.boardsService.setUpdatedTasks(this.tasks);
+      this.currentUpdatedBoard = this.boardsService.getUpdatedTasks();
     });
   }
   addBoard() {
     const title = prompt("Enter board title:");
     if (title) {
       this.boardsService.createBoard(title).subscribe((board) => {
-        this.boards.push(board.title);
+        this.boards.push(board);
       });
     }
   }
@@ -68841,7 +68870,7 @@ var BoardsComponent = class _BoardsComponent {
   static \u0275fac = function BoardsComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _BoardsComponent)(\u0275\u0275directiveInject(BoardsService), \u0275\u0275directiveInject(TasksService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 2, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "click"], ["mat-tab-label", ""]], template: function BoardsComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 3, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "currentUpdatedBoard"], [3, "click"], ["mat-tab-label", ""]], template: function BoardsComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "mat-tab-group", 1);
       \u0275\u0275twoWayListener("selectedIndexChange", function BoardsComponent_Template_mat_tab_group_selectedIndexChange_1_listener($event) {
@@ -68853,8 +68882,8 @@ var BoardsComponent = class _BoardsComponent {
       });
       \u0275\u0275template(2, BoardsComponent_mat_tab_2_Template, 2, 0, "mat-tab", 2);
       \u0275\u0275elementEnd();
-      \u0275\u0275element(3, "app-dashboard");
-      \u0275\u0275elementStart(4, "button", 3);
+      \u0275\u0275element(3, "app-dashboard", 3);
+      \u0275\u0275elementStart(4, "button", 4);
       \u0275\u0275listener("click", function BoardsComponent_Template_button_click_4_listener() {
         return ctx.addBoard();
       });
@@ -68866,6 +68895,8 @@ var BoardsComponent = class _BoardsComponent {
       \u0275\u0275twoWayProperty("selectedIndex", ctx.selectedBoardIndex);
       \u0275\u0275advance();
       \u0275\u0275property("ngForOf", ctx.boards);
+      \u0275\u0275advance();
+      \u0275\u0275property("currentUpdatedBoard", ctx.currentUpdatedBoard);
     }
   }, dependencies: [
     CommonModule,

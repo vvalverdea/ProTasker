@@ -11,7 +11,7 @@
       class="example-list"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (item of todo; track item) {
+      @for (item of currentUpdatedBoard.todo; track item) {
       <div class="example-box todo" cdkDrag>
         {{ item.title }}
         <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
@@ -30,7 +30,7 @@
       class="example-list"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (item of inprogress; track item) {
+      @for (item of currentUpdatedBoard.inprogress; track item) {
       <div class="example-box inprogress" cdkDrag>
         {{ item.title }}
         <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>
@@ -49,7 +49,7 @@
       class="example-list"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (item of done; track item) {
+      @for (item of currentUpdatedBoard.done; track item) {
       <div class="example-box done" cdkDrag>
         {{ item.title }}
         <mat-icon class="trash" (click)="deleteTask(item)">delete</mat-icon>

@@ -22,7 +22,7 @@ export class TasksService {
   }
 
   getTasksByBoard(boardId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}?board=${boardId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/${boardId}/boards`);
   }
 
   async getTasks(): Promise<Task[]> {

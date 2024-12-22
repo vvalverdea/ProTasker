@@ -3,21 +3,21 @@ const db = require('../models');
 const Boards = db.boards;
 
 exports.createBoard = async (req, res) => {
-  const { title } = req.body;
+  const { id, title, tasks } = req.body;
 
   const newBoard = new Boards({
+    id: id,
     title: title,
+    tasks: tasks,
   });
 
   if (!title) {
     return res.status(400).send({ message: 'Title is required' });
   }
-  console.log('guay');
   try {
     const savedBoard = await newBoard.save(newBoard);
     res.status(201).send(savedBoard);
   } catch (error) {
-    console.log('dime el error', error);
     res.status(500).send({ message: error.message });
   }
 };
