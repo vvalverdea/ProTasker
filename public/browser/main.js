@@ -40621,20 +40621,33 @@ var DashboardComponent = class _DashboardComponent {
 // src/app/boards/boards.component.ts
 function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275text(0);
-    \u0275\u0275elementStart(1, "mat-icon", 6);
-    \u0275\u0275text(2, "close");
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
     \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "button", 6);
+    \u0275\u0275listener("click", function BoardsComponent_mat_tab_2_ng_template_1_Template_button_click_2_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      const board_r3 = ctx_r1.$implicit;
+      const i_r4 = ctx_r1.index;
+      const ctx_r4 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r4.deleteBoard(board_r3.id, i_r4));
+    });
+    \u0275\u0275elementStart(3, "mat-icon");
+    \u0275\u0275text(4, "close");
+    \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const board_r1 = \u0275\u0275nextContext().$implicit;
-    \u0275\u0275textInterpolate1(" ", board_r1.title, " ");
+    const board_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(board_r3.title);
   }
 }
 function BoardsComponent_mat_tab_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-tab");
-    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 3, 1, "ng-template", 5);
+    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 5, 1, "ng-template", 5);
     \u0275\u0275elementEnd();
   }
 }
@@ -40708,6 +40721,20 @@ var BoardsComponent = class _BoardsComponent {
   }
   deleteTask(taskId) {
   }
+  deleteBoard(boardId, index) {
+    if (confirm("Are you sure you want to delete this board?")) {
+      this.boardsService.deleteBoard(boardId).subscribe(() => {
+        this.boards.splice(index, 1);
+        if (this.selectedBoardIndex === index && this.boards.length > 0) {
+          this.selectedBoardIndex = 0;
+          this.onBoardChange(0);
+        } else if (this.boards.length === 0) {
+          this.clearTasks();
+          this.currentUpdatedBoard = [];
+        }
+      });
+    }
+  }
   drop(event, boardId) {
   }
   clearTasks() {
@@ -40720,7 +40747,7 @@ var BoardsComponent = class _BoardsComponent {
   static \u0275fac = function BoardsComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _BoardsComponent)(\u0275\u0275directiveInject(BoardsService), \u0275\u0275directiveInject(TasksService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 3, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "currentUpdatedBoard"], [3, "click"], ["mat-tab-label", ""], [1, "close"]], template: function BoardsComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 3, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "currentUpdatedBoard"], [3, "click"], ["mat-tab-label", ""], [1, "close-btn", 3, "click"]], template: function BoardsComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "mat-tab-group", 1);
       \u0275\u0275twoWayListener("selectedIndexChange", function BoardsComponent_Template_mat_tab_group_selectedIndexChange_1_listener($event) {

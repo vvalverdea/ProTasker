@@ -1,6 +1,7 @@
 const db = require('../models');
 
 const Boards = db.boards;
+const Tasks = db.tasks;
 
 exports.createBoard = async (req, res) => {
   const { id, title, tasks } = req.body;
@@ -35,17 +36,29 @@ exports.deleteBoard = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const board = await Boards.findByIdAndDelete(id);
+    const session = await Boards.startSession();
 
-    if (!board) {
-      return res.status(404).send({ message: 'Board not found' });
-    }
+    await session.withTransaction(async () => {
+      const board = await Boards.findById(id);
 
-    // Opcional: Eliminar también las tareas asociadas al tablero
-    await Tasks.deleteMany({ board: board._id });
+      if (!board) {
+        return res.status(404).send({ message: 'Board not found' });
+      }
 
-    res.status(200).send({ message: 'Board deleted successfully' });
+      await Tasks.deleteMany({ board: board._id });
+
+      await Boards.findByIdAndDelete(id);
+    });
+
+    session.endSession();
+    res
+      .status(200)
+      .send({ message: 'Board and associated tasks deleted successfully' });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    console.error('Error deleting board:', error);
+    res.status(500).send({
+      message: 'Error deleting board and tasks',
+      error: error.message,
+    });
   }
 };

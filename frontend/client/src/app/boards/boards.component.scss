@@ -1,0 +1,17 @@
+.tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding-left: 40px;
+}
+
+.close-btn:hover {
+  color: red;
+}

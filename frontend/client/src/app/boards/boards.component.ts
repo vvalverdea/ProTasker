@@ -100,6 +100,23 @@ export class BoardsComponent implements OnInit {
     });*/
   }
 
+  deleteBoard(boardId: string, index: number) {
+    if (confirm('Are you sure you want to delete this board?')) {
+      this.boardsService.deleteBoard(boardId).subscribe(() => {
+        this.boards.splice(index, 1); // Elimina el tablero del array local
+
+        // Ajusta el índice seleccionado si el tablero eliminado era el actual
+        if (this.selectedBoardIndex === index && this.boards.length > 0) {
+          this.selectedBoardIndex = 0;
+          this.onBoardChange(0); // Cambia al primer tablero
+        } else if (this.boards.length === 0) {
+          this.clearTasks(); // Si no quedan tableros, limpia las tareas
+          this.currentUpdatedBoard = [];
+        }
+      });
+    }
+  }
+
   drop(event: any, boardId: string) {
     // Lógica para actualizar el estado de la tarea al arrastrarla
   }

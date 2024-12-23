@@ -5,8 +5,10 @@
   >
     <mat-tab *ngFor="let board of boards; index as i">
       <ng-template mat-tab-label>
-        {{ board.title }}
-        <mat-icon class="close">close</mat-icon>
+        <span>{{ board.title }}</span>
+        <button class="close-btn" (click)="deleteBoard(board.id, i)">
+          <mat-icon>close</mat-icon>
+        </button>
       </ng-template>
     </mat-tab>
   </mat-tab-group>
