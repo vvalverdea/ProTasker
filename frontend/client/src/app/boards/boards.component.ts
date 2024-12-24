@@ -7,6 +7,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { mockTasksByBoard } from '../mocks/task';
+import { Board } from '../interfaces/boards';
+import { TaskState } from '../interfaces/tasks';
 
 @Component({
   selector: 'app-boards',
@@ -22,56 +25,69 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   ],
 })
 export class BoardsComponent implements OnInit {
-  boards: any[] = [];
-  currentUpdatedBoard = [];
-  selectedBoardIndex: number = 0;
-  tasks: { todo: any[]; inprogress: any[]; done: any[] } = {
+  boards: Board[] = [];
+  currentUpdatedBoard: TaskState = {
     todo: [],
     inprogress: [],
     done: [],
   };
+  selectedBoardIndex: number = 0;
+  tasks: TaskState = {
+    todo: [],
+    inprogress: [],
+    done: [],
+  };
+  isLoading: boolean = false;
+  error: string | null = null;
 
   constructor(
     private boardsService: BoardsService,
     private tasksService: TasksService
   ) {}
 
-  ngOnInit() {
-    this.boardsService.getBoards().subscribe((boards) => {
-      this.boardsService.setCurrentBoard(boards[0]);
-    });
-
+  ngOnInit(): void {
     this.loadBoards();
   }
 
-  async loadBoards() {
-    this.boardsService.getBoards().subscribe((boards) => {
-      this.boards = boards;
-      if (this.boards.length > 0) {
-        this.loadTasks(this.boards[0].id);
-      }
+  private loadBoards(): void {
+    this.isLoading = true;
+    this.boardsService.getBoards().subscribe({
+      next: (boards) => {
+        this.boards = boards;
+        this.boardsService.setCurrentBoard(boards[0]);
+      },
+      error: (error) => {
+        this.error = 'Error loading boards';
+        console.error('Error:', error);
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
     });
   }
 
   onBoardChange(index: number) {
     this.selectedBoardIndex = index;
-    this.boardsService.setCurrentBoard(this.boards[index]);
+    const selectedBoard = this.boards[index];
+    this.boardsService.setCurrentBoard(selectedBoard);
 
-    this.loadTasks(this.boardsService.getCurrentBoard().id);
+    this.loadTasks(selectedBoard.id);
   }
 
-  async loadTasks(boardId: string) {
-    this.clearTasks();
-    await this.tasksService.getTasksByBoard(boardId).subscribe((tasks) => {
-      console.log(1, boardId, tasks);
-      this.tasks = {
-        todo: tasks.filter((task) => task.status === 0),
-        inprogress: tasks.filter((task) => task.status === 1),
-        done: tasks.filter((task) => task.status === 2),
-      };
-      this.boardsService.setUpdatedTasks(this.tasks);
-      this.currentUpdatedBoard = this.boardsService.getUpdatedTasks();
-      console.log(2, this.currentUpdatedBoard);
+  async loadTasks(boardId: string): Promise<void> {
+    this.tasksService.getTasksByBoard(boardId).subscribe({
+      next: (tasks) => {
+        this.tasks = {
+          todo: tasks.filter((task) => task.status === 0),
+          inprogress: tasks.filter((task) => task.status === 1),
+          done: tasks.filter((task) => task.status === 2),
+        };
+        this.currentUpdatedBoard = this.tasks;
+      },
+      error: (error) => {
+        this.error = 'Error loading tasks';
+        console.error('Error:', error);
+      },
     });
   }
 
@@ -93,32 +109,41 @@ export class BoardsComponent implements OnInit {
     }
   }
 
-  deleteTask(taskId: string) {
-    /*this.tasksService.deleteTask(taskId).subscribe(() => {
-      const boardId = this.boards[this.selectedBoardIndex].id;
-      this.loadTasks(boardId);
-    });*/
+  deleteBoard(boardId: string, index: number): void {
+    if (!confirm('Are you sure you want to delete this board?')) return;
+
+    this.isLoading = true;
+    this.boardsService.deleteBoard(boardId).subscribe({
+      next: () => {
+        this.handleBoardDeletion(index);
+      },
+      error: (error) => {
+        this.error = 'Error deleting board';
+        console.error('Error:', error);
+      },
+      complete: () => {
+        this.clearTasks();
+        this.loadBoards();
+
+        this.isLoading = false;
+      },
+    });
   }
 
-  deleteBoard(boardId: string, index: number) {
-    if (confirm('Are you sure you want to delete this board?')) {
-      this.boardsService.deleteBoard(boardId).subscribe(() => {
-        this.boards.splice(index, 1); // Elimina el tablero del array local
+  private handleBoardDeletion(index: number): void {
+    this.boards = this.boards.filter((_, i) => i !== index);
 
-        // Ajusta el índice seleccionado si el tablero eliminado era el actual
-        if (this.selectedBoardIndex === index && this.boards.length > 0) {
-          this.selectedBoardIndex = 0;
-          this.onBoardChange(0); // Cambia al primer tablero
-        } else if (this.boards.length === 0) {
-          this.clearTasks(); // Si no quedan tableros, limpia las tareas
-          this.currentUpdatedBoard = [];
-        }
-      });
+    if (this.boards.length === 0) {
+      this.clearTasks();
+      return;
     }
-  }
 
-  drop(event: any, boardId: string) {
-    // Lógica para actualizar el estado de la tarea al arrastrarla
+    if (this.selectedBoardIndex === index) {
+      this.selectedBoardIndex = 0;
+      this.onBoardChange(0);
+    } else if (this.selectedBoardIndex > index) {
+      this.selectedBoardIndex--;
+    }
   }
 
   clearTasks() {

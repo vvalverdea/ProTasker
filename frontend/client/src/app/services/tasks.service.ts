@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
-
-import Task from '../interfaces/tasks';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Task } from '../interfaces/tasks';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+
+enum TaskStatus {
+  TODO = 0,
+  IN_PROGRESS = 1,
+  DONE = 2,
+}
 
 @Injectable({
   providedIn: 'root',
@@ -13,63 +19,89 @@ export class TasksService {
 
   constructor(private http: HttpClient) {}
 
-  addTask(task: Task) {
-    return this.http.post<Task>(this.apiUrl, task);
-  }
-
-  createTask(boardId: string, title: string, status: number): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { board: boardId, title, status });
-  }
-
-  getTasksByBoard(boardId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${boardId}/boards`);
-  }
-
-  async getTasks(): Promise<Task[]> {
-    console.log(this.apiUrl);
-    const tasks: Task[] = [];
-
-    await this.http
-      .get<Task[]>(this.apiUrl)
-      .toPromise()
-      .then((response) => {
-        response?.forEach((res) => {
-          tasks.push({
-            id: res.id,
-            title: res.title,
-            status: res.status,
-            board: res.board,
-          });
-        });
+  createTask(
+    boardId: string,
+    title: string,
+    status: TaskStatus
+  ): Observable<Task> {
+    return this.http
+      .post<Task>(this.apiUrl, {
+        board: boardId,
+        title,
+        status,
       })
-      .catch((error) => {
-        console.error('Error getting tasks', error);
-      });
-
-    return tasks;
+      .pipe(catchError(this.handleError));
   }
 
-  edit(place: string, task: Task) {
-    console.log(place, task);
-    let status = 0;
-    const id: string = task.id ?? 'undefined';
+  addTask(boardId: string, title: string): Observable<Task> {
+    const newTask: Task = {
+      board: boardId,
+      title: title,
+      status: TaskStatus.TODO,
+    };
+    console.log(newTask);
+    return this.http
+      .post<Task>(this.apiUrl, newTask)
+      .pipe(catchError(this.handleError));
+  }
 
-    if (place === 'cdk-drop-list-0') {
-      status = 1;
-    } else if (place === 'cdk-drop-list-1') {
-      status = 2;
-    } else {
-      status = 3;
-    }
+  getTasksByBoard(boardId: string): Observable<Task[]> {
+    return this.http
+      .get<Task[]>(`${this.apiUrl}/${boardId}/boards`)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateTaskStatus(task: Task, newStatus: TaskStatus): Observable<Task> {
+    return this.http
+      .put<Task>(`${this.apiUrl}/${task.id}`, {
+        ...task,
+        status: newStatus,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  edit(status: string, task: Task): Observable<Task> {
+    const statusMap: Record<string, TaskStatus> = {
+      todo: TaskStatus.TODO,
+      inprogress: TaskStatus.IN_PROGRESS,
+      done: TaskStatus.DONE,
+    };
 
     return this.http
-      .put<Task>(`${this.apiUrl}/${id}`, { status: status })
-      .subscribe();
+      .put<Task>(`${this.apiUrl}/${task.id}`, {
+        ...task,
+        status: statusMap[status] ?? TaskStatus.TODO,
+      })
+      .pipe(catchError(this.handleError));
   }
 
-  delete(task: Task) {
-    const id: string = task.id ?? 'undefined';
+  delete(task: Task): Observable<void> {
+    return this.http
+      .delete<void>(`${this.apiUrl}/${task.id}`)
+      .pipe(catchError(this.handleError));
+  }
 
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  private getStatusFromContainer(containerId: string): TaskStatus {
+    switch (containerId) {
+      case 'todo-list':
+        return TaskStatus.TODO;
+      case 'inprogress-list':
+        return TaskStatus.IN_PROGRESS;
+      case 'done-list':
+        return TaskStatus.DONE;
+      default:
+        return TaskStatus.TODO;
+    }
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An error occurred';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 }

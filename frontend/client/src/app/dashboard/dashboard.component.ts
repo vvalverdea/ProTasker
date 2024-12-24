@@ -1,12 +1,18 @@
 import {
   Component,
   Input,
-  OnChanges,
   OnInit,
+  OnDestroy,
+  OnChanges,
   SimpleChanges,
 } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Task, TaskState, TaskStatus } from '../interfaces/tasks';
+import { Board, TasksByBoard } from '../interfaces/boards';
+import { TasksService } from '../services/tasks.service';
+import { BoardsService } from '../services/boards.service';
 import { CardComponent } from '../atoms/card/card.component';
-
 import { CommonModule } from '@angular/common';
 import {
   CdkDragDrop,
@@ -14,16 +20,17 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-
-import { MatDialog } from '@angular/material/dialog';
-import Task from '../interfaces/tasks';
-import { TasksService } from '../services/tasks.service';
-
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DialogComponent, DialogData } from '../dialog/dialog.component';
-import Board from '../interfaces/boards';
-import { BoardsService } from '../services/boards.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { mockTasksByBoard } from '../mocks/task';
+
+interface DashboardState {
+  isLoading: boolean;
+  error: string | null;
+  currentBoard: Board;
+  tasks: TasksByBoard;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -34,62 +41,99 @@ import { BoardsService } from '../services/boards.service';
     DragDropModule,
     MatIconModule,
     MatTabsModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() currentUpdatedBoard: TaskState = mockTasksByBoard;
+
+  state: DashboardState = {
+    isLoading: false,
+    error: null,
+    currentBoard: { id: '', title: '', tasks: [] },
+    tasks: {
+      todo: [],
+      inprogress: [],
+      done: [],
+    },
+  };
+
+  private destroy$ = new Subject<void>();
+
   constructor(
-    private dialog: MatDialog,
-    private tasksService: TasksService,
-    private boardsService: BoardsService
+    private readonly dialog: MatDialog,
+    private readonly tasksService: TasksService,
+    private readonly boardsService: BoardsService
   ) {}
 
-  @Input() currentUpdatedBoard: any;
-  hoverStates: boolean[] = [];
-  currentBoard: Board = { id: '0', title: '0', tasks: [] };
-  task = {};
-
-  todo: Task[] = [];
-  inprogress: Task[] = [];
-  done: Task[] = [];
-
-  isHovered = false;
-
-  async ngOnInit() {
-    this.hoverStates = new Array(this.todo.length).fill(false);
+  ngOnInit(): void {
+    this.loadBoardData();
   }
 
-  fetchBoard() {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['currentUpdatedBoard']) {
+      console.log('change');
+      this.loadBoardData();
+    }
+    this.organizeTasks(this.boardsService.getUpdatedTasks());
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private loadBoardData(): void {
+    this.state.isLoading = true;
+
     this.tasksService
       .getTasksByBoard(this.boardsService.getCurrentBoard().id)
-      .subscribe((task: any) => {
-        if (task.status === 0) {
-          this.todo.push(task);
-        } else if (task.status === 1) {
-          this.inprogress.push(task);
-        } else {
-          this.done.push(task);
-        }
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (tasks) => {
+          this.state.tasks = this.organizeTasks(tasks);
+          this.state.isLoading = false;
+        },
+        error: (error) => {
+          this.state.error = 'Error loading tasks';
+          this.state.isLoading = false;
+          console.error('Error:', error);
+        },
       });
   }
 
-  /*async getTasks() {
-    const tasks = this.tasksService.getTasks();
+  private organizeTasks(tasks: Task[]): TasksByBoard {
+    this.boardsService.setUpdatedTasks(tasks);
+    return {
+      todo: tasks.filter((task) => task.status === TaskStatus.TODO),
+      inprogress: tasks.filter(
+        (task) => task.status === TaskStatus.IN_PROGRESS
+      ),
+      done: tasks.filter((task) => task.status === TaskStatus.DONE),
+    };
+  }
 
-    (await tasks).map((task) => {
-      if (task.status === 1) {
-        this.todo.push(task);
-      } else if (task.status === 2) {
-        this.inprogress.push(task);
-      } else {
-        this.done.push(task);
-      }
-    });
-  }*/
-
-  onHover(state: boolean): void {
-    this.isHovered = state;
+  openAddTaskDialog(): void {
+    const title = prompt('Enter task title:');
+    if (title) {
+      this.state.isLoading = true;
+      this.tasksService
+        .addTask(this.boardsService.getCurrentBoard().id, title)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.loadBoardData();
+            this.state.isLoading = false;
+          },
+          error: (error) => {
+            this.state.error = 'Error creating task';
+            this.state.isLoading = false;
+            console.error('Error:', error);
+          },
+        });
+    }
   }
 
   drop(event: CdkDragDrop<Task[]>) {
@@ -107,44 +151,52 @@ export class DashboardComponent implements OnInit {
         event.currentIndex
       );
 
-      const movedTask = event.container.data[event.currentIndex];
-      const columnPlace = event.container._dropListRef.element as HTMLElement;
-      this.changeTaskStatus(columnPlace.id, movedTask);
+      const task = event.container.data[event.currentIndex];
+      const newStatus = this.getStatusFromContainerId(event.container.id);
+
+      this.tasksService
+        .edit(newStatus, task)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => this.loadBoardData(),
+          error: (error) => {
+            this.state.error = 'Error updating task';
+            console.error('Error:', error);
+          },
+        });
     }
   }
 
-  changeTaskStatus(place: string, task: Task) {
-    this.tasksService.edit(place, task);
-  }
-
-  async openAddTaskDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: { name: '', task: '' } as DialogData,
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const response = this.tasksService.addTask({
-          title: result,
-          status: 0,
-          board: this.currentBoard.id,
+  deleteTask(task: Task): void {
+    if (confirm('Are you sure you want to delete this task?')) {
+      this.tasksService
+        .delete(task)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => this.loadBoardData(),
+          error: (error) => {
+            this.state.error = 'Error deleting task';
+            console.error('Error:', error);
+          },
         });
-        console.log(response);
-      }
-      this.cleanAndRefresh();
-    });
+    }
   }
 
-  deleteTask(task: Task) {
-    this.tasksService.delete(task).subscribe(() => {
-      console.log('Task deleted successfully');
-      this.cleanAndRefresh();
-    });
+  private getStatusFromContainerId(containerId: string): string {
+    if (containerId.includes('todo')) return 'todo';
+    if (containerId.includes('inprogress')) return 'inprogress';
+    return 'done';
   }
 
-  cleanAndRefresh() {
-    this.todo = [];
-    this.inprogress = [];
-    this.done = [];
-    this.fetchBoard();
+  get isLoading(): boolean {
+    return this.state.isLoading;
+  }
+
+  get error(): string | null {
+    return this.state.error;
+  }
+
+  get tasks(): TasksByBoard {
+    return this.state.tasks;
   }
 }

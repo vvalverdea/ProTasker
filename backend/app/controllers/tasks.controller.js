@@ -1,6 +1,7 @@
 const db = require('../models');
 
 const Task = db.tasks;
+const Board = db.boards;
 
 exports.create = (req, res) => {
   if (!req.body.title) {
@@ -18,6 +19,7 @@ exports.create = (req, res) => {
     .save(newTask)
     .then((data) => {
       res.send(data);
+      Board.findByIdAndUpdate(req.body.board, { $push: { tasks: data.id } });
       console.log('newTask saved!');
     })
     .catch((err) => {
