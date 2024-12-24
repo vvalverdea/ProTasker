@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component, ElementRef } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,10 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(private elementRef: ElementRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    private sharedService: SharedService
+  ) {}
 
   toggleBackground() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
@@ -19,5 +23,9 @@ export class AppComponent {
       'white'
         ? 'grey'
         : 'white';
+
+    this.sharedService.setTheme(
+      this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor
+    );
   }
 }

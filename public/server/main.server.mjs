@@ -52,6 +52,7 @@ import {
   LOCATION_INITIALIZED,
   Location,
   LocationStrategy,
+  NgClass,
   NgForOf,
   NgModule,
   NgModuleFactory$1,
@@ -258,7 +259,7 @@ import {
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuery
-} from "./chunk-RWOSVDYT.mjs";
+} from "./chunk-B44UHQZP.mjs";
 import {
   __async,
   __asyncGenerator,
@@ -44431,17 +44432,39 @@ var MatIconModule = class _MatIconModule {
   }], null, null);
 })();
 
+// src/app/shared.service.ts
+var SharedService = class _SharedService {
+  themeSubject = new BehaviorSubject("light");
+  theme$ = this.themeSubject.asObservable();
+  constructor() {
+  }
+  setTheme(theme) {
+    this.themeSubject.next(theme);
+    localStorage.setItem("theme", theme);
+  }
+  getTheme() {
+    return localStorage.getItem("theme") || "white";
+  }
+  static \u0275fac = function SharedService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SharedService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _SharedService, factory: _SharedService.\u0275fac, providedIn: "root" });
+};
+
 // src/app/app.component.ts
 var AppComponent = class _AppComponent {
   elementRef;
-  constructor(elementRef) {
+  sharedService;
+  constructor(elementRef, sharedService) {
     this.elementRef = elementRef;
+    this.sharedService = sharedService;
   }
   toggleBackground() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor === "white" ? "grey" : "white";
+    this.sharedService.setTheme(this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor);
   }
   static \u0275fac = function AppComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AppComponent)(\u0275\u0275directiveInject(ElementRef));
+    return new (__ngFactoryType__ || _AppComponent)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(SharedService));
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], decls: 3, vars: 0, consts: [[1, "light", 3, "click"]], template: function AppComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -44456,7 +44479,7 @@ var AppComponent = class _AppComponent {
   }, dependencies: [RouterOutlet, MatIcon, HttpClientModule], styles: ['@charset "UTF-8";\n\n\n\n.light[_ngcontent-%COMP%] {\n  margin: 0 auto;\n  margin-top: 0;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.light[_ngcontent-%COMP%]:hover {\n  animation: _ngcontent-%COMP%_sway 0.7s ease infinite;\n}\n@keyframes _ngcontent-%COMP%_sway {\n  0% {\n    transform: rotate(-10deg);\n  }\n  50% {\n    transform: rotate(10deg);\n  }\n  100% {\n    transform: rotate(-10deg);\n  }\n}\n/*# sourceMappingURL=app.component.css.map */'] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 13 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 14 });
 })();
 
 // src/app/atoms/card/card.component.ts
@@ -58599,140 +58622,67 @@ var BoardsService = class _BoardsService {
 
 // src/app/dashboard/dashboard.component.ts
 var _forTrack0 = ($index, $item) => $item.id;
-function DashboardComponent_Conditional_4_Template(rf, ctx) {
+function DashboardComponent_For_9_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "mat-spinner");
-  }
-}
-function DashboardComponent_Conditional_5_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 3);
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 6);
     \u0275\u0275text(1);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate(ctx_r0.error);
-  }
-}
-function DashboardComponent_Conditional_6_For_5_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 7)(1, "span", 12);
-    \u0275\u0275text(2);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 13);
-    \u0275\u0275listener("click", function DashboardComponent_Conditional_6_For_5_Template_button_click_3_listener() {
-      const task_r4 = \u0275\u0275restoreView(_r3).$implicit;
-      const ctx_r0 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r0.deleteTask(task_r4));
+    \u0275\u0275elementStart(2, "mat-icon", 7);
+    \u0275\u0275listener("click", function DashboardComponent_For_9_Template_mat_icon_click_2_listener() {
+      const task_r2 = \u0275\u0275restoreView(_r1).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.deleteTask(task_r2));
     });
-    \u0275\u0275elementStart(4, "mat-icon");
-    \u0275\u0275text(5, "delete");
-    \u0275\u0275elementEnd()()();
-  }
-  if (rf & 2) {
-    const task_r4 = ctx.$implicit;
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(task_r4.title);
-  }
-}
-function DashboardComponent_Conditional_6_For_11_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 9)(1, "span", 12);
-    \u0275\u0275text(2);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 13);
-    \u0275\u0275listener("click", function DashboardComponent_Conditional_6_For_11_Template_button_click_3_listener() {
-      const task_r6 = \u0275\u0275restoreView(_r5).$implicit;
-      const ctx_r0 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r0.deleteTask(task_r6));
-    });
-    \u0275\u0275elementStart(4, "mat-icon");
-    \u0275\u0275text(5, "delete");
-    \u0275\u0275elementEnd()()();
-  }
-  if (rf & 2) {
-    const task_r6 = ctx.$implicit;
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(task_r6.title);
-  }
-}
-function DashboardComponent_Conditional_6_For_17_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r7 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 11)(1, "span", 12);
-    \u0275\u0275text(2);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 13);
-    \u0275\u0275listener("click", function DashboardComponent_Conditional_6_For_17_Template_button_click_3_listener() {
-      const task_r8 = \u0275\u0275restoreView(_r7).$implicit;
-      const ctx_r0 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r0.deleteTask(task_r8));
-    });
-    \u0275\u0275elementStart(4, "mat-icon");
-    \u0275\u0275text(5, "delete");
-    \u0275\u0275elementEnd()()();
-  }
-  if (rf & 2) {
-    const task_r8 = ctx.$implicit;
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(task_r8.title);
-  }
-}
-function DashboardComponent_Conditional_6_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r2 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 4)(1, "h2", 5);
-    \u0275\u0275text(2, "To do");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 6);
-    \u0275\u0275listener("cdkDropListDropped", function DashboardComponent_Conditional_6_Template_div_cdkDropListDropped_3_listener($event) {
-      \u0275\u0275restoreView(_r2);
-      const ctx_r0 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r0.drop($event));
-    });
-    \u0275\u0275repeaterCreate(4, DashboardComponent_Conditional_6_For_5_Template, 6, 1, "div", 7, _forTrack0);
+    \u0275\u0275text(3, "delete");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "div", 4)(7, "h2", 5);
-    \u0275\u0275text(8, "In Progress");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "div", 8);
-    \u0275\u0275listener("cdkDropListDropped", function DashboardComponent_Conditional_6_Template_div_cdkDropListDropped_9_listener($event) {
-      \u0275\u0275restoreView(_r2);
-      const ctx_r0 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r0.drop($event));
-    });
-    \u0275\u0275repeaterCreate(10, DashboardComponent_Conditional_6_For_11_Template, 6, 1, "div", 9, _forTrack0);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(12, "div", 4)(13, "h2", 5);
-    \u0275\u0275text(14, "Done");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(15, "div", 10);
-    \u0275\u0275listener("cdkDropListDropped", function DashboardComponent_Conditional_6_Template_div_cdkDropListDropped_15_listener($event) {
-      \u0275\u0275restoreView(_r2);
-      const ctx_r0 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r0.drop($event));
-    });
-    \u0275\u0275repeaterCreate(16, DashboardComponent_Conditional_6_For_17_Template, 6, 1, "div", 11, _forTrack0);
-    \u0275\u0275elementEnd()();
+    \u0275\u0275element(4, "br");
   }
   if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275advance(3);
-    \u0275\u0275property("cdkDropListData", ctx_r0.tasks.todo);
+    const task_r2 = ctx.$implicit;
     \u0275\u0275advance();
-    \u0275\u0275repeater(ctx_r0.state.tasks.todo);
-    \u0275\u0275advance(5);
-    \u0275\u0275property("cdkDropListData", ctx_r0.tasks.inprogress);
+    \u0275\u0275textInterpolate1(" ", task_r2.title, " ");
+  }
+}
+function DashboardComponent_For_15_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275text(1);
+    \u0275\u0275elementStart(2, "mat-icon", 7);
+    \u0275\u0275listener("click", function DashboardComponent_For_15_Template_mat_icon_click_2_listener() {
+      const task_r5 = \u0275\u0275restoreView(_r4).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.deleteTask(task_r5));
+    });
+    \u0275\u0275text(3, "delete");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275element(4, "br");
+  }
+  if (rf & 2) {
+    const task_r5 = ctx.$implicit;
     \u0275\u0275advance();
-    \u0275\u0275repeater(ctx_r0.state.tasks.inprogress);
-    \u0275\u0275advance(5);
-    \u0275\u0275property("cdkDropListData", ctx_r0.tasks.done);
+    \u0275\u0275textInterpolate1(" ", task_r5.title, " ");
+  }
+}
+function DashboardComponent_For_21_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 9);
+    \u0275\u0275text(1);
+    \u0275\u0275elementStart(2, "mat-icon", 7);
+    \u0275\u0275listener("click", function DashboardComponent_For_21_Template_mat_icon_click_2_listener() {
+      const task_r7 = \u0275\u0275restoreView(_r6).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.deleteTask(task_r7));
+    });
+    \u0275\u0275text(3, "delete");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275element(4, "br");
+  }
+  if (rf & 2) {
+    const task_r7 = ctx.$implicit;
     \u0275\u0275advance();
-    \u0275\u0275repeater(ctx_r0.state.tasks.done);
+    \u0275\u0275textInterpolate1(" ", task_r7.title, " ");
   }
 }
 var DashboardComponent = class _DashboardComponent {
@@ -58855,7 +58805,7 @@ var DashboardComponent = class _DashboardComponent {
   static \u0275fac = function DashboardComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _DashboardComponent)(\u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(TasksService), \u0275\u0275directiveInject(BoardsService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DashboardComponent, selectors: [["app-dashboard"]], inputs: { currentUpdatedBoard: "currentUpdatedBoard" }, features: [\u0275\u0275NgOnChangesFeature], decls: 7, vars: 3, consts: [["cdkDropListGroup", ""], ["aria-label", "Add new task", 1, "button-53", 3, "click"], [1, "icon-pencil"], [1, "error-message"], [1, "board-column"], [1, "column-title"], ["id", "todo-list", "cdkDropList", "", 1, "task-list", 3, "cdkDropListDropped", "cdkDropListData"], ["cdkDrag", "", 1, "task-item", "todo"], ["id", "inprogress-list", "cdkDropList", "", 1, "task-list", 3, "cdkDropListDropped", "cdkDropListData"], ["cdkDrag", "", 1, "task-item", "inprogress"], ["id", "done-list", "cdkDropList", "", 1, "task-list", 3, "cdkDropListDropped", "cdkDropListData"], ["cdkDrag", "", 1, "task-item", "done"], [1, "task-title"], ["aria-label", "Delete task", 1, "delete-button", 3, "click"]], template: function DashboardComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DashboardComponent, selectors: [["app-dashboard"]], inputs: { currentUpdatedBoard: "currentUpdatedBoard" }, features: [\u0275\u0275NgOnChangesFeature], decls: 22, vars: 3, consts: [["cdkDropListGroup", ""], [1, "button-53", 3, "click"], [1, "icon-pencil"], [1, "example-container"], [2, "text-decoration", "underline", "font-family", "serif"], ["cdkDropList", "", 1, "example-list", 3, "cdkDropListDropped", "cdkDropListData"], ["cdkDrag", "", 1, "example-box", "todo"], [1, "trash", 3, "click"], ["cdkDrag", "", 1, "example-box", "inprogress"], ["cdkDrag", "", 1, "example-box", "done"]], template: function DashboardComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "app-card", 0)(1, "button", 1);
       \u0275\u0275listener("click", function DashboardComponent_Template_button_click_1_listener() {
@@ -58864,16 +58814,47 @@ var DashboardComponent = class _DashboardComponent {
       \u0275\u0275elementStart(2, "mat-icon", 2);
       \u0275\u0275text(3, "edit");
       \u0275\u0275elementEnd()();
-      \u0275\u0275template(4, DashboardComponent_Conditional_4_Template, 1, 0, "mat-spinner")(5, DashboardComponent_Conditional_5_Template, 2, 1, "div", 3)(6, DashboardComponent_Conditional_6_Template, 18, 3);
+      \u0275\u0275elementStart(4, "div", 3)(5, "h2", 4);
+      \u0275\u0275text(6, "To do");
       \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(7, "div", 5);
+      \u0275\u0275listener("cdkDropListDropped", function DashboardComponent_Template_div_cdkDropListDropped_7_listener($event) {
+        return ctx.drop($event);
+      });
+      \u0275\u0275repeaterCreate(8, DashboardComponent_For_9_Template, 5, 1, null, null, \u0275\u0275repeaterTrackByIdentity);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(10, "div", 3)(11, "h2", 4);
+      \u0275\u0275text(12, "In Progress");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(13, "div", 5);
+      \u0275\u0275listener("cdkDropListDropped", function DashboardComponent_Template_div_cdkDropListDropped_13_listener($event) {
+        return ctx.drop($event);
+      });
+      \u0275\u0275repeaterCreate(14, DashboardComponent_For_15_Template, 5, 1, null, null, \u0275\u0275repeaterTrackByIdentity);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(16, "div", 3)(17, "h2", 4);
+      \u0275\u0275text(18, "Done");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(19, "div", 5);
+      \u0275\u0275listener("cdkDropListDropped", function DashboardComponent_Template_div_cdkDropListDropped_19_listener($event) {
+        return ctx.drop($event);
+      });
+      \u0275\u0275repeaterCreate(20, DashboardComponent_For_21_Template, 5, 1, null, null, _forTrack0);
+      \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
-      \u0275\u0275advance(4);
-      \u0275\u0275conditional(ctx.isLoading ? 4 : -1);
+      \u0275\u0275advance(7);
+      \u0275\u0275property("cdkDropListData", ctx.state.tasks.todo);
       \u0275\u0275advance();
-      \u0275\u0275conditional(ctx.error ? 5 : -1);
+      \u0275\u0275repeater(ctx.state.tasks.todo);
+      \u0275\u0275advance(5);
+      \u0275\u0275property("cdkDropListData", ctx.state.tasks.inprogress);
       \u0275\u0275advance();
-      \u0275\u0275conditional(!ctx.isLoading && !ctx.error ? 6 : -1);
+      \u0275\u0275repeater(ctx.state.tasks.inprogress);
+      \u0275\u0275advance(5);
+      \u0275\u0275property("cdkDropListData", ctx.state.tasks.done);
+      \u0275\u0275advance();
+      \u0275\u0275repeater(ctx.state.tasks.done);
     }
   }, dependencies: [
     CardComponent,
@@ -58885,8 +58866,7 @@ var DashboardComponent = class _DashboardComponent {
     MatIconModule,
     MatIcon,
     MatTabsModule,
-    MatProgressSpinnerModule,
-    MatProgressSpinner
+    MatProgressSpinnerModule
   ], styles: ['\n\n.grid-header[_ngcontent-%COMP%] {\n  background-color: #fff;\n  color: #e9b44c;\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n  max-height: 100%;\n  margin: 0 auto;\n  text-align: center;\n  font-size: xx-large;\n  font-family:\n    "Gill Sans",\n    "Gill Sans MT",\n    Calibri,\n    "Trebuchet MS",\n    sans-serif;\n  padding: 2%;\n}\n.example-container[_ngcontent-%COMP%] {\n  width: 20%;\n  margin: 2%;\n  margin-left: 10%;\n  display: inline-block;\n  vertical-align: top;\n  flex-grow: 2;\n}\n.example-list[_ngcontent-%COMP%] {\n  min-height: 60px;\n  background: white;\n  margin-left: -45%;\n  display: block;\n  padding: 5px;\n}\n.example-box[_ngcontent-%COMP%] {\n  padding: 20px 10px;\n  color: rgba(0, 0, 0, 0.87);\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  box-sizing: border-box;\n  cursor: default;\n  background: white;\n  font-size: 14px;\n  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  box-shadow: 2px 9px 12px rgba(0, 0, 0, 0.2);\n}\n.example-box[_ngcontent-%COMP%]   *[_ngcontent-%COMP%] {\n  padding: 5px;\n}\n.cdk-drag-preview[_ngcontent-%COMP%] {\n  box-sizing: border-box;\n  box-shadow:\n    0 5px 5px -3px rgba(0, 0, 0, 0.2),\n    0 8px 10px 1px rgba(0, 0, 0, 0.14),\n    0 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n.cdk-drag-placeholder[_ngcontent-%COMP%] {\n  opacity: 0;\n}\n.cdk-drag-animating[_ngcontent-%COMP%] {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.example-box[_ngcontent-%COMP%]:last-child {\n  border: none;\n}\n.example-list.cdk-drop-list-dragging[_ngcontent-%COMP%]   .example-box[_ngcontent-%COMP%]:not(.cdk-drag-placeholder) {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n.styled_button[_ngcontent-%COMP%] {\n  color: #fff;\n  padding: 10px 15px;\n  background-color: #38d2d2;\n  background-image:\n    radial-gradient(\n      93% 87% at 87% 89%,\n      rgba(0, 0, 0, 0.23) 0%,\n      transparent 86.18%),\n    radial-gradient(\n      66% 66% at 26% 20%,\n      rgba(255, 255, 255, 0.55) 0%,\n      rgba(255, 255, 255, 0) 69.79%,\n      rgba(255, 255, 255, 0) 100%);\n  box-shadow:\n    inset -3px -3px 9px rgba(255, 255, 255, 0.25),\n    inset 0px 3px 9px rgba(255, 255, 255, 0.3),\n    inset 0px 1px 1px rgba(255, 255, 255, 0.6),\n    inset 0px -8px 36px rgba(0, 0, 0, 0.3),\n    inset 0px 1px 5px rgba(255, 255, 255, 0.6),\n    2px 19px 31px rgba(0, 0, 0, 0.2);\n  border-radius: 14px;\n  font-weight: bold;\n  font-size: 16px;\n  height: 2%;\n  border: 0;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  cursor: default;\n}\n.button-53[_ngcontent-%COMP%] {\n  background-color: #88efff;\n  border: 0 solid #e5e7eb;\n  box-sizing: border-box;\n  color: #000000;\n  display: flex;\n  font-family: ui-sans-serif, system-ui;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  font-weight: 700;\n  justify-content: center;\n  line-height: 1.75rem;\n  padding: 0.75rem 1.65rem;\n  width: 100%;\n  max-width: 60px;\n  font-size: 16px;\n  height: 2%;\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: default;\n  transform: rotate(-2deg);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  content: icon;\n}\n.button-53[_ngcontent-%COMP%]:focus {\n  outline: 0;\n}\n.button-53[_ngcontent-%COMP%]:after {\n  content: "";\n  position: absolute;\n  border: 1px solid #000000;\n  bottom: 4px;\n  left: 4px;\n  width: calc(100% - 1px);\n  height: calc(100% - 1px);\n}\n.button-53[_ngcontent-%COMP%]:hover:after {\n  bottom: 2px;\n  left: 2px;\n}\n@media (min-width: 768px) {\n  .button-53[_ngcontent-%COMP%] {\n    padding: 0.75rem 3rem;\n    font-size: 1.25rem;\n  }\n}\n.styled_button[_ngcontent-%COMP%]:hover {\n  transition: opacity 1.3s ease, transform 1.3s ease;\n  transform: scale(1.15);\n}\n.trash[_ngcontent-%COMP%] {\n  color: grey;\n  font-family: "Material Icons";\n}\n.trash[_ngcontent-%COMP%]:hover {\n  color: red;\n  transition: color 0.3s ease-out;\n}\n.title1[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title2[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.title3[_ngcontent-%COMP%] {\n  text-decoration: underline;\n}\n.todo[_ngcontent-%COMP%] {\n  background-color: #dbf8f8;\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.inprogress[_ngcontent-%COMP%] {\n  background-color: rgb(252, 222, 157);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.done[_ngcontent-%COMP%] {\n  background-color: rgb(212, 250, 156);\n  font-style: italic;\n  font-family: cursive;\n  font-size: large;\n}\n.icon-pencil[_ngcontent-%COMP%] {\n  z-index: 3;\n  position: absolute;\n  margin-bottom: 10px;\n}\n/*# sourceMappingURL=dashboard.component.css.map */'] });
 };
 (() => {
@@ -58894,14 +58874,15 @@ var DashboardComponent = class _DashboardComponent {
 })();
 
 // src/app/boards/boards.component.ts
+var _c07 = (a0, a1) => ({ "dark-title": a0, "light-title": a1 });
 function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275elementStart(0, "span", 5);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "button", 6);
-    \u0275\u0275listener("click", function BoardsComponent_mat_tab_2_ng_template_1_Template_button_click_2_listener() {
+    \u0275\u0275elementStart(2, "div", 6);
+    \u0275\u0275listener("click", function BoardsComponent_mat_tab_2_ng_template_1_Template_div_click_2_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       const board_r3 = ctx_r1.$implicit;
@@ -58915,6 +58896,8 @@ function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
   }
   if (rf & 2) {
     const board_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r4 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(2, _c07, ctx_r4.currentTheme === "grey", ctx_r4.currentTheme === "white"));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate(board_r3.title);
   }
@@ -58922,14 +58905,17 @@ function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
 function BoardsComponent_mat_tab_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-tab");
-    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 5, 1, "ng-template", 5);
+    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 5, 5, "ng-template", 4);
     \u0275\u0275elementEnd();
   }
 }
 var BoardsComponent = class _BoardsComponent {
   boardsService;
   tasksService;
+  sharedService;
   boards = [];
+  currentTheme = "white";
+  destroy$ = new Subject();
   currentUpdatedBoard = {
     todo: [],
     inprogress: [],
@@ -58943,12 +58929,21 @@ var BoardsComponent = class _BoardsComponent {
   };
   isLoading = false;
   error = null;
-  constructor(boardsService, tasksService) {
+  constructor(boardsService, tasksService, sharedService) {
     this.boardsService = boardsService;
     this.tasksService = tasksService;
+    this.sharedService = sharedService;
   }
   ngOnInit() {
+    this.currentTheme = this.sharedService.getTheme();
+    this.sharedService.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
+      this.currentTheme = theme;
+    });
     this.loadBoards();
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   loadBoards() {
     this.isLoading = true;
@@ -59046,11 +59041,11 @@ var BoardsComponent = class _BoardsComponent {
     };
   }
   static \u0275fac = function BoardsComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _BoardsComponent)(\u0275\u0275directiveInject(BoardsService), \u0275\u0275directiveInject(TasksService));
+    return new (__ngFactoryType__ || _BoardsComponent)(\u0275\u0275directiveInject(BoardsService), \u0275\u0275directiveInject(TasksService), \u0275\u0275directiveInject(SharedService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 6, vars: 3, consts: [[1, "tab-container"], [3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "currentUpdatedBoard"], [3, "click"], ["mat-tab-label", ""], [1, "close-btn", 3, "click"]], template: function BoardsComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardsComponent, selectors: [["app-boards"]], decls: 8, vars: 3, consts: [[3, "selectedIndexChange", "selectedIndex"], [4, "ngFor", "ngForOf"], [3, "currentUpdatedBoard"], [3, "click"], ["mat-tab-label", ""], [3, "ngClass"], [1, "delete-button", 3, "click"]], template: function BoardsComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "mat-tab-group", 1);
+      \u0275\u0275elementStart(0, "div")(1, "mat-tab-group", 0);
       \u0275\u0275twoWayListener("selectedIndexChange", function BoardsComponent_Template_mat_tab_group_selectedIndexChange_1_listener($event) {
         \u0275\u0275twoWayBindingSet(ctx.selectedBoardIndex, $event) || (ctx.selectedBoardIndex = $event);
         return $event;
@@ -59058,14 +59053,17 @@ var BoardsComponent = class _BoardsComponent {
       \u0275\u0275listener("selectedIndexChange", function BoardsComponent_Template_mat_tab_group_selectedIndexChange_1_listener($event) {
         return ctx.onBoardChange($event);
       });
-      \u0275\u0275template(2, BoardsComponent_mat_tab_2_Template, 2, 0, "mat-tab", 2);
+      \u0275\u0275template(2, BoardsComponent_mat_tab_2_Template, 2, 0, "mat-tab", 1);
       \u0275\u0275elementEnd();
-      \u0275\u0275element(3, "app-dashboard", 3);
-      \u0275\u0275elementStart(4, "button", 4);
+      \u0275\u0275element(3, "app-dashboard", 2);
+      \u0275\u0275elementStart(4, "button", 3);
       \u0275\u0275listener("click", function BoardsComponent_Template_button_click_4_listener() {
         return ctx.addBoard();
       });
-      \u0275\u0275text(5, "+ Add Board");
+      \u0275\u0275elementStart(5, "mat-icon");
+      \u0275\u0275text(6, "add");
+      \u0275\u0275elementEnd();
+      \u0275\u0275text(7, " Add Board");
       \u0275\u0275elementEnd()();
     }
     if (rf & 2) {
@@ -59078,6 +59076,7 @@ var BoardsComponent = class _BoardsComponent {
     }
   }, dependencies: [
     CommonModule,
+    NgClass,
     NgForOf,
     DragDropModule,
     MatIconModule,
@@ -59087,10 +59086,10 @@ var BoardsComponent = class _BoardsComponent {
     MatTab,
     MatTabGroup,
     DashboardComponent
-  ], encapsulation: 2 });
+  ], styles: ["\n\ndiv[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  padding: 1rem;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%] {\n  background-color: #f5f5f5;\n  border-radius: 8px;\n  box-shadow: #333;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%] {\n  display: flex;\n  cursor: default;\n  padding: 0.25rem 1rem;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span[_ngcontent-%COMP%]:first-child {\n  flex: 1;\n  text-align: left;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.dark-title[_ngcontent-%COMP%] {\n  color: #333;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.light-title[_ngcontent-%COMP%] {\n  color: #fff;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%] {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  color: #ff0000;\n  transition: color 0.2s ease-in-out;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]:hover {\n  color: #d32f2f;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   .delete-button[_ngcontent-%COMP%] {\n  padding: 10px;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%] {\n  background-color: #eeeeee;\n  border-bottom: 2px solid #ccc;\n  min-height: 32px;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label[_ngcontent-%COMP%] {\n  font-size: 12px;\n  padding: 0.25rem 1rem;\n  text-transform: none;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label-active[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: #3f51b5;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  align-self: flex-end;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n  padding: 0.5rem 1rem;\n  background-color: #3f51b5;\n  color: white;\n  border: none;\n  border-radius: 4px;\n  cursor: default;\n  transition: background-color 0.3s;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover {\n  background-color: #303f9f;\n}\n/*# sourceMappingURL=boards.component.css.map */"] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardsComponent, { className: "BoardsComponent", filePath: "src/app/boards/boards.component.ts", lineNumber: 27 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardsComponent, { className: "BoardsComponent", filePath: "src/app/boards/boards.component.ts", lineNumber: 37 });
 })();
 
 // src/app/app.routes.ts
@@ -59131,7 +59130,7 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./chunk-NFA7ZMDS.mjs").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import("./chunk-RODUB6LE.mjs").then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);

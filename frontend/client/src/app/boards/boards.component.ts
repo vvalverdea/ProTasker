@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewEncapsulation,
+} from '@angular/core';
 import { BoardsService } from '../services/boards.service';
 import { TasksService } from '../services/tasks.service';
 import { CardComponent } from '../atoms/card/card.component';
@@ -10,11 +17,14 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { mockTasksByBoard } from '../mocks/task';
 import { Board } from '../interfaces/boards';
 import { TaskState } from '../interfaces/tasks';
+import { MatDialogTitle } from '@angular/material/dialog';
+import { SharedService } from '../shared.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-boards',
   templateUrl: './boards.component.html',
-  styleUrls: ['./boards.component.css'],
+  styleUrls: ['./boards.component.scss'],
   imports: [
     CardComponent,
     CommonModule,
@@ -24,8 +34,10 @@ import { TaskState } from '../interfaces/tasks';
     DashboardComponent,
   ],
 })
-export class BoardsComponent implements OnInit {
+export class BoardsComponent implements OnInit, OnDestroy {
   boards: Board[] = [];
+  currentTheme: string = 'white';
+  private destroy$ = new Subject<void>();
   currentUpdatedBoard: TaskState = {
     todo: [],
     inprogress: [],
@@ -42,11 +54,23 @@ export class BoardsComponent implements OnInit {
 
   constructor(
     private boardsService: BoardsService,
-    private tasksService: TasksService
+    private tasksService: TasksService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
+    this.currentTheme = this.sharedService.getTheme();
+    this.sharedService.theme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((theme) => {
+        this.currentTheme = theme;
+      });
     this.loadBoards();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private loadBoards(): void {

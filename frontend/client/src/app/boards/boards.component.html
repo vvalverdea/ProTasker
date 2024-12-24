@@ -1,18 +1,25 @@
-<div class="tab-container">
+<div>
   <mat-tab-group
     [(selectedIndex)]="selectedBoardIndex"
     (selectedIndexChange)="onBoardChange($event)"
   >
     <mat-tab *ngFor="let board of boards; index as i">
       <ng-template mat-tab-label>
-        <span>{{ board.title }}</span>
-        <button class="close-btn" (click)="deleteBoard(board.id, i)">
+        <span
+          [ngClass]="{
+            'dark-title': currentTheme === 'grey',
+            'light-title': currentTheme === 'white'
+          }"
+          >{{ board.title }}</span
+        >
+
+        <div class="delete-button" (click)="deleteBoard(board.id, i)">
           <mat-icon>close</mat-icon>
-        </button>
+        </div>
       </ng-template>
     </mat-tab>
   </mat-tab-group>
   <app-dashboard [currentUpdatedBoard]="currentUpdatedBoard"></app-dashboard>
   <!-- Botón para crear nuevo tablero -->
-  <button (click)="addBoard()">+ Add Board</button>
+  <button (click)="addBoard()"><mat-icon>add</mat-icon> Add Board</button>
 </div>

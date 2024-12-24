@@ -1,98 +1,61 @@
 <app-card cdkDropListGroup>
-  <!-- Add Task Button -->
-  <button
-    class="button-53"
-    (click)="openAddTaskDialog()"
-    aria-label="Add new task"
-  >
+  <button class="button-53" (click)="openAddTaskDialog()">
     <mat-icon class="icon-pencil">edit</mat-icon>
   </button>
+  <div class="example-container">
+    <h2 style="text-decoration: underline; font-family: serif">To do</h2>
 
-  <!-- Loading State -->
-  @if (isLoading) {
-  <mat-spinner></mat-spinner>
-  }
-
-  <!-- Error State -->
-  @if (error) {
-  <div class="error-message">{{ error }}</div>
-  }
-
-  <!-- Board Content -->
-  @if (!isLoading && !error) {
-  <!-- Todo Column -->
-  <div class="board-column">
-    <h2 class="column-title">To do</h2>
     <div
-      id="todo-list"
       cdkDropList
-      [cdkDropListData]="tasks.todo"
-      class="task-list"
+      [cdkDropListData]="state.tasks.todo"
+      class="example-list"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (task of state.tasks.todo; track task.id) {
-      <div class="task-item todo" cdkDrag>
-        <span class="task-title">{{ task.title }}</span>
-        <button
-          class="delete-button"
-          (click)="deleteTask(task)"
-          aria-label="Delete task"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
+      @for (task of state.tasks.todo; track task) {
+      <div class="example-box todo" cdkDrag>
+        {{ task.title }}
+        <mat-icon class="trash" (click)="deleteTask(task)">delete</mat-icon>
       </div>
+      <br />
       }
     </div>
   </div>
 
-  <!-- In Progress Column -->
-  <div class="board-column">
-    <h2 class="column-title">In Progress</h2>
+  <div class="example-container">
+    <h2 style="text-decoration: underline; font-family: serif">In Progress</h2>
+
     <div
-      id="inprogress-list"
       cdkDropList
-      [cdkDropListData]="tasks.inprogress"
-      class="task-list"
+      [cdkDropListData]="state.tasks.inprogress"
+      class="example-list"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (task of state.tasks.inprogress; track task.id) {
-      <div class="task-item inprogress" cdkDrag>
-        <span class="task-title">{{ task.title }}</span>
-        <button
-          class="delete-button"
-          (click)="deleteTask(task)"
-          aria-label="Delete task"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
+      @for (task of state.tasks.inprogress; track task) {
+      <div class="example-box inprogress" cdkDrag>
+        {{ task.title }}
+        <mat-icon class="trash" (click)="deleteTask(task)">delete</mat-icon>
       </div>
+      <br />
       }
     </div>
   </div>
 
-  <!-- Done Column -->
-  <div class="board-column">
-    <h2 class="column-title">Done</h2>
+  <div class="example-container">
+    <h2 style="text-decoration: underline; font-family: serif">Done</h2>
+
     <div
-      id="done-list"
       cdkDropList
-      [cdkDropListData]="tasks.done"
-      class="task-list"
+      [cdkDropListData]="state.tasks.done"
+      class="example-list"
       (cdkDropListDropped)="drop($event)"
     >
       @for (task of state.tasks.done; track task.id) {
-      <div class="task-item done" cdkDrag>
-        <span class="task-title">{{ task.title }}</span>
-        <button
-          class="delete-button"
-          (click)="deleteTask(task)"
-          aria-label="Delete task"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
+      <div class="example-box done" cdkDrag>
+        {{ task.title }}
+        <mat-icon class="trash" (click)="deleteTask(task)">delete</mat-icon>
       </div>
+      <br />
       }
     </div>
   </div>
-  }
 </app-card>
