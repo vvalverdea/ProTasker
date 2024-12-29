@@ -66,7 +66,7 @@ export class TasksService {
       inprogress: TaskStatus.IN_PROGRESS,
       done: TaskStatus.DONE,
     };
-
+    console.log('STATUS:', statusMap[status]);
     return this.http
       .put<Task>(`${this.apiUrl}/${task.id}`, {
         ...task,

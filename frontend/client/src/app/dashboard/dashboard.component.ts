@@ -153,6 +153,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
       const task = event.container.data[event.currentIndex];
       const newStatus = this.getStatusFromContainerId(event.container.id);
+      console.log(newStatus, task);
 
       this.tasksService
         .edit(newStatus, task)
@@ -183,8 +184,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private getStatusFromContainerId(containerId: string): string {
-    if (containerId.includes('todo')) return 'todo';
-    if (containerId.includes('inprogress')) return 'inprogress';
+    if (containerId.includes('0')) return 'todo';
+    if (containerId.includes('1')) return 'inprogress';
     return 'done';
   }
 
