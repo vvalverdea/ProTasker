@@ -26,13 +26,4 @@ describe('DashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should onHover', () => {
-    const state = true;
-    let isHovered = false;
-
-    component.onHover(state);
-    isHovered = state;
-    expect(isHovered).toBe(true);
-  });
 });
