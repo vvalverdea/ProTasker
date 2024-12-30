@@ -2,13 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.js",
+      "src": "server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "backend/server.js" },
-    { "src": "/(.*)", "dest": "/public/$1" }
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "PORT": "@port"
+  }
 }
