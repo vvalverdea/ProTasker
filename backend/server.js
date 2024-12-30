@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const app = express();
 const path = require('path');
-
+const open = require('open');
 const isVercel = process.env.VERCEL ? true : false;
 
 const corsOptions = {
@@ -58,4 +58,8 @@ require('./app/routes/boards.routes')(app);
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
+});
+
+open(`http://localhost:${PORT}`).catch((err) => {
+  console.log('Error opening browser:', err);
 });
