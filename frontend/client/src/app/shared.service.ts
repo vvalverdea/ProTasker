@@ -8,8 +8,6 @@ export class SharedService {
   private themeSubject = new BehaviorSubject<string>('light');
   theme$ = this.themeSubject.asObservable();
 
-  constructor() {}
-
   setTheme(theme: string) {
     this.themeSubject.next(theme);
     localStorage.setItem('theme', theme);

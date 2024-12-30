@@ -1,8 +1,7 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogActions,
   MatDialogClose,
@@ -13,8 +12,6 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TasksService } from '../services/tasks.service';
-import { Task } from '../interfaces/tasks';
-import { Board } from '../interfaces/boards';
 import { BoardsService } from '../services/boards.service';
 
 export interface DialogData {

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Board } from '../interfaces/boards';
+import { Task } from '../interfaces/tasks';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,12 @@ import { Board } from '../interfaces/boards';
 export class BoardsService {
   private baseUrl = `${environment.apiUrl}api/boards`;
   private currentBoard: Board = { id: '', title: '0', tasks: [] };
-  private currentTasks: any = [];
+  private currentTasks: Task[] = [];
 
   constructor(private http: HttpClient) {}
 
-  getBoards(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl);
+  getBoards(): Observable<Board[]> {
+    return this.http.get<Board[]>(this.baseUrl);
   }
 
   setCurrentBoard(currentBoard: Board) {
@@ -26,15 +27,15 @@ export class BoardsService {
     return this.currentBoard;
   }
 
-  createBoard(title: string): Observable<any> {
-    return this.http.post<any>(this.baseUrl, { title });
+  createBoard(title: string): Observable<Board> {
+    return this.http.post<Board>(this.baseUrl, { title });
   }
 
-  deleteBoard(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/${id}`);
+  deleteBoard(id: string): Observable<string> {
+    return this.http.delete<string>(`${this.baseUrl}/${id}`);
   }
 
-  setUpdatedTasks(tasks: any) {
+  setUpdatedTasks(tasks: Task[]) {
     this.currentBoard.tasks = [];
     this.currentBoard.tasks = tasks;
     this.currentTasks = tasks;

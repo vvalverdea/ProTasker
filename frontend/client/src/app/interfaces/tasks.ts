@@ -1,5 +1,3 @@
-import { Board } from './boards';
-
 export interface Task {
   id?: string;
   title: string;

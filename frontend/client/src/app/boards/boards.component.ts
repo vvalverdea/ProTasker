@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardsService } from '../services/boards.service';
 import { TasksService } from '../services/tasks.service';
 import { CardComponent } from '../atoms/card/card.component';
@@ -14,10 +7,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { mockTasksByBoard } from '../mocks/task';
 import { Board } from '../interfaces/boards';
 import { TaskState } from '../interfaces/tasks';
-import { MatDialogTitle } from '@angular/material/dialog';
 import { SharedService } from '../shared.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -36,20 +27,20 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class BoardsComponent implements OnInit, OnDestroy {
   boards: Board[] = [];
-  currentTheme: string = 'white';
+  currentTheme = 'white';
   private destroy$ = new Subject<void>();
   currentUpdatedBoard: TaskState = {
     todo: [],
     inprogress: [],
     done: [],
   };
-  selectedBoardIndex: number = 0;
+  selectedBoardIndex = 0;
   tasks: TaskState = {
     todo: [],
     inprogress: [],
     done: [],
   };
-  isLoading: boolean = false;
+  isLoading = false;
   error: string | null = null;
 
   constructor(
