@@ -1,2 +1,13 @@
+# Node modules
 node_modules
-.vercel
+backend/node_modules
+frontend/client/node_modules
+
+# Environment variables
+frontend/client/.env
+backend/.env
+
+# Build files
+public
+
+vercel.json
