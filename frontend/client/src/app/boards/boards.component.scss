@@ -10,6 +10,7 @@ div {
     border-radius: 8px; // Bordes redondeados
     box-shadow: #333;
     cursor: default;
+    align-items: start;
     mat-tab-label {
       display: flex;
       cursor: default;
@@ -31,7 +32,7 @@ div {
       div {
         margin-left: auto; // Lleva el botón al extremo derecho
         display: flex;
-        align-items: center;
+        align-items: start;
         cursor: default;
 
         mat-icon {
@@ -47,17 +48,24 @@ div {
     }
 
     .delete-button {
-      padding: 10px;
+      margin-left: 18px;
+    }
+
+    .delete-button:hover {
+      color: #d26f6f;
+      cursor: default;
+      // Cambiar color al pasar el cursor
     }
 
     mat-tab-header {
       background-color: #eeeeee; // Fondo del header de pestañas
       border-bottom: 2px solid #ccc;
       min-height: 32px; // Reducimos la altura del header
-
+      cursor: default;
       .mat-tab-label {
         font-size: 12px; // Texto más pequeño
         padding: 0.25rem 1rem; // Tamaño reducido del tab
+        margin-left: 1rem;
         text-transform: none;
       }
 
@@ -69,7 +77,7 @@ div {
   }
 
   button {
-    align-self: flex-end;
+    align-self: flex-start;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -80,6 +88,7 @@ div {
     border-radius: 4px;
     cursor: default;
     transition: background-color 0.3s;
+    margin-top: -100px;
 
     mat-icon {
       font-size: 20px;

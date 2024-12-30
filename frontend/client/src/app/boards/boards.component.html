@@ -12,10 +12,9 @@
           }"
           >{{ board.title }}</span
         >
-
-        <div class="delete-button" (click)="deleteBoard(board.id, i)">
-          <mat-icon>close</mat-icon>
-        </div>
+        <mat-icon class="delete-button" (click)="deleteBoard(board.id, i)"
+          >close</mat-icon
+        >
       </ng-template>
     </mat-tab>
   </mat-tab-group>

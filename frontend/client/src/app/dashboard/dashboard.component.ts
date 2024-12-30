@@ -74,7 +74,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['currentUpdatedBoard']) {
-      console.log('change');
       this.loadBoardData();
     }
     this.organizeTasks(this.boardsService.getUpdatedTasks());

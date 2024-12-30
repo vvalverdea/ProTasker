@@ -46,6 +46,7 @@ div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743] {
   border-radius: 8px;
   box-shadow: #333;
   cursor: default;
+  align-items: start;
 }
 div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-tab-label[_ngcontent-ng-c1853174743] {
   display: flex;
@@ -65,7 +66,7 @@ div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-
 div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-tab-label[_ngcontent-ng-c1853174743]   div[_ngcontent-ng-c1853174743] {
   margin-left: auto;
   display: flex;
-  align-items: center;
+  align-items: start;
   cursor: default;
 }
 div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-tab-label[_ngcontent-ng-c1853174743]   div[_ngcontent-ng-c1853174743]   mat-icon[_ngcontent-ng-c1853174743] {
@@ -77,16 +78,22 @@ div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-
   color: #d32f2f;
 }
 div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   .delete-button[_ngcontent-ng-c1853174743] {
-  padding: 10px;
+  margin-left: 18px;
+}
+div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   .delete-button[_ngcontent-ng-c1853174743]:hover {
+  color: #d26f6f;
+  cursor: default;
 }
 div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-tab-header[_ngcontent-ng-c1853174743] {
   background-color: #eeeeee;
   border-bottom: 2px solid #ccc;
   min-height: 32px;
+  cursor: default;
 }
 div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-tab-header[_ngcontent-ng-c1853174743]   .mat-tab-label[_ngcontent-ng-c1853174743] {
   font-size: 12px;
   padding: 0.25rem 1rem;
+  margin-left: 1rem;
   text-transform: none;
 }
 div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-tab-header[_ngcontent-ng-c1853174743]   .mat-tab-label-active[_ngcontent-ng-c1853174743] {
@@ -94,7 +101,7 @@ div[_ngcontent-ng-c1853174743]   mat-tab-group[_ngcontent-ng-c1853174743]   mat-
   color: #3f51b5;
 }
 div[_ngcontent-ng-c1853174743]   button[_ngcontent-ng-c1853174743] {
-  align-self: flex-end;
+  align-self: flex-start;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -105,6 +112,7 @@ div[_ngcontent-ng-c1853174743]   button[_ngcontent-ng-c1853174743] {
   border-radius: 4px;
   cursor: default;
   transition: background-color 0.3s;
+  margin-top: -100px;
 }
 div[_ngcontent-ng-c1853174743]   button[_ngcontent-ng-c1853174743]   mat-icon[_ngcontent-ng-c1853174743] {
   font-size: 20px;

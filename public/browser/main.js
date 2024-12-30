@@ -30344,7 +30344,6 @@ var TasksService = class _TasksService {
       title,
       status: TaskStatus2.TODO
     };
-    console.log(newTask);
     return this.http.post(this.apiUrl, newTask).pipe(catchError(this.handleError));
   }
   getTasksByBoard(boardId) {
@@ -30361,7 +30360,6 @@ var TasksService = class _TasksService {
       inprogress: TaskStatus2.IN_PROGRESS,
       done: TaskStatus2.DONE
     };
-    console.log("STATUS:", statusMap[status]);
     return this.http.put(`${this.apiUrl}/${task.id}`, __spreadProps(__spreadValues({}, task), {
       status: statusMap[status] ?? TaskStatus2.TODO
     })).pipe(catchError(this.handleError));
@@ -30527,7 +30525,6 @@ var DashboardComponent = class _DashboardComponent {
   }
   ngOnChanges(changes) {
     if (changes["currentUpdatedBoard"]) {
-      console.log("change");
       this.loadBoardData();
     }
     this.organizeTasks(this.boardsService.getUpdatedTasks());
@@ -30717,8 +30714,8 @@ function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
     \u0275\u0275elementStart(0, "span", 5);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "div", 6);
-    \u0275\u0275listener("click", function BoardsComponent_mat_tab_2_ng_template_1_Template_div_click_2_listener() {
+    \u0275\u0275elementStart(2, "mat-icon", 6);
+    \u0275\u0275listener("click", function BoardsComponent_mat_tab_2_ng_template_1_Template_mat_icon_click_2_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       const board_r3 = ctx_r1.$implicit;
@@ -30726,9 +30723,8 @@ function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
       const ctx_r4 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r4.deleteBoard(board_r3.id, i_r4));
     });
-    \u0275\u0275elementStart(3, "mat-icon");
-    \u0275\u0275text(4, "close");
-    \u0275\u0275elementEnd()();
+    \u0275\u0275text(3, "close");
+    \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     const board_r3 = \u0275\u0275nextContext().$implicit;
@@ -30741,7 +30737,7 @@ function BoardsComponent_mat_tab_2_ng_template_1_Template(rf, ctx) {
 function BoardsComponent_mat_tab_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-tab");
-    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 5, 5, "ng-template", 4);
+    \u0275\u0275template(1, BoardsComponent_mat_tab_2_ng_template_1_Template, 4, 5, "ng-template", 4);
     \u0275\u0275elementEnd();
   }
 }
@@ -30922,7 +30918,7 @@ var BoardsComponent = class _BoardsComponent {
     MatTab,
     MatTabGroup,
     DashboardComponent
-  ], styles: ["\n\ndiv[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  padding: 1rem;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%] {\n  background-color: #f5f5f5;\n  border-radius: 8px;\n  box-shadow: #333;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%] {\n  display: flex;\n  cursor: default;\n  padding: 0.25rem 1rem;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span[_ngcontent-%COMP%]:first-child {\n  flex: 1;\n  text-align: left;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.dark-title[_ngcontent-%COMP%] {\n  color: #333;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.light-title[_ngcontent-%COMP%] {\n  color: #fff;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%] {\n  margin-left: auto;\n  display: flex;\n  align-items: center;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  color: #ff0000;\n  transition: color 0.2s ease-in-out;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]:hover {\n  color: #d32f2f;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   .delete-button[_ngcontent-%COMP%] {\n  padding: 10px;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%] {\n  background-color: #eeeeee;\n  border-bottom: 2px solid #ccc;\n  min-height: 32px;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label[_ngcontent-%COMP%] {\n  font-size: 12px;\n  padding: 0.25rem 1rem;\n  text-transform: none;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label-active[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: #3f51b5;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  align-self: flex-end;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n  padding: 0.5rem 1rem;\n  background-color: #3f51b5;\n  color: white;\n  border: none;\n  border-radius: 4px;\n  cursor: default;\n  transition: background-color 0.3s;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover {\n  background-color: #303f9f;\n}\n/*# sourceMappingURL=boards.component.css.map */"] });
+  ], styles: ["\n\ndiv[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  padding: 1rem;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%] {\n  background-color: #f5f5f5;\n  border-radius: 8px;\n  box-shadow: #333;\n  cursor: default;\n  align-items: start;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%] {\n  display: flex;\n  cursor: default;\n  padding: 0.25rem 1rem;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span[_ngcontent-%COMP%]:first-child {\n  flex: 1;\n  text-align: left;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.dark-title[_ngcontent-%COMP%] {\n  color: #333;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.light-title[_ngcontent-%COMP%] {\n  color: #fff;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%] {\n  margin-left: auto;\n  display: flex;\n  align-items: start;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  color: #ff0000;\n  transition: color 0.2s ease-in-out;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]:hover {\n  color: #d32f2f;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   .delete-button[_ngcontent-%COMP%] {\n  margin-left: 18px;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   .delete-button[_ngcontent-%COMP%]:hover {\n  color: #d26f6f;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%] {\n  background-color: #eeeeee;\n  border-bottom: 2px solid #ccc;\n  min-height: 32px;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label[_ngcontent-%COMP%] {\n  font-size: 12px;\n  padding: 0.25rem 1rem;\n  margin-left: 1rem;\n  text-transform: none;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label-active[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: #3f51b5;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  align-self: flex-start;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n  padding: 0.5rem 1rem;\n  background-color: #3f51b5;\n  color: white;\n  border: none;\n  border-radius: 4px;\n  cursor: default;\n  transition: background-color 0.3s;\n  margin-top: -100px;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover {\n  background-color: #303f9f;\n}\n/*# sourceMappingURL=boards.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardsComponent, { className: "BoardsComponent", filePath: "src/app/boards/boards.component.ts", lineNumber: 37 });

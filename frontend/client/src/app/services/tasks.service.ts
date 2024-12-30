@@ -39,7 +39,6 @@ export class TasksService {
       title: title,
       status: TaskStatus.TODO,
     };
-    console.log(newTask);
     return this.http
       .post<Task>(this.apiUrl, newTask)
       .pipe(catchError(this.handleError));
@@ -66,7 +65,6 @@ export class TasksService {
       inprogress: TaskStatus.IN_PROGRESS,
       done: TaskStatus.DONE,
     };
-    console.log('STATUS:', statusMap[status]);
     return this.http
       .put<Task>(`${this.apiUrl}/${task.id}`, {
         ...task,
