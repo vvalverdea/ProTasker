@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "ProTasker is a web-based task management application inspired by tools like JIRA and Trello. Its main goal is to streamline project and task organization through an interactive Kanban board. Designed for teams and freelancers, ProTasker offers an intuitive experience to boost productivity and collaboration.",
   "main": "index.js",
-  "bin": "./play.bat",
+  "bin": "./ProTasker.bat",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

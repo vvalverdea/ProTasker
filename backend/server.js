@@ -59,7 +59,3 @@ const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-open(`http://localhost:${PORT}`).catch((err) => {
-  console.log('Error opening browser:', err);
-});

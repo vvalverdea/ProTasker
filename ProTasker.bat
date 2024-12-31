@@ -19,12 +19,12 @@ cd ..\..\backend
 
 rem Start backend server
 echo Starting backend server...
+start http://localhost:8081
 node server.js
-timeout /t 3 /nobreak
 
 IF %ERRORLEVEL% NEQ 0 (
     echo Backend server failed to start!
     exit /b %ERRORLEVEL%
 )
-start http://localhost:8081
+
 pause

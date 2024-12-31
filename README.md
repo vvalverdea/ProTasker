@@ -26,12 +26,10 @@ ProTasker features a REST API built with Node.js to handle backend logic, using 
 Clone the repository:
 git clone https://github.com/vvalverdea/ProTasker.git
 
-Install frontend dependencies:
-cd frontend/client
-npm install
+# Set your DB
 
-Run the development server:
-npm run start/ng serve
+Set the MONGODB_URI variable with the uri from your db in ".env-example" and rename this to ".env"
 
-Access the application:
-Open http://localhost:4200 in your browser.
+# Run
+
+Execute the script ProTasker.bat (Windows) or ProTasker.sh
