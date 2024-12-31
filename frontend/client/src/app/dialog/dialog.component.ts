@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TasksService } from '../services/tasks.service';
 import { BoardsService } from '../services/boards.service';
+import { response } from 'express';
 
 export interface DialogData {
   task: string;
@@ -35,7 +36,7 @@ export interface DialogData {
 })
 export class DialogComponent {
   readonly dialogRef = inject(MatDialogRef<DialogComponent>);
-  readonly name = 'Add Task';
+  readonly name = '';
   readonly dialog = inject(MatDialog);
 
   constructor(

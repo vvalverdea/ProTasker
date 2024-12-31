@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockTasksByBoard } from '../mocks/task';
+import { DialogComponent } from '../dialog/dialog.component';
 
 interface DashboardState {
   isLoading: boolean;
@@ -114,7 +115,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     };
   }
 
-  openAddTaskDialog(): void {
+  /*openAddTaskDialog(): void {
     const title = prompt('Enter task title:');
     if (title) {
       this.state.isLoading = true;
@@ -133,6 +134,34 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           },
         });
     }
+  }*/
+  openAddTaskDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '20%',
+    });
+    dialogRef.beforeClosed().subscribe(() => this.loadBoardData());
+    dialogRef.afterClosed().subscribe((title) => {
+      this.loadBoardData();
+      if (title) {
+        this.state.isLoading = true;
+        this.tasksService
+          .addTask(this.boardsService.getCurrentBoard().id, title)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: () => {
+              this.loadBoardData();
+              this.state.isLoading = false;
+            },
+            error: (error) => {
+              this.state.error = 'Error creating task';
+              this.state.isLoading = false;
+              console.error('Error:', error);
+            },
+          });
+        console.log('tarea creada');
+        this.loadBoardData();
+      }
+    });
   }
 
   drop(event: CdkDragDrop<Task[]>) {
