@@ -40703,7 +40703,7 @@ var DialogComponent = class _DialogComponent {
   ], encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DialogComponent, { className: "DialogComponent", filePath: "src/app/dialog/dialog.component.ts", lineNumber: 37 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DialogComponent, { className: "DialogComponent", filePath: "src/app/dialog/dialog.component.ts", lineNumber: 36 });
 })();
 
 // src/app/dashboard/dashboard.component.ts
