@@ -4,11 +4,10 @@ require('dotenv').config();
 
 const app = express();
 const path = require('path');
-const open = require('open');
 const isVercel = process.env.VERCEL ? true : false;
 
 const corsOptions = {
-  origin: ['https://protasker-server.vercel.app/', 'http://localhost:8081/'],
+  origin: ['http://localhost:8081/'],
   methods: ['POST', 'GET'],
 };
 
@@ -42,6 +41,7 @@ db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    dbName: 'protasker',
   })
   .then(() => {
     console.log('Connected to the database!');
