@@ -51,6 +51,7 @@ export class BoardsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentTheme = this.sharedService.getTheme();
+
     this.sharedService.theme$
       .pipe(takeUntil(this.destroy$))
       .subscribe((theme) => {

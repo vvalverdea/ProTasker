@@ -7,12 +7,10 @@
   align-items: center;
 }
 
-/* Movimiento al hacer hover */
 .light:hover {
   animation: sway 0.7s ease infinite;
 }
 
-/* Animación de balanceo */
 @keyframes sway {
   0% {
     transform: rotate(-10deg);

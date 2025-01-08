@@ -12,13 +12,14 @@
           }"
           >{{ board.title }}</span
         >
-        <mat-icon class="delete-button" (click)="deleteBoard(board.id, i)"
+        <mat-icon class="delete__button" (click)="deleteBoard(board.id, i)"
           >close</mat-icon
         >
       </ng-template>
     </mat-tab>
   </mat-tab-group>
   <app-dashboard [currentUpdatedBoard]="currentUpdatedBoard"></app-dashboard>
-  <!-- Botón para crear nuevo tablero -->
-  <button (click)="addBoard()"><mat-icon>add</mat-icon> Add Board</button>
+  <button class="board__button" (click)="addBoard()">
+    <mat-icon>add</mat-icon>New Board
+  </button>
 </div>

@@ -1,4 +1,3 @@
-// src/app.routes.ts
 import { Routes } from '@angular/router';
 import { BoardsComponent } from './boards/boards.component';
 
