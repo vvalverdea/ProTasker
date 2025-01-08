@@ -6,19 +6,19 @@ div {
   cursor: default;
 
   mat-tab-group {
-    background-color: #f5f5f5; // Fondo del grupo de pestañas
-    border-radius: 8px; // Bordes redondeados
+    background-color: #f5f5f5;
+    border-radius: 8px;
     box-shadow: #333;
     cursor: default;
     align-items: start;
     mat-tab-label {
       display: flex;
       cursor: default;
-      padding: 0.25rem 1rem; // Tamaño reducido del tab
+      padding: 0.25rem 1rem;
 
       span:first-child {
-        flex: 1; // Ocupa todo el espacio disponible
-        text-align: left; // Título alineado a la izquierda
+        flex: 1;
+        text-align: left;
       }
 
       mat-tab-label span.dark-title {
@@ -30,48 +30,47 @@ div {
       }
 
       div {
-        margin-left: auto; // Lleva el botón al extremo derecho
+        margin-left: auto;
         display: flex;
         align-items: start;
         cursor: default;
 
         mat-icon {
           font-size: 16px;
-          color: #ff0000; // Color del ícono "close"
+          color: #ff0000;
           transition: color 0.2s ease-in-out;
 
           &:hover {
-            color: #d32f2f; // Cambiar color al pasar el cursor
+            color: #d32f2f;
           }
         }
       }
     }
 
-    .delete-button {
+    .delete__button {
       margin-left: 18px;
     }
 
-    .delete-button:hover {
+    .delete__button:hover {
       color: #d26f6f;
       cursor: default;
-      // Cambiar color al pasar el cursor
     }
 
     mat-tab-header {
-      background-color: #eeeeee; // Fondo del header de pestañas
+      background-color: #eeeeee;
       border-bottom: 2px solid #ccc;
-      min-height: 32px; // Reducimos la altura del header
+      min-height: 32px;
       cursor: default;
       .mat-tab-label {
-        font-size: 12px; // Texto más pequeño
-        padding: 0.25rem 1rem; // Tamaño reducido del tab
+        font-size: 12px;
+        padding: 0.25rem 1rem;
         margin-left: 1rem;
         text-transform: none;
       }
 
       .mat-tab-label-active {
         font-weight: bold;
-        color: #3f51b5; // Color del texto activo
+        color: #3f51b5;
       }
     }
   }
@@ -80,15 +79,13 @@ div {
     align-self: flex-start;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     background-color: #3f51b5;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: default;
     transition: background-color 0.3s;
-    margin-top: -100px;
 
     mat-icon {
       font-size: 20px;

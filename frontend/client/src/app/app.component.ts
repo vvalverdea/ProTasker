@@ -20,9 +20,9 @@ export class AppComponent {
   toggleBackground() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
       this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor ===
-      'white'
-        ? 'grey'
-        : 'white';
+      'grey'
+        ? 'white'
+        : 'grey';
 
     this.sharedService.setTheme(
       this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor

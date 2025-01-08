@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["src/app/atoms/card/card.component.scss"],
-  "sourcesContent": ["@use \"../../../styles/_variables\" as *;\r\n\r\n.card {\r\n  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,\r\n    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;\r\n  border-radius: 20px;\r\n  margin: 10%;\r\n  padding: 20px;\r\n  display: flex;\r\n  min-height: 40%;\r\n  overflow: hidden;\r\n  background-color: white;\r\n}\r\n"],
-  "mappings": ";AAEA,CAAA;AACE;IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,KAAA,IAAA,IAAA,GAAA;IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,KAAA,IAAA,IAAA,KAAA,IAAA;IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,KAAA,IAAA,KAAA,IAAA;AAEA,iBAAA;AACA,UAAA;AACA,WAAA;AACA,WAAA;AACA,cAAA;AACA,YAAA;AACA,oBAAA;;",
+  "sourcesContent": ["@use '../../../styles/_variables' as *;\r\n\r\n.card {\r\n  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,\r\n    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;\r\n  border-radius: 20px;\r\n  padding: 20px;\r\n  display: flex;\r\n  min-height: 40%;\r\n  overflow: hidden;\r\n  background-color: white;\r\n}\r\n"],
+  "mappings": ";AAEA,CAAA;AACE;IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,KAAA,IAAA,IAAA,GAAA;IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,KAAA,IAAA,IAAA,KAAA,IAAA;IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,KAAA,IAAA,KAAA,IAAA;AAEA,iBAAA;AACA,WAAA;AACA,WAAA;AACA,cAAA;AACA,YAAA;AACA,oBAAA;;",
   "names": []
 }
