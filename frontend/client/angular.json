@@ -58,6 +58,7 @@
               ],
               "outputHashing": "none",
               "outputPath": "../../public/prod",
+              "namedChunks": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -123,9 +124,7 @@
     }
   },
   "cli": {
-    "schematicCollections": [
-      "angular-eslint"
-    ],
+    "schematicCollections": ["angular-eslint"],
     "analytics": false
   }
 }

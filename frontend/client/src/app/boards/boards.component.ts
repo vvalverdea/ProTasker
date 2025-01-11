@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardsService } from '../services/boards.service';
 import { TasksService } from '../services/tasks.service';
-import { CardComponent } from '../atoms/card/card.component';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +16,6 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './boards.component.html',
   styleUrls: ['./boards.component.scss'],
   imports: [
-    CardComponent,
     CommonModule,
     DragDropModule,
     MatIconModule,

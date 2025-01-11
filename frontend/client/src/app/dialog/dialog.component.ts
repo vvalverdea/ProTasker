@@ -4,10 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialog,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -27,10 +25,8 @@ export interface DialogData {
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
 })
 export class DialogComponent {

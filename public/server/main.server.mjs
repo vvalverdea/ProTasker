@@ -44564,26 +44564,6 @@ var AppComponent = class _AppComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 14 });
 })();
 
-// src/app/atoms/card/card.component.ts
-var _c03 = ["*"];
-var CardComponent = class _CardComponent {
-  gradient = "linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB)";
-  static \u0275fac = function CardComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _CardComponent)();
-  };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CardComponent, selectors: [["app-card"]], inputs: { gradient: "gradient" }, ngContentSelectors: _c03, decls: 2, vars: 0, consts: [[1, "card"]], template: function CardComponent_Template(rf, ctx) {
-    if (rf & 1) {
-      \u0275\u0275projectionDef();
-      \u0275\u0275elementStart(0, "div", 0);
-      \u0275\u0275projection(1);
-      \u0275\u0275elementEnd();
-    }
-  }, styles: ["\n\n.card[_ngcontent-%COMP%] {\n  box-shadow:\n    rgba(0, 0, 0, 0.4) 0px 2px 4px,\n    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,\n    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;\n  border-radius: 20px;\n  padding: 20px;\n  display: flex;\n  min-height: 40%;\n  overflow: hidden;\n  background-color: white;\n}\n/*# sourceMappingURL=card.component.css.map */"] });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CardComponent, { className: "CardComponent", filePath: "src/app/atoms/card/card.component.ts", lineNumber: 8 });
-})();
-
 // node_modules/@angular/cdk/fesm2022/collections.mjs
 var DataSource = class {
 };
@@ -44751,7 +44731,7 @@ var UniqueSelectionDispatcher = class _UniqueSelectionDispatcher {
 })();
 
 // node_modules/@angular/cdk/fesm2022/scrolling.mjs
-var _c04 = ["contentWrapper"];
+var _c03 = ["contentWrapper"];
 var _c12 = ["*"];
 var VIRTUAL_SCROLL_STRATEGY = new InjectionToken("VIRTUAL_SCROLL_STRATEGY");
 var FixedSizeVirtualScrollStrategy = class {
@@ -45754,7 +45734,7 @@ var CdkVirtualScrollViewport = class _CdkVirtualScrollViewport extends CdkVirtua
     selectors: [["cdk-virtual-scroll-viewport"]],
     viewQuery: function CdkVirtualScrollViewport_Query(rf, ctx) {
       if (rf & 1) {
-        \u0275\u0275viewQuery(_c04, 7);
+        \u0275\u0275viewQuery(_c03, 7);
       }
       if (rf & 2) {
         let _t;
@@ -50903,7 +50883,7 @@ var SharedResizeObserver = class _SharedResizeObserver {
 })();
 
 // node_modules/@angular/material/fesm2022/tabs.mjs
-var _c05 = ["*"];
+var _c04 = ["*"];
 function MatTab_ng_template_0_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275projection(0);
@@ -51197,7 +51177,7 @@ var MatTab = class _MatTab {
       provide: MAT_TAB,
       useExisting: _MatTab
     }]), \u0275\u0275InputTransformsFeature, \u0275\u0275NgOnChangesFeature],
-    ngContentSelectors: _c05,
+    ngContentSelectors: _c04,
     decls: 1,
     vars: 0,
     template: function MatTab_Template(rf, ctx) {
@@ -51993,7 +51973,7 @@ var MatTabHeader = class _MatTabHeader extends MatPaginatedTabHeader {
       disableRipple: [2, "disableRipple", "disableRipple", booleanAttribute]
     },
     features: [\u0275\u0275InputTransformsFeature, \u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c05,
+    ngContentSelectors: _c04,
     decls: 13,
     vars: 10,
     consts: [["previousPaginator", ""], ["tabListContainer", ""], ["tabList", ""], ["tabListInner", ""], ["nextPaginator", ""], ["mat-ripple", "", 1, "mat-mdc-tab-header-pagination", "mat-mdc-tab-header-pagination-before", 3, "click", "mousedown", "touchend", "matRippleDisabled"], [1, "mat-mdc-tab-header-pagination-chevron"], [1, "mat-mdc-tab-label-container", 3, "keydown"], ["role", "tablist", 1, "mat-mdc-tab-list", 3, "cdkObserveContent"], [1, "mat-mdc-tab-labels"], ["mat-ripple", "", 1, "mat-mdc-tab-header-pagination", "mat-mdc-tab-header-pagination-after", 3, "mousedown", "click", "touchend", "matRippleDisabled"]],
@@ -52852,7 +52832,7 @@ var MatTabGroup = class _MatTabGroup {
       provide: MAT_TAB_GROUP,
       useExisting: _MatTabGroup
     }]), \u0275\u0275InputTransformsFeature],
-    ngContentSelectors: _c05,
+    ngContentSelectors: _c04,
     decls: 9,
     vars: 8,
     consts: [["tabHeader", ""], ["tabBodyWrapper", ""], ["tabNode", ""], [3, "indexFocused", "selectFocusedIndex", "selectedIndex", "disableRipple", "disablePagination", "aria-label", "aria-labelledby"], ["role", "tab", "matTabLabelWrapper", "", "cdkMonitorElementFocus", "", 1, "mdc-tab", "mat-mdc-tab", "mat-focus-indicator", 3, "id", "mdc-tab--active", "class", "disabled", "fitInkBarToContent"], [1, "mat-mdc-tab-body-wrapper"], ["role", "tabpanel", 3, "id", "mat-mdc-tab-body-active", "class", "content", "position", "origin", "animationDuration", "preserveContent"], ["role", "tab", "matTabLabelWrapper", "", "cdkMonitorElementFocus", "", 1, "mdc-tab", "mat-mdc-tab", "mat-focus-indicator", 3, "click", "cdkFocusChange", "id", "disabled", "fitInkBarToContent"], [1, "mdc-tab__ripple"], ["mat-ripple", "", 1, "mat-mdc-tab-ripple", 3, "matRippleTrigger", "matRippleDisabled"], [1, "mdc-tab__content"], [1, "mdc-tab__text-label"], [3, "cdkPortalOutlet"], ["role", "tabpanel", 3, "_onCentered", "_onCentering", "id", "content", "position", "origin", "animationDuration", "preserveContent"]],
@@ -53200,7 +53180,7 @@ var MatTabNav = class _MatTabNav extends MatPaginatedTabHeader {
     exportAs: ["matTabNavBar", "matTabNav"],
     features: [\u0275\u0275InputTransformsFeature, \u0275\u0275InheritDefinitionFeature],
     attrs: _c10,
-    ngContentSelectors: _c05,
+    ngContentSelectors: _c04,
     decls: 13,
     vars: 6,
     consts: [["previousPaginator", ""], ["tabListContainer", ""], ["tabList", ""], ["tabListInner", ""], ["nextPaginator", ""], ["mat-ripple", "", 1, "mat-mdc-tab-header-pagination", "mat-mdc-tab-header-pagination-before", 3, "click", "mousedown", "touchend", "matRippleDisabled"], [1, "mat-mdc-tab-header-pagination-chevron"], [1, "mat-mdc-tab-link-container", 3, "keydown"], [1, "mat-mdc-tab-list", 3, "cdkObserveContent"], [1, "mat-mdc-tab-links"], ["mat-ripple", "", 1, "mat-mdc-tab-header-pagination", "mat-mdc-tab-header-pagination-after", 3, "mousedown", "click", "touchend", "matRippleDisabled"]],
@@ -53528,7 +53508,7 @@ var MatTabLink = class _MatTabLink extends InkBarItem {
     exportAs: ["matTabLink"],
     features: [\u0275\u0275InputTransformsFeature, \u0275\u0275InheritDefinitionFeature],
     attrs: _c11,
-    ngContentSelectors: _c05,
+    ngContentSelectors: _c04,
     decls: 5,
     vars: 2,
     consts: [[1, "mdc-tab__ripple"], ["mat-ripple", "", 1, "mat-mdc-tab-ripple", 3, "matRippleTrigger", "matRippleDisabled"], [1, "mdc-tab__content"], [1, "mdc-tab__text-label"]],
@@ -53629,7 +53609,7 @@ var MatTabNavPanel = class _MatTabNavPanel {
       id: "id"
     },
     exportAs: ["matTabNavPanel"],
-    ngContentSelectors: _c05,
+    ngContentSelectors: _c04,
     decls: 1,
     vars: 0,
     template: function MatTabNavPanel_Template(rf, ctx) {
@@ -53692,6 +53672,26 @@ var TaskStatus;
   TaskStatus3[TaskStatus3["IN_PROGRESS"] = 1] = "IN_PROGRESS";
   TaskStatus3[TaskStatus3["DONE"] = 2] = "DONE";
 })(TaskStatus || (TaskStatus = {}));
+
+// src/app/atoms/card/card.component.ts
+var _c05 = ["*"];
+var CardComponent = class _CardComponent {
+  gradient = "linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB)";
+  static \u0275fac = function CardComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _CardComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CardComponent, selectors: [["app-card"]], inputs: { gradient: "gradient" }, ngContentSelectors: _c05, decls: 2, vars: 0, consts: [[1, "card"]], template: function CardComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275projectionDef();
+      \u0275\u0275elementStart(0, "div", 0);
+      \u0275\u0275projection(1);
+      \u0275\u0275elementEnd();
+    }
+  }, styles: ["\n\n.card[_ngcontent-%COMP%] {\n  box-shadow:\n    rgba(0, 0, 0, 0.4) 0px 2px 4px,\n    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,\n    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;\n  border-radius: 20px;\n  padding: 20px;\n  display: flex;\n  min-height: 40%;\n  overflow: hidden;\n  background-color: white;\n}\n/*# sourceMappingURL=card.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CardComponent, { className: "CardComponent", filePath: "src/app/atoms/card/card.component.ts", lineNumber: 8 });
+})();
 
 // node_modules/@angular/material/fesm2022/progress-spinner.mjs
 var _c06 = ["determinateSpinner"];
@@ -68886,7 +68886,7 @@ var DialogComponent = class _DialogComponent {
   ], encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DialogComponent, { className: "DialogComponent", filePath: "src/app/dialog/dialog.component.ts", lineNumber: 36 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DialogComponent, { className: "DialogComponent", filePath: "src/app/dialog/dialog.component.ts", lineNumber: 32 });
 })();
 
 // src/app/dashboard/dashboard.component.ts
@@ -69365,7 +69365,7 @@ var BoardsComponent = class _BoardsComponent {
   ], styles: ["\n\ndiv[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  padding: 1rem;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%] {\n  background-color: #f5f5f5;\n  border-radius: 8px;\n  box-shadow: #333;\n  cursor: default;\n  align-items: start;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%] {\n  display: flex;\n  cursor: default;\n  padding: 0.25rem 1rem;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span[_ngcontent-%COMP%]:first-child {\n  flex: 1;\n  text-align: left;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.dark-title[_ngcontent-%COMP%] {\n  color: #333;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   span.light-title[_ngcontent-%COMP%] {\n  color: #fff;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%] {\n  margin-left: auto;\n  display: flex;\n  align-items: start;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  color: #ff0000;\n  transition: color 0.2s ease-in-out;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-label[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%]:hover {\n  color: #d32f2f;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   .delete__button[_ngcontent-%COMP%] {\n  margin-left: 18px;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   .delete__button[_ngcontent-%COMP%]:hover {\n  color: #d26f6f;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%] {\n  background-color: #eeeeee;\n  border-bottom: 2px solid #ccc;\n  min-height: 32px;\n  cursor: default;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label[_ngcontent-%COMP%] {\n  font-size: 12px;\n  padding: 0.25rem 1rem;\n  margin-left: 1rem;\n  text-transform: none;\n}\ndiv[_ngcontent-%COMP%]   mat-tab-group[_ngcontent-%COMP%]   mat-tab-header[_ngcontent-%COMP%]   .mat-tab-label-active[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: #3f51b5;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  align-self: flex-start;\n  display: flex;\n  align-items: center;\n  padding: 0.5rem 0.5rem;\n  background-color: #3f51b5;\n  color: white;\n  border: none;\n  border-radius: 4px;\n  cursor: default;\n  transition: background-color 0.3s;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n}\ndiv[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover {\n  background-color: #303f9f;\n}\n/*# sourceMappingURL=boards.component.css.map */"] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardsComponent, { className: "BoardsComponent", filePath: "src/app/boards/boards.component.ts", lineNumber: 28 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardsComponent, { className: "BoardsComponent", filePath: "src/app/boards/boards.component.ts", lineNumber: 26 });
 })();
 
 // src/app/app.routes.ts
