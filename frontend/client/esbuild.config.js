@@ -1,9 +1,12 @@
-require('esbuild')
+const esbuild = require('esbuild');
+
+esbuild
   .build({
-    entryPoints: ['backend/server.js'],
+    entryPoints: ['./src/main.ts'],
     bundle: true,
-    platform: 'node',
-    external: ['mongoose', 'express', 'cors'],
-    outdir: 'dist',
+    outfile: '../../public/browser/main.js',
+    minify: true,
+    sourcemap: true,
+    files: ['**/*.html'],
   })
   .catch(() => process.exit(1));
